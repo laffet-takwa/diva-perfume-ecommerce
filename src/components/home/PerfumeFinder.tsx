@@ -113,7 +113,7 @@ export function PerfumeFinder() {
             <div className="eyebrow eyebrow-rule mb-5">
               <span className="font-display text-xs text-gold">03</span>
               <span className="h-px w-6 bg-gold/60" aria-hidden="true" />
-              <span className="text-burgundy/70">The Scent Finder</span>
+              <span className="text-noir/70">The Scent Finder</span>
             </div>
 
             <h2 id="finder-title" className="display-title text-[clamp(1.9rem,4.4vw,3rem)]">
@@ -125,7 +125,7 @@ export function PerfumeFinder() {
                 <span
                   key={i}
                   className={`h-px w-10 transition-colors duration-500 ${
-                    i <= step ? 'bg-burgundy' : 'bg-dark/15'
+                    i <= step ? 'bg-noir' : 'bg-dark/15'
                   }`}
                 />
               ))}
@@ -150,7 +150,7 @@ export function PerfumeFinder() {
                       type="button"
                       onClick={goBack}
                       disabled={step === 0}
-                      className="mt-6 inline-flex items-center gap-2 text-[0.625rem] uppercase tracking-[0.2em] text-muted transition-colors hover:text-burgundy disabled:pointer-events-none disabled:opacity-0"
+                      className="mt-6 inline-flex items-center gap-2 text-[0.625rem] uppercase tracking-[0.2em] text-muted transition-colors hover:text-noir disabled:pointer-events-none disabled:opacity-0"
                     >
                       <ArrowLeft className="size-3.5" aria-hidden="true" />
                       Previous
@@ -180,7 +180,7 @@ export function PerfumeFinder() {
           </div>
 
           {/* Options / results side */}
-          <div className="relative min-h-[28rem] overflow-hidden rounded-md border border-dark/10 bg-cream p-6 sm:p-8 lg:p-10">
+          <div className="relative min-h-[28rem] overflow-hidden rounded-md border border-dark/10 bg-ivory p-6 sm:p-8 lg:p-10">
             <AnimatePresence mode="wait">
               {!complete ? (
                 <motion.div
@@ -212,8 +212,8 @@ export function PerfumeFinder() {
                               aria-pressed={active}
                               className={`rounded-xs border px-5 py-3 text-[0.6875rem] font-medium uppercase tracking-[0.16em] transition-all duration-300 ${
                                 active
-                                  ? 'border-burgundy bg-burgundy text-cream'
-                                  : 'border-dark/15 text-dark hover:border-burgundy/50 hover:text-burgundy'
+                                  ? 'border-noir bg-noir text-ivory'
+                                  : 'border-dark/15 text-dark hover:border-noir/50 hover:text-noir'
                               }`}
                             >
                               {note}
@@ -258,7 +258,7 @@ export function PerfumeFinder() {
                       }}
                       className="flex items-center gap-5 border-b border-dark/8 pb-7 last:border-0 last:pb-0"
                     >
-                      <div className="flex size-20 shrink-0 items-center justify-center overflow-hidden rounded-sm bg-champagne/35 sm:size-24">
+                      <div className="flex size-20 shrink-0 items-center justify-center overflow-hidden rounded-sm bg-taupe/35 sm:size-24">
                         <Flacon
                           art={product.art}
                           photo={product.photo}
@@ -344,8 +344,8 @@ function OptionsGrid({
               aria-pressed={active}
               className={`group flex h-full w-full flex-col gap-1 rounded-xs border p-4 text-left transition-all duration-300 ${
                 active
-                  ? 'border-burgundy bg-burgundy text-cream'
-                  : 'border-dark/12 hover:border-burgundy/50 hover:bg-burgundy/[0.03]'
+                  ? 'border-noir bg-noir text-ivory'
+                  : 'border-dark/12 hover:border-noir/50 hover:bg-noir/[0.03]'
               }`}
             >
               <span className="flex items-center gap-2 font-display text-base">
@@ -353,7 +353,7 @@ function OptionsGrid({
                 {option.label}
               </span>
               <span
-                className={`text-[0.6875rem] leading-relaxed ${active ? 'text-cream/70' : 'text-muted'}`}
+                className={`text-[0.6875rem] leading-relaxed ${active ? 'text-ivory/70' : 'text-muted'}`}
               >
                 {option.blurb}
               </span>

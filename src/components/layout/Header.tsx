@@ -9,7 +9,7 @@ import { cn } from '@/lib/utils'
 
 /* ==========================================================================
    Header
-   Transparent over the home hero, then solid cream with a blur + hairline.
+   Transparent over the home hero, then solid ivory with a blur + hairline.
    ========================================================================== */
 
 export function Header() {
@@ -49,10 +49,10 @@ export function Header() {
         initial={false}
         animate={{ height: scrolled ? 0 : 34, opacity: scrolled ? 0 : 1 }}
         transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-        className="overflow-hidden bg-burgundy text-cream"
+        className="overflow-hidden bg-noir text-ivory"
       >
         <div className="flex h-[34px] items-center justify-center gap-2 border-b border-gold/40 px-4">
-          <span className="eyebrow text-[0.5625rem] text-cream/85 sm:text-[0.625rem]">
+          <span className="eyebrow text-[0.5625rem] text-ivory/85 sm:text-[0.625rem]">
             <span className="hidden sm:inline">{FREE_SHIPPING_COPY} — </span>
             Free delivery • Easy returns • Secure payment
           </span>
@@ -64,7 +64,7 @@ export function Header() {
           'relative transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]',
           transparent
             ? 'bg-transparent'
-            : 'border-b border-gold/25 bg-cream/85 shadow-[0_1px_24px_-16px_rgba(23,19,21,0.45)] backdrop-blur-xl',
+            : 'border-b border-gold/25 bg-ivory/85 shadow-[0_1px_24px_-16px_rgba(12,12,14,0.45)] backdrop-blur-xl',
         )}
       >
         {/* Mobile: three columns so the wordmark stays optically centred;
@@ -75,7 +75,7 @@ export function Header() {
             type="button"
             onClick={openMenu}
             aria-label="Open menu"
-            className="-ml-2 justify-self-start rounded-xs p-2 text-dark transition-colors hover:text-burgundy lg:hidden"
+            className="-ml-2 justify-self-start rounded-xs p-2 text-dark transition-colors hover:text-noir lg:hidden"
           >
             <Menu className="size-5" aria-hidden="true" />
           </button>
@@ -101,7 +101,7 @@ export function Header() {
                     className={({ isActive }) =>
                       cn(
                         'link-underline text-[0.6875rem] font-medium uppercase tracking-[0.2em] transition-colors duration-300',
-                        isActive ? 'text-burgundy' : 'text-dark/70 hover:text-burgundy',
+                        isActive ? 'text-noir' : 'text-dark/70 hover:text-noir',
                       )
                     }
                   >
@@ -167,7 +167,7 @@ function IconAction({
     </>
   )
   const classes = cn(
-    'relative -mr-0.5 inline-flex size-10 items-center justify-center rounded-xs text-dark transition-colors duration-300 hover:text-burgundy',
+    'relative -mr-0.5 inline-flex size-10 items-center justify-center rounded-xs text-dark transition-colors duration-300 hover:text-noir',
     className,
   )
 
@@ -195,7 +195,7 @@ function Count({ value }: { value: number }) {
           animate={{ scale: 1, opacity: 1 }}
           exit={{ scale: 0.5, opacity: 0 }}
           transition={{ duration: 0.25 }}
-          className="absolute -right-0.5 -top-0.5 flex size-4 items-center justify-center rounded-full bg-burgundy text-[0.5rem] font-medium text-cream"
+          className="absolute -right-0.5 -top-0.5 flex size-4 items-center justify-center rounded-full bg-noir text-[0.5rem] font-medium text-ivory"
         >
           {value > 9 ? '9+' : value}
           <span className="sr-only"> items</span>

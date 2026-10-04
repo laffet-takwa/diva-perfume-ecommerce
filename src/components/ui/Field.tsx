@@ -30,13 +30,13 @@ export const Field = forwardRef<HTMLInputElement, FieldProps>(function Field(
         aria-invalid={error ? true : undefined}
         aria-describedby={error || hint ? messageId : undefined}
         className={cn(
-          'h-12 rounded-xs border bg-cream px-4 text-[0.875rem] text-dark transition-colors placeholder:text-muted/60 focus:outline-none',
-          error ? 'border-burgundy' : 'border-dark/15 focus:border-burgundy',
+          'h-12 rounded-xs border bg-ivory px-4 text-[0.875rem] text-dark transition-colors placeholder:text-muted/60 focus:outline-none',
+          error ? 'border-noir' : 'border-dark/15 focus:border-noir',
         )}
         {...rest}
       />
       {(error || hint) && (
-        <p id={messageId} className={cn('text-[0.6875rem]', error ? 'text-burgundy' : 'text-muted')}>
+        <p id={messageId} className={cn('text-[0.6875rem]', error ? 'text-noir' : 'text-muted')}>
           {error ?? hint}
         </p>
       )}
@@ -65,12 +65,12 @@ export const TextAreaField = forwardRef<HTMLTextAreaElement, TextAreaProps>(func
         aria-invalid={error ? true : undefined}
         rows={3}
         className={cn(
-          'rounded-xs border bg-cream px-4 py-3 text-[0.875rem] text-dark transition-colors placeholder:text-muted/60 focus:outline-none',
-          error ? 'border-burgundy' : 'border-dark/15 focus:border-burgundy',
+          'rounded-xs border bg-ivory px-4 py-3 text-[0.875rem] text-dark transition-colors placeholder:text-muted/60 focus:outline-none',
+          error ? 'border-noir' : 'border-dark/15 focus:border-noir',
         )}
         {...rest}
       />
-      {error && <p className="text-[0.6875rem] text-burgundy">{error}</p>}
+      {error && <p className="text-[0.6875rem] text-noir">{error}</p>}
     </div>
   )
 })
@@ -100,7 +100,7 @@ export function ChoiceCard({
     <label
       className={cn(
         'flex cursor-pointer items-start gap-3 rounded-xs border p-4 transition-all duration-300',
-        checked ? 'border-burgundy bg-burgundy/[0.03]' : 'border-dark/15 hover:border-burgundy/40',
+        checked ? 'border-noir bg-noir/[0.03]' : 'border-dark/15 hover:border-noir/40',
       )}
     >
       <input
@@ -115,10 +115,10 @@ export function ChoiceCard({
         aria-hidden="true"
         className={cn(
           'mt-0.5 flex size-4 shrink-0 items-center justify-center rounded-full border transition-colors',
-          checked ? 'border-burgundy' : 'border-dark/25',
+          checked ? 'border-noir' : 'border-dark/25',
         )}
       >
-        {checked && <span className="size-2 rounded-full bg-burgundy" />}
+        {checked && <span className="size-2 rounded-full bg-noir" />}
       </span>
       <span className="min-w-0 flex-1">
         <span className="block text-[0.875rem] text-dark">{title}</span>

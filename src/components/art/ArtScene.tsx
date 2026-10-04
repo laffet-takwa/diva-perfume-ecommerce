@@ -29,17 +29,17 @@ interface ScenePalette {
 }
 
 const PALETTES: Record<SceneVariant, ScenePalette> = {
-  hero: { from: '#F7F1EA', to: '#E8D8C3', ink: '#4A1728', accent: '#C9A45C', line: '#C98F9F' },
-  women: { from: '#F6E7E4', to: '#E2C6C4', ink: '#4A1728', accent: '#C9A45C', line: '#C98F9F' },
-  men: { from: '#2A2124', to: '#171315', ink: '#F7F1EA', accent: '#C9A45C', line: '#8E8588' },
-  unisex: { from: '#E8D8C3', to: '#4A1728', ink: '#F7F1EA', accent: '#C9A45C', line: '#E3CD9D' },
-  editorial: { from: '#EFE4D6', to: '#D9C6B0', ink: '#4A1728', accent: '#C9A45C', line: '#A98E7A' },
-  philosophy: { from: '#F7F1EA', to: '#E8D8C3', ink: '#4A1728', accent: '#C9A45C', line: '#8E8588' },
-  atelier: { from: '#3B222C', to: '#1B1417', ink: '#F7F1EA', accent: '#C9A45C', line: '#C98F9F' },
-  ritual: { from: '#F2E8DE', to: '#DFC9B4', ink: '#4A1728', accent: '#C9A45C', line: '#A98E7A' },
-  story: { from: '#EFDDD9', to: '#C9A7A6', ink: '#4A1728', accent: '#C9A45C', line: '#8E8588' },
-  promise: { from: '#4A1728', to: '#25121B', ink: '#F7F1EA', accent: '#C9A45C', line: '#C98F9F' },
-  journal: { from: '#F4EDE4', to: '#E0CFC0', ink: '#4A1728', accent: '#C9A45C', line: '#8E8588' },
+  hero: { from: '#FAF7F1', to: '#E4DACB', ink: '#0E0E10', accent: '#B99A52', line: '#B08579' },
+  women: { from: '#F2EAE1', to: '#DEC8BC', ink: '#0E0E10', accent: '#B99A52', line: '#B08579' },
+  men: { from: '#232326', to: '#121214', ink: '#FAF7F1', accent: '#B99A52', line: '#7C776F' },
+  unisex: { from: '#E4DACB', to: '#0E0E10', ink: '#FAF7F1', accent: '#B99A52', line: '#E2CFA4' },
+  editorial: { from: '#EFE4D6', to: '#D9C6B0', ink: '#0E0E10', accent: '#B99A52', line: '#B0A492' },
+  philosophy: { from: '#FAF7F1', to: '#E4DACB', ink: '#0E0E10', accent: '#B99A52', line: '#7C776F' },
+  atelier: { from: '#2A2A2E', to: '#161618', ink: '#FAF7F1', accent: '#B99A52', line: '#B08579' },
+  ritual: { from: '#F2E8DE', to: '#DFC9B4', ink: '#0E0E10', accent: '#B99A52', line: '#B0A492' },
+  story: { from: '#EFE6DA', to: '#C6B29C', ink: '#0E0E10', accent: '#B99A52', line: '#7C776F' },
+  promise: { from: '#0E0E10', to: '#050506', ink: '#FAF7F1', accent: '#B99A52', line: '#B08579' },
+  journal: { from: '#F4EDE4', to: '#E0CFC0', ink: '#0E0E10', accent: '#B99A52', line: '#7C776F' },
 }
 
 export interface ArtSceneProps {
@@ -150,9 +150,9 @@ export function ArtScene({ variant, className, grain = 0.35 }: ArtSceneProps) {
           <circle cx="400" cy="330" r="210" fill={`url(#orb-${uid})`} />
           <g opacity="0.72">
             {[
-              { cx: 400, cy: 420, r: 150, rot: 0, fill: '#C98F9F' },
-              { cx: 340, cy: 500, r: 120, rot: 24, fill: '#E0AFBA' },
-              { cx: 470, cy: 520, r: 104, rot: -18, fill: '#F0D3D8' },
+              { cx: 400, cy: 420, r: 150, rot: 0, fill: '#B08579' },
+              { cx: 340, cy: 500, r: 120, rot: 24, fill: '#D9C3A9' },
+              { cx: 470, cy: 520, r: 104, rot: -18, fill: '#EFE2D3' },
             ].map((petal, i) => (
               <ellipse
                 key={petal.r}
@@ -203,10 +203,10 @@ export function ArtScene({ variant, className, grain = 0.35 }: ArtSceneProps) {
 
       {variant === 'unisex' && (
         <g>
-          <rect x="0" y="0" width="400" height="1000" fill="#E8D8C3" opacity="0.55" />
+          <rect x="0" y="0" width="400" height="1000" fill="#E4DACB" opacity="0.55" />
           <g style={{ mixBlendMode: 'multiply' }}>
-            <circle cx="330" cy="500" r="200" fill="#C98F9F" opacity="0.5" />
-            <circle cx="480" cy="500" r="200" fill="#4A1728" opacity="0.4" />
+            <circle cx="330" cy="500" r="200" fill="#B08579" opacity="0.5" />
+            <circle cx="480" cy="500" r="200" fill="#0E0E10" opacity="0.4" />
           </g>
           <circle cx="330" cy="500" r="200" fill="none" stroke={p.accent} strokeWidth="1.5" opacity="0.7" />
           <circle cx="480" cy="500" r="200" fill="none" stroke={p.accent} strokeWidth="1.5" opacity="0.5" />
@@ -223,7 +223,7 @@ export function ArtScene({ variant, className, grain = 0.35 }: ArtSceneProps) {
           {/* Campaign arch — the recurring "portal" motif of the house */}
           <path
             d="M228 1000V446a172 172 0 0 1 344 0v554Z"
-            fill="#4A1728"
+            fill="#0E0E10"
             fillOpacity="0.14"
           />
           <path
@@ -289,7 +289,7 @@ export function ArtScene({ variant, className, grain = 0.35 }: ArtSceneProps) {
 
       {variant === 'atelier' && (
         <g>
-          <circle cx="500" cy="420" r="300" fill="#C9A45C" opacity="0.16" filter={`url(#blur-${uid})`} />
+          <circle cx="500" cy="420" r="300" fill="#B99A52" opacity="0.16" filter={`url(#blur-${uid})`} />
           <g fill={p.line} opacity="0.28">
             {Array.from({ length: 12 }).map((_, row) =>
               Array.from({ length: 8 }).map((_, col) => (
@@ -339,7 +339,7 @@ export function ArtScene({ variant, className, grain = 0.35 }: ArtSceneProps) {
               return <circle key={i} cx={190 + i * 21} cy={480 - height} r="2" />
             })}
           </g>
-          <circle cx="400" cy="480" r="46" fill="#4A1728" opacity="0.85" />
+          <circle cx="400" cy="480" r="46" fill="#0E0E10" opacity="0.85" />
           <circle cx="400" cy="480" r="46" fill="none" stroke={p.accent} strokeWidth="1.5" />
           <circle cx="400" cy="480" r="18" fill={p.accent} opacity="0.9" />
           <g fill={p.ink} opacity="0.2">

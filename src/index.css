@@ -2,24 +2,26 @@
 
 /* ==========================================================================
    DIVA STORE — DESIGN SYSTEM
-   Brand: Premium perfume house. Cream paper, deep burgundy ink, gold accents.
+   Brand: Luxury fragrance boutique. Black ink, gold accents, off-white paper.
    ========================================================================== */
 
 @theme {
   /* --- Brand palette ---------------------------------------------------- */
-  --color-burgundy: #4a1728;
-  --color-burgundy-deep: #3a1020;
-  --color-burgundy-soft: #6b2438;
-  --color-rose: #c98f9f;
-  --color-rose-pale: #e6c3cd;
-  --color-gold: #c9a45c;
-  --color-gold-pale: #e3cd9d;
-  --color-cream: #f7f1ea;
-  --color-cream-deep: #f0e7dc;
-  --color-champagne: #e8d8c3;
-  --color-dark: #171315;
-  --color-ink: #2a2325;
-  --color-muted: #8e8588;
+  --color-noir: #0e0e10;
+  --color-noir-deep: #000000;
+  --color-noir-soft: #26262b;
+  --color-rose: #b08579;
+  --color-rose-pale: #e3cdc4;
+  --color-gold: #b99a52;
+  --color-gold-pale: #e2cfa4;
+  --color-ivory: #faf7f1;
+  --color-sand: #f0e8dc;
+  --color-taupe: #e4dacb;
+  --color-dark: #121214;
+  --color-ink: #1d1c1b;
+  --color-muted: #7c776f;
+  /* Brand glyph only — never used as a surface colour */
+  --color-whatsapp: #25d366;
 
   /* --- Typography -------------------------------------------------------- */
   --font-display: 'Playfair Display', 'Iowan Old Style', Georgia, 'Times New Roman', serif;
@@ -40,9 +42,9 @@
   /* --- Layout ------------------------------------------------------------ */
   --spacing-header: 4.5rem;
 
-  --shadow-lift: 0 1px 2px rgb(23 19 21 / 0.04), 0 12px 32px -12px rgb(23 19 21 / 0.14);
-  --shadow-float: 0 24px 60px -24px rgb(23 19 21 / 0.28);
-  --shadow-panel: 0 30px 80px -30px rgb(23 19 21 / 0.35);
+  --shadow-lift: 0 1px 2px rgb(12 12 14 / 0.04), 0 12px 32px -12px rgb(12 12 14 / 0.14);
+  --shadow-float: 0 24px 60px -24px rgb(12 12 14 / 0.28);
+  --shadow-panel: 0 30px 80px -30px rgb(12 12 14 / 0.35);
 }
 
 /* ==========================================================================
@@ -64,7 +66,7 @@
   }
 
   body {
-    background-color: var(--color-cream);
+    background-color: var(--color-ivory);
     color: var(--color-ink);
     font-family: var(--font-sans);
     font-weight: 400;
@@ -98,14 +100,14 @@
 
   /* Visible, on-brand focus for keyboard users only */
   :focus-visible {
-    outline: 2px solid var(--color-burgundy);
+    outline: 2px solid var(--color-noir);
     outline-offset: 3px;
     border-radius: 2px;
   }
 
   ::selection {
-    background-color: var(--color-burgundy);
-    color: var(--color-cream);
+    background-color: var(--color-noir);
+    color: var(--color-ivory);
   }
 
   /* Restrained scrollbar */
@@ -114,15 +116,15 @@
     height: 10px;
   }
   ::-webkit-scrollbar-track {
-    background: var(--color-cream-deep);
+    background: var(--color-sand);
   }
   ::-webkit-scrollbar-thumb {
-    background: color-mix(in srgb, var(--color-burgundy) 25%, transparent);
-    border: 3px solid var(--color-cream-deep);
+    background: color-mix(in srgb, var(--color-noir) 25%, transparent);
+    border: 3px solid var(--color-sand);
     border-radius: 999px;
   }
   ::-webkit-scrollbar-thumb:hover {
-    background: color-mix(in srgb, var(--color-burgundy) 45%, transparent);
+    background: color-mix(in srgb, var(--color-noir) 45%, transparent);
   }
 
   input,
@@ -166,9 +168,9 @@
     width: 16px;
     height: 16px;
     border-radius: 999px;
-    background: var(--color-cream);
-    border: 1px solid var(--color-burgundy);
-    box-shadow: 0 2px 8px -2px rgb(23 19 21 / 0.3);
+    background: var(--color-ivory);
+    border: 1px solid var(--color-noir);
+    box-shadow: 0 2px 8px -2px rgb(12 12 14 / 0.3);
   }
   input[type='range']::-moz-range-track {
     height: 2px;
@@ -177,12 +179,12 @@
   input[type='range']::-moz-range-thumb {
     width: 16px;
     height: 16px;
-    border: 1px solid var(--color-burgundy);
+    border: 1px solid var(--color-noir);
     border-radius: 999px;
-    background: var(--color-cream);
+    background: var(--color-ivory);
   }
   input[type='range']:focus-visible::-webkit-slider-thumb {
-    outline: 2px solid var(--color-burgundy);
+    outline: 2px solid var(--color-noir);
     outline-offset: 2px;
   }
 }
@@ -320,7 +322,7 @@
 @utility shimmer {
   position: relative;
   overflow: hidden;
-  background-color: var(--color-cream-deep);
+  background-color: var(--color-sand);
   &::after {
     content: '';
     position: absolute;
@@ -383,6 +385,19 @@
   }
   to {
     transform: translateX(-50%);
+  }
+}
+
+/* Slow halo behind the WhatsApp handle — a breath, not a beacon */
+@keyframes diva-pulse {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.5;
+  }
+  50% {
+    transform: scale(1.14);
+    opacity: 0;
   }
 }
 

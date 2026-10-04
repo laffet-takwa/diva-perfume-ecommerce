@@ -43,7 +43,7 @@ export function OrderSuccess() {
 
   return (
     <div className="pt-16 lg:pt-20">
-      <section className="relative overflow-hidden border-b border-dark/10 bg-cream-deep/40">
+      <section className="relative overflow-hidden border-b border-dark/10 bg-sand/40">
         <div className="pointer-events-none absolute inset-0" aria-hidden="true">
           <div className="absolute left-1/2 top-0 size-[40rem] -translate-x-1/2 -translate-y-1/3 rounded-full bg-gold/12 blur-[90px]" />
         </div>
@@ -53,7 +53,7 @@ export function OrderSuccess() {
             initial={{ scale: 0, rotate: -30 }}
             animate={{ scale: 1, rotate: 0 }}
             transition={{ type: 'spring', stiffness: 220, damping: 16, delay: 0.15 }}
-            className="flex size-16 items-center justify-center rounded-full bg-burgundy text-cream"
+            className="flex size-16 items-center justify-center rounded-full bg-noir text-ivory"
           >
             <Check className="size-7" aria-hidden="true" />
           </motion.span>
@@ -64,7 +64,7 @@ export function OrderSuccess() {
             transition={{ duration: 0.7, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
             className="mt-9"
           >
-            <p className="eyebrow text-burgundy/70">Order confirmed</p>
+            <p className="eyebrow text-noir/70">Order confirmed</p>
             <h1 className="mt-4 display-title text-[clamp(2.25rem,6vw,4rem)]">Thank you, Diva.</h1>
             <p className="mx-auto mt-5 max-w-lg font-quote text-xl italic leading-relaxed text-muted">
               Your fragrance journey has officially begun.
@@ -105,7 +105,7 @@ export function OrderSuccess() {
           <ul className="flex flex-col gap-5">
             {lastOrder.items.map((line) => (
               <li key={line.key} className="flex items-center gap-4 border-b border-dark/10 pb-5 last:border-0">
-                <span className="flex size-20 shrink-0 items-center justify-center overflow-hidden rounded-sm bg-champagne/40">
+                <span className="flex size-20 shrink-0 items-center justify-center overflow-hidden rounded-sm bg-taupe/40">
                   <Flacon
                     art={line.image}
                     photo={line.photo}
@@ -119,7 +119,7 @@ export function OrderSuccess() {
                 <div className="min-w-0 flex-1">
                   <Link
                     to={`/product/${line.slug}`}
-                    className="block truncate font-display text-base text-dark hover:text-burgundy"
+                    className="block truncate font-display text-base text-dark hover:text-noir"
                   >
                     {line.name}
                   </Link>
@@ -148,7 +148,7 @@ export function OrderSuccess() {
             <h2 className="eyebrow mb-5 text-dark">Delivery</h2>
             <ul className="flex flex-col gap-4 text-[0.8125rem] text-muted">
               <li className="flex gap-3">
-                <Truck className="size-4 shrink-0 text-burgundy" aria-hidden="true" />
+                <Truck className="size-4 shrink-0 text-noir" aria-hidden="true" />
                 <span>
                   {lastOrder.shipping.label} — {lastOrder.shipping.detail}
                   <br />
@@ -156,7 +156,7 @@ export function OrderSuccess() {
                 </span>
               </li>
               <li className="flex gap-3">
-                <Package className="size-4 shrink-0 text-burgundy" aria-hidden="true" />
+                <Package className="size-4 shrink-0 text-noir" aria-hidden="true" />
                 <address className="not-italic leading-relaxed">
                   {lastOrder.customer.firstName} {lastOrder.customer.lastName}
                   <br />

@@ -36,7 +36,7 @@ export function MobileMenu() {
                 <Link
                   to={item.to}
                   onClick={closeMenu}
-                  className="flex items-baseline justify-between py-4 font-display text-[1.375rem] text-dark transition-colors hover:text-burgundy"
+                  className="flex items-baseline justify-between py-4 font-display text-[1.375rem] text-dark transition-colors hover:text-noir"
                 >
                   <span>{item.label}</span>
                   <span className="font-sans text-[0.5625rem] tracking-[0.2em] text-muted">
@@ -78,7 +78,7 @@ export function MobileMenu() {
           <Link
             to={`/product/${spotlight.slug}`}
             onClick={closeMenu}
-            className="group mt-10 flex items-center gap-4 rounded-md border border-dark/10 bg-champagne/30 p-4"
+            className="group mt-10 flex items-center gap-4 rounded-md border border-dark/10 bg-taupe/30 p-4"
           >
             <Flacon
               art={spotlight.art}
@@ -93,7 +93,7 @@ export function MobileMenu() {
               <p className="text-[0.6875rem] text-muted">{formatPrice(spotlight.price)}</p>
             </div>
             <ArrowRight
-              className="size-4 shrink-0 text-burgundy transition-transform duration-300 group-hover:translate-x-1"
+              className="size-4 shrink-0 text-noir transition-transform duration-300 group-hover:translate-x-1"
               aria-hidden="true"
             />
           </Link>
@@ -112,7 +112,7 @@ export function MobileMenu() {
                 target="_blank"
                 rel="noreferrer noopener"
                 aria-label={social.label}
-                className="flex size-9 items-center justify-center rounded-full border border-dark/12 font-display text-[0.75rem] text-muted transition-colors hover:border-burgundy hover:text-burgundy"
+                className="flex size-9 items-center justify-center rounded-full border border-dark/12 font-display text-[0.75rem] text-muted transition-colors hover:border-noir hover:text-noir"
               >
                 {social.label.charAt(0)}
               </a>

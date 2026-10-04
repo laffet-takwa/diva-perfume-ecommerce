@@ -41,12 +41,12 @@ export function Account() {
 
   return (
     <div className="pt-16 lg:pt-20">
-      <div className="border-b border-dark/10 bg-cream-deep/40">
+      <div className="border-b border-dark/10 bg-sand/40">
         <div className="container-lux py-14 md:py-20">
           <Reveal variant="up">
             <div className="eyebrow eyebrow-rule mb-6">
               <span className="h-px w-8 bg-gold" aria-hidden="true" />
-              <span className="text-burgundy/70">Your Diva world</span>
+              <span className="text-noir/70">Your Diva world</span>
             </div>
             <h1 className="display-title text-[clamp(2.1rem,5vw,3.2rem)]">Account</h1>
             <p className="mt-4 max-w-xl text-[0.9375rem] leading-relaxed text-muted">
@@ -62,7 +62,7 @@ export function Account() {
           <Reveal variant="up">
             <div className="rounded-md border border-dark/10 p-6 md:p-8">
               <h2 className="flex items-center gap-2.5 font-display text-xl text-dark">
-                <LogIn className="size-4 text-burgundy" aria-hidden="true" />
+                <LogIn className="size-4 text-noir" aria-hidden="true" />
                 Sign in
               </h2>
               <p className="mt-2 max-w-md text-[0.8125rem] text-muted">
@@ -99,7 +99,7 @@ export function Account() {
                   />
                   <button
                     type="submit"
-                    className="h-12 shrink-0 rounded-xs bg-burgundy px-6 text-[0.6875rem] font-medium uppercase tracking-[0.16em] text-cream transition-colors hover:bg-burgundy-deep"
+                    className="h-12 shrink-0 rounded-xs bg-noir px-6 text-[0.6875rem] font-medium uppercase tracking-[0.16em] text-ivory transition-colors hover:bg-noir-deep"
                   >
                     Send link
                   </button>
@@ -112,7 +112,7 @@ export function Account() {
           <Reveal variant="up" delay={0.08} className="mt-8">
             <div className="rounded-md border border-dark/10 p-6 md:p-8">
               <h2 className="flex items-center gap-2.5 font-display text-xl text-dark">
-                <Package className="size-4 text-burgundy" aria-hidden="true" />
+                <Package className="size-4 text-noir" aria-hidden="true" />
                 Recent order
               </h2>
 
@@ -143,7 +143,7 @@ export function Account() {
                     </div>
                   </dl>
                   <p className="flex items-center gap-2.5 text-[0.8125rem] text-muted">
-                    <Truck className="size-4 shrink-0 text-burgundy" aria-hidden="true" />
+                    <Truck className="size-4 shrink-0 text-noir" aria-hidden="true" />
                     {lastOrder.shipping.label} — arriving {formatDeliveryWindow(lastOrder.etaDays)}
                   </p>
                   <ButtonLink to="/order-success" variant="ghost" size="sm" className="self-start px-0">
@@ -205,7 +205,7 @@ export function Account() {
           />
           <p className="mt-4 text-[0.6875rem] leading-relaxed text-muted">
             Need help? Visit our{' '}
-            <Link to="/help/faq" className="link-underline text-burgundy">
+            <Link to="/help/faq" className="link-underline text-noir">
               FAQ
             </Link>
             .
@@ -230,12 +230,12 @@ function SideLink({
   return (
     <Link
       to={to}
-      className="group flex items-center gap-3 rounded-xs border border-dark/10 px-5 py-4 transition-colors hover:border-burgundy/45"
+      className="group flex items-center gap-3 rounded-xs border border-dark/10 px-5 py-4 transition-colors hover:border-noir/45"
     >
-      <span className="text-burgundy">{icon}</span>
+      <span className="text-noir">{icon}</span>
       <span className="flex-1 text-[0.8125rem] text-dark">{label}</span>
       {count !== undefined && count > 0 && (
-        <span className="flex size-5 items-center justify-center rounded-full bg-burgundy text-[0.5625rem] text-cream">
+        <span className="flex size-5 items-center justify-center rounded-full bg-noir text-[0.5625rem] text-ivory">
           {count}
         </span>
       )}

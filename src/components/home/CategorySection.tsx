@@ -44,18 +44,18 @@ const BLOCKS: CategoryBlock[] = [
 
 export function CategorySection() {
   return (
-    <section className="relative overflow-hidden bg-cream-deep/50 py-20 md:py-28" aria-labelledby="category-title">
+    <section className="relative overflow-hidden bg-sand/50 py-20 md:py-28" aria-labelledby="category-title">
       <div className="container-lux">
         <Reveal variant="up" className="max-w-2xl">
           <div className="eyebrow eyebrow-rule mb-5">
             <span className="font-display text-xs text-gold">02</span>
             <span className="h-px w-6 bg-gold/60" aria-hidden="true" />
-            <span className="text-burgundy/70">Find Your Fragrance</span>
+            <span className="text-noir/70">Find Your Fragrance</span>
           </div>
           <h2 id="category-title" className="display-title text-[clamp(2rem,5vw,3.4rem)]">
             Three doors.
             <br />
-            <span className="italic text-burgundy">One signature.</span>
+            <span className="italic text-noir">One signature.</span>
           </h2>
           <p className="mt-5 max-w-lg text-[0.9375rem] leading-relaxed text-muted">
             Fragrance does not recognise labels — but a starting point helps. Choose the room you are
@@ -80,7 +80,7 @@ export function CategorySection() {
             >
               <Link
                 to={block.to}
-                className="relative block h-full overflow-hidden rounded-md bg-champagne/30 focus-visible:outline-offset-4"
+                className="relative block h-full overflow-hidden rounded-md bg-taupe/30 focus-visible:outline-offset-4"
               >
                 <div
                   className={cn(

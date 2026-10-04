@@ -24,7 +24,7 @@ import { formatPrice } from '@/lib/utils'
 const ASSURANCES = [
   { icon: Truck, label: 'Free shipping over 150 DT' },
   { icon: ShieldCheck, label: '14-day easy returns' },
-  { icon: Sparkles, label: '100% authentic' },
+  { icon: Sparkles, label: 'Curated shortlist' },
 ]
 
 export function ProductDetails() {
@@ -108,7 +108,7 @@ export function ProductDetails() {
         <nav aria-label="Breadcrumb" className="py-6">
           <ol className="flex flex-wrap items-center gap-2 text-[0.5625rem] uppercase tracking-[0.24em] text-muted">
             <li>
-              <Link to="/" className="transition-colors hover:text-burgundy">
+              <Link to="/" className="transition-colors hover:text-noir">
                 Home
               </Link>
             </li>
@@ -116,7 +116,7 @@ export function ProductDetails() {
               <ChevronRight className="size-3" />
             </li>
             <li>
-              <Link to="/perfumes" className="transition-colors hover:text-burgundy">
+              <Link to="/perfumes" className="transition-colors hover:text-noir">
                 Perfumes
               </Link>
             </li>
@@ -126,7 +126,7 @@ export function ProductDetails() {
             <li>
               <Link
                 to={`/perfumes/${product.gender}`}
-                className="transition-colors hover:text-burgundy"
+                className="transition-colors hover:text-noir"
               >
                 {product.gender}
               </Link>
@@ -198,12 +198,12 @@ export function ProductDetails() {
                   aria-pressed={ml === size.ml}
                   className={`min-w-[6.5rem] rounded-xs border px-4 py-3 text-left transition-all duration-300 ${
                     ml === size.ml
-                      ? 'border-burgundy bg-burgundy/[0.04]'
-                      : 'border-dark/15 hover:border-burgundy/50'
+                      ? 'border-noir bg-noir/[0.04]'
+                      : 'border-dark/15 hover:border-noir/50'
                   }`}
                 >
                   <span
-                    className={`block font-display text-sm ${ml === size.ml ? 'text-burgundy' : 'text-dark'}`}
+                    className={`block font-display text-sm ${ml === size.ml ? 'text-noir' : 'text-dark'}`}
                   >
                     {size.ml}ml
                   </span>
@@ -236,7 +236,7 @@ export function ProductDetails() {
               size="lg"
               onClick={handleWish}
               aria-pressed={wished}
-              className={wished ? 'border-burgundy text-burgundy' : undefined}
+              className={wished ? 'border-noir text-noir' : undefined}
               iconLeft={
                 <Heart className="size-4" fill={wished ? 'currentColor' : 'none'} aria-hidden="true" />
               }
@@ -249,7 +249,7 @@ export function ProductDetails() {
           <ul className="mt-8 flex flex-col gap-3 border-t border-dark/10 pt-6">
             {ASSURANCES.map((item) => (
               <li key={item.label} className="flex items-center gap-3 text-[0.8125rem] text-muted">
-                <item.icon className="size-4 shrink-0 text-burgundy" aria-hidden="true" />
+                <item.icon className="size-4 shrink-0 text-noir" aria-hidden="true" />
                 {item.label}
               </li>
             ))}
@@ -258,7 +258,7 @@ export function ProductDetails() {
       </div>
 
       {/* Notes */}
-      <div className="border-y border-dark/10 bg-cream-deep/40 py-16 md:py-24">
+      <div className="border-y border-dark/10 bg-sand/40 py-16 md:py-24">
         <div className="container-lux">
           <ProductNotes notes={product.notes} />
         </div>
@@ -283,7 +283,7 @@ export function ProductDetails() {
       )}
 
       {/* Mobile sticky CTA */}
-      <div className="safe-bottom fixed inset-x-0 bottom-0 z-40 border-t border-dark/10 bg-cream/95 px-4 py-3 backdrop-blur-lg lg:hidden">
+      <div className="safe-bottom fixed inset-x-0 bottom-0 z-40 border-t border-dark/10 bg-ivory/95 px-4 py-3 backdrop-blur-lg lg:hidden">
         <div className="flex items-center gap-3">
           <div className="min-w-0 flex-1">
             <p className="truncate font-display text-sm text-dark">{product.name}</p>

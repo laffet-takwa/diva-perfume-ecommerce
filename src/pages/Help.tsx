@@ -151,13 +151,13 @@ export function Help() {
 
   return (
     <div className="pt-16 lg:pt-20">
-      <div className="border-b border-dark/10 bg-cream-deep/40">
+      <div className="border-b border-dark/10 bg-sand/40">
         <div className="container-lux py-14 md:py-20">
           <Reveal variant="up">
             <nav aria-label="Breadcrumb" className="mb-6">
               <ol className="flex items-center gap-2 text-[0.5625rem] uppercase tracking-[0.24em] text-muted">
                 <li>
-                  <Link to="/" className="transition-colors hover:text-burgundy">
+                  <Link to="/" className="transition-colors hover:text-noir">
                     Home
                   </Link>
                 </li>
@@ -202,7 +202,7 @@ export function Help() {
                   />
                   <button
                     type="submit"
-                    className="h-12 shrink-0 rounded-xs bg-burgundy px-6 text-[0.6875rem] font-medium uppercase tracking-[0.16em] text-cream transition-colors hover:bg-burgundy-deep"
+                    className="h-12 shrink-0 rounded-xs bg-noir px-6 text-[0.6875rem] font-medium uppercase tracking-[0.16em] text-ivory transition-colors hover:bg-noir-deep"
                   >
                     Send message
                   </button>
@@ -225,8 +225,8 @@ export function Help() {
               aria-current={entry.slug === topic.slug ? 'page' : undefined}
               className={`flex items-center gap-3 rounded-xs border px-4 py-3 text-[0.8125rem] transition-colors ${
                 entry.slug === topic.slug
-                  ? 'border-burgundy bg-burgundy/[0.04] text-burgundy'
-                  : 'border-dark/10 text-dark hover:border-burgundy/45'
+                  ? 'border-noir bg-noir/[0.04] text-noir'
+                  : 'border-dark/10 text-dark hover:border-noir/45'
               }`}
             >
               <entry.icon className="size-4 shrink-0" aria-hidden="true" />
@@ -279,9 +279,9 @@ export function HelpIndex() {
               <Reveal key={topic.slug} as="li" variant="up" index={i}>
                 <Link
                   to={`/help/${topic.slug}`}
-                  className="group flex h-full flex-col gap-3 rounded-md border border-dark/10 p-6 transition-colors hover:border-burgundy/45"
+                  className="group flex h-full flex-col gap-3 rounded-md border border-dark/10 p-6 transition-colors hover:border-noir/45"
                 >
-                  <topic.icon className="size-5 text-burgundy" aria-hidden="true" />
+                  <topic.icon className="size-5 text-noir" aria-hidden="true" />
                   <span className="font-display text-lg text-dark">{topic.title}</span>
                   <span className="text-[0.8125rem] leading-relaxed text-muted">{topic.lede}</span>
                 </Link>

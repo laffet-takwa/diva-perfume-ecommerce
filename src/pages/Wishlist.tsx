@@ -40,12 +40,12 @@ export function Wishlist() {
 
   return (
     <div className="pt-16 lg:pt-20">
-      <div className="border-b border-dark/10 bg-cream-deep/40">
+      <div className="border-b border-dark/10 bg-sand/40">
         <div className="container-lux py-12 md:py-16">
           <nav aria-label="Breadcrumb" className="mb-5">
             <ol className="flex items-center gap-2 text-[0.5625rem] uppercase tracking-[0.24em] text-muted">
               <li>
-                <Link to="/" className="transition-colors hover:text-burgundy">
+                <Link to="/" className="transition-colors hover:text-noir">
                   Home
                 </Link>
               </li>
@@ -74,7 +74,7 @@ export function Wishlist() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.3 }}
           transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-          className="flex flex-col items-center justify-between gap-6 rounded-md border border-gold/30 bg-champagne/25 px-6 py-8 text-center sm:flex-row sm:text-left md:px-10"
+          className="flex flex-col items-center justify-between gap-6 rounded-md border border-gold/30 bg-taupe/25 px-6 py-8 text-center sm:flex-row sm:text-left md:px-10"
         >
           <div>
             <h2 className="font-display text-xl text-dark">Ready to decide?</h2>

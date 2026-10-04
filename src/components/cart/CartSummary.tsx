@@ -26,14 +26,14 @@ export function CartSummary({ showShipping = true, tone = 'light', className, ch
       {showShipping && count > 0 && (
         <div>
           <div className="flex items-center gap-2.5">
-            <Truck className={cn('size-4 shrink-0', dark ? 'text-gold' : 'text-burgundy')} aria-hidden="true" />
+            <Truck className={cn('size-4 shrink-0', dark ? 'text-gold' : 'text-noir')} aria-hidden="true" />
             <p className={cn('text-[0.8125rem]', dark ? 'text-white/80' : 'text-dark')}>
               {qualifiesForFreeShipping ? (
                 <span className="text-gold">Free shipping unlocked.</span>
               ) : (
                 <>
                   You&rsquo;re{' '}
-                  <span className={dark ? 'text-gold' : 'text-burgundy'}>
+                  <span className={dark ? 'text-gold' : 'text-noir'}>
                     {formatPrice(freeShippingRemaining)}
                   </span>{' '}
                   away from free shipping.
@@ -51,7 +51,7 @@ export function CartSummary({ showShipping = true, tone = 'light', className, ch
             aria-label="Progress towards free shipping"
           >
             <motion.div
-              className={cn('h-full rounded-full', qualifiesForFreeShipping ? 'bg-gold' : 'bg-burgundy')}
+              className={cn('h-full rounded-full', qualifiesForFreeShipping ? 'bg-gold' : 'bg-noir')}
               initial={{ width: 0 }}
               animate={{ width: `${freeShippingProgress * 100}%` }}
               transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}

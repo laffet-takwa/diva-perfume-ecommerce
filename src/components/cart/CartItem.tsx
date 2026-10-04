@@ -34,7 +34,7 @@ export function CartItem({ line, onRemove, layout = 'row', className }: CartItem
       <Link
         to={`/product/${line.slug}`}
         className={cn(
-          'flex shrink-0 items-center justify-center overflow-hidden rounded-sm bg-champagne/35',
+          'flex shrink-0 items-center justify-center overflow-hidden rounded-sm bg-taupe/35',
           stacked ? 'aspect-[4/3] w-full' : 'size-24',
         )}
       >
@@ -73,7 +73,7 @@ export function CartItem({ line, onRemove, layout = 'row', className }: CartItem
             type="button"
             onClick={onRemove}
             aria-label={`Remove ${line.name} from bag`}
-            className="inline-flex items-center gap-1.5 text-[0.625rem] uppercase tracking-[0.16em] text-muted transition-colors hover:text-burgundy"
+            className="inline-flex items-center gap-1.5 text-[0.625rem] uppercase tracking-[0.16em] text-muted transition-colors hover:text-noir"
           >
             <Trash2 className="size-3.5" aria-hidden="true" />
             <span className="hidden sm:inline">Remove</span>

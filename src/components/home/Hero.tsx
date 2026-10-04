@@ -17,10 +17,10 @@ import { formatPrice } from '@/lib/utils'
 
 const CAMPAIGN_IMAGE = {
   src: '/images/campaign/la-diva-portrait.jpg',
-  alt: 'A woman in a blush satin evening gown seated on a cream sofa in the DIVA STORE boutique.',
+  alt: 'A woman in a blush satin evening gown seated on a ivory sofa in the DIVA STORE boutique.',
 }
 
-const ASSURANCES = ['Free shipping over 150 DT', '14-day returns', '100% authentic']
+const ASSURANCES = ['Free shipping over 150 DT', '14-day returns', 'Independent boutique']
 
 const copyStagger = {
   hidden: {},
@@ -38,7 +38,7 @@ export function Hero() {
 
   return (
     <section
-      className="relative min-h-[100svh] overflow-hidden bg-cream pt-28 lg:pt-32"
+      className="relative min-h-[100svh] overflow-hidden bg-ivory pt-28 lg:pt-32"
       aria-labelledby="hero-title"
     >
       {/* Backdrop: soft light pool behind the copy, fading away from the portrait */}
@@ -52,8 +52,8 @@ export function Hero() {
         <div className="absolute inset-y-0 right-0 w-full lg:w-[58%] lg:[mask-image:linear-gradient(to_right,transparent,black_10rem)]">
           <ArtScene variant="hero" className="h-full w-full" grain={0.3} />
         </div>
-        <div className="absolute inset-0 bg-[linear-gradient(90deg,var(--color-cream)_0%,var(--color-cream)_32%,rgba(247,241,234,0.72)_52%,rgba(247,241,234,0.25)_100%)]" />
-        <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-cream to-transparent" />
+        <div className="absolute inset-0 bg-[linear-gradient(90deg,var(--color-ivory)_0%,var(--color-ivory)_32%,rgba(247,241,234,0.72)_52%,rgba(247,241,234,0.25)_100%)]" />
+        <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-ivory to-transparent" />
       </motion.div>
 
       <div className="container-lux relative grid min-h-[calc(100svh-8rem)] items-center gap-12 pb-24 lg:min-h-[calc(100svh-9rem)] lg:grid-cols-12 lg:gap-12 lg:pb-28 xl:gap-16">
@@ -74,9 +74,9 @@ export function Hero() {
           {spotlight && (
             <Link
               to={`/product/${spotlight.slug}`}
-              className="group absolute -bottom-5 left-4 hidden items-center gap-3 rounded-md border border-dark/10 bg-cream/92 px-4 py-3 shadow-float backdrop-blur-md transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-1 sm:flex lg:-right-6 lg:bottom-8 lg:left-auto"
+              className="group absolute -bottom-5 left-4 hidden items-center gap-3 rounded-md border border-dark/10 bg-ivory/92 px-4 py-3 shadow-float backdrop-blur-md transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-1 sm:flex lg:-right-6 lg:bottom-8 lg:left-auto"
             >
-              <span className="relative flex size-12 shrink-0 items-center justify-center overflow-hidden rounded-sm bg-champagne/40">
+              <span className="relative flex size-12 shrink-0 items-center justify-center overflow-hidden rounded-sm bg-taupe/40">
                 <Flacon
                   art={spotlight.art}
                   photo={spotlight.photo}
@@ -99,7 +99,7 @@ export function Hero() {
                 </span>
               </span>
               <ArrowRight
-                className="size-4 shrink-0 text-burgundy transition-transform duration-300 group-hover:translate-x-0.5"
+                className="size-4 shrink-0 text-noir transition-transform duration-300 group-hover:translate-x-0.5"
                 aria-hidden="true"
               />
             </Link>
@@ -115,7 +115,7 @@ export function Hero() {
         >
           <motion.div variants={riseItem} className="eyebrow eyebrow-rule mb-6">
             <span className="h-px w-8 bg-gold" aria-hidden="true" />
-            <span className="text-burgundy/80">Diva Store — Est. 2026</span>
+            <span className="text-noir/80">Diva Store — Est. 2026</span>
           </motion.div>
 
           <motion.p variants={riseItem} className="eyebrow mb-4 text-dark/60">
@@ -129,7 +129,7 @@ export function Hero() {
           >
             Your Scent.
             <br />
-            <span className="italic text-burgundy">Your Story.</span>
+            <span className="italic text-noir">Your Story.</span>
           </motion.h1>
 
           <motion.p
@@ -175,7 +175,7 @@ export function Hero() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.6, duration: 0.8 }}
-        className="absolute bottom-7 left-1/2 hidden -translate-x-1/2 flex-col items-center gap-2 text-muted transition-colors hover:text-burgundy md:flex"
+        className="absolute bottom-7 left-1/2 hidden -translate-x-1/2 flex-col items-center gap-2 text-muted transition-colors hover:text-noir md:flex"
       >
         <span className="eyebrow text-[0.5625rem]">Scroll to discover</span>
         <motion.span

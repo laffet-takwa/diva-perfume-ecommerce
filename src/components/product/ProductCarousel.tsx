@@ -139,7 +139,7 @@ function CarouselButton({
       onClick={onClick}
       disabled={disabled}
       aria-label={label}
-      className="flex size-10 items-center justify-center rounded-full border border-dark/15 text-dark transition-all duration-300 hover:border-burgundy hover:text-burgundy disabled:pointer-events-none disabled:opacity-25"
+      className="flex size-10 items-center justify-center rounded-full border border-dark/15 text-dark transition-all duration-300 hover:border-noir hover:text-noir disabled:pointer-events-none disabled:opacity-25"
     >
       {children}
     </button>

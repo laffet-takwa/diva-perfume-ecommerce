@@ -94,7 +94,7 @@ export function ProductShot({
       {spec.floor && !photo && (
         <div
           aria-hidden="true"
-          className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-[rgba(23,19,21,0.10)] to-transparent"
+          className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-[rgba(12,12,14,0.10)] to-transparent"
         />
       )}
 

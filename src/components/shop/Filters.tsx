@@ -59,7 +59,7 @@ export function Filters({
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: 8 }}
               onClick={onReset}
-              className="inline-flex items-center gap-1.5 text-[0.625rem] uppercase tracking-[0.16em] text-burgundy transition-colors hover:text-burgundy-deep"
+              className="inline-flex items-center gap-1.5 text-[0.625rem] uppercase tracking-[0.16em] text-noir transition-colors hover:text-noir-deep"
             >
               <X className="size-3" aria-hidden="true" />
               Clear ({activeCount})
@@ -132,7 +132,7 @@ export function Filters({
                 aria-pressed={filters.minRating === rating}
                 className={cn(
                   'flex w-full items-center gap-2 py-1.5 text-left text-[0.8125rem] transition-colors',
-                  filters.minRating === rating ? 'text-burgundy' : 'text-muted hover:text-dark',
+                  filters.minRating === rating ? 'text-noir' : 'text-muted hover:text-dark',
                 )}
               >
                 <span className="flex items-center gap-0.5" aria-hidden="true">
@@ -182,7 +182,7 @@ function CheckboxRow({
     <label
       className={cn(
         'group flex cursor-pointer items-center gap-3 py-1.5 text-[0.8125rem] transition-colors',
-        checked ? 'text-burgundy' : 'text-muted hover:text-dark',
+        checked ? 'text-noir' : 'text-muted hover:text-dark',
       )}
     >
       <input type="checkbox" checked={checked} onChange={onChange} className="sr-only" />
@@ -190,11 +190,11 @@ function CheckboxRow({
         aria-hidden="true"
         className={cn(
           'flex size-4 shrink-0 items-center justify-center border transition-all duration-200',
-          checked ? 'border-burgundy bg-burgundy' : 'border-dark/25 bg-transparent group-hover:border-burgundy/60',
+          checked ? 'border-noir bg-noir' : 'border-dark/25 bg-transparent group-hover:border-noir/60',
         )}
       >
         {checked && (
-          <svg viewBox="0 0 12 12" className="size-2.5" fill="none" stroke="#F7F1EA" strokeWidth="2">
+          <svg viewBox="0 0 12 12" className="size-2.5" fill="none" stroke="#FAF7F1" strokeWidth="2">
             <path d="M2 6.2l2.6 2.6L10 3.4" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
         )}

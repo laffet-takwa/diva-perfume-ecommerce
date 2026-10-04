@@ -291,7 +291,7 @@ export function Checkout() {
                     })}
                   </div>
 
-                  <div className="mt-8 rounded-xs border border-dark/12 bg-cream-deep/40 p-5">
+                  <div className="mt-8 rounded-xs border border-dark/12 bg-sand/40 p-5">
                     <h3 className="eyebrow mb-3 text-dark">Delivering to</h3>
                     <address className="not-italic text-[0.8125rem] leading-relaxed text-muted">
                       {customer.firstName} {customer.lastName}
@@ -303,7 +303,7 @@ export function Checkout() {
                     <button
                       type="button"
                       onClick={() => setStep(1)}
-                      className="mt-4 text-[0.625rem] uppercase tracking-[0.16em] text-burgundy"
+                      className="mt-4 text-[0.625rem] uppercase tracking-[0.16em] text-noir"
                     >
                       Edit information
                     </button>
@@ -335,7 +335,7 @@ export function Checkout() {
                     Payment
                   </h2>
                   <p className="mt-2 flex items-center gap-2 text-[0.8125rem] text-muted">
-                    <Lock className="size-3.5 text-burgundy" aria-hidden="true" />
+                    <Lock className="size-3.5 text-noir" aria-hidden="true" />
                     This is a demonstration checkout. No card is charged.
                   </p>
 
@@ -347,7 +347,7 @@ export function Checkout() {
                       onChange={() => setPayment('card')}
                       title={
                         <span className="flex items-center gap-2">
-                          <CreditCard className="size-4 text-burgundy" aria-hidden="true" />
+                          <CreditCard className="size-4 text-noir" aria-hidden="true" />
                           Credit card
                         </span>
                       }
@@ -360,7 +360,7 @@ export function Checkout() {
                       onChange={() => setPayment('cod')}
                       title={
                         <span className="flex items-center gap-2">
-                          <Wallet className="size-4 text-burgundy" aria-hidden="true" />
+                          <Wallet className="size-4 text-noir" aria-hidden="true" />
                           Cash on delivery
                         </span>
                       }

@@ -37,13 +37,13 @@ export function EmptyState({
       )}
     >
       {icon && (
-        <span className="mb-7 flex size-16 items-center justify-center rounded-full border border-gold/40 text-burgundy/70">
+        <span className="mb-7 flex size-16 items-center justify-center rounded-full border border-gold/40 text-noir/70">
           {icon}
         </span>
       )}
       <div className="eyebrow eyebrow-rule mb-4">
         <span className="h-px w-6 bg-gold/60" aria-hidden="true" />
-        <span className="text-burgundy/70">{eyebrow}</span>
+        <span className="text-noir/70">{eyebrow}</span>
       </div>
       <h3 className="display-title max-w-md text-[clamp(1.5rem,3.2vw,2.1rem)] text-dark">{title}</h3>
       {description && (

@@ -49,10 +49,10 @@ export function App() {
   const location = useLocation()
 
   return (
-    <div className="flex min-h-screen flex-col bg-cream">
+    <div className="flex min-h-screen flex-col bg-ivory">
       <a
         href="#main"
-        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[200] focus:rounded-xs focus:bg-burgundy focus:px-4 focus:py-2.5 focus:text-[0.6875rem] focus:uppercase focus:tracking-[0.16em] focus:text-cream"
+        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[200] focus:rounded-xs focus:bg-noir focus:px-4 focus:py-2.5 focus:text-[0.6875rem] focus:uppercase focus:tracking-[0.16em] focus:text-ivory"
       >
         Skip to content
       </a>

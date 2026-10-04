@@ -77,19 +77,19 @@ export function CustomCursor() {
   return (
     <div aria-hidden="true" className="pointer-events-none fixed inset-0 z-[200] hidden lg:block">
       <motion.div
-        className="absolute rounded-full border border-burgundy/70 mix-blend-multiply"
+        className="absolute rounded-full border border-noir/70 mix-blend-multiply"
         style={{ x: ringXSpring, y: ringYSpring, translateX: '-50%', translateY: '-50%' }}
         animate={{
           width: size,
           height: size,
           opacity: visible ? 1 : 0,
           backgroundColor:
-            state === 'media' ? 'rgba(74,23,40,0.10)' : 'rgba(74,23,40,0)',
+            state === 'media' ? 'rgba(14,14,16,0.10)' : 'rgba(14,14,16,0)',
           transition: { width: { duration: 0.28 }, height: { duration: 0.28 }, opacity: { duration: 0.2 } },
         }}
       />
       <motion.div
-        className="absolute size-1 rounded-full bg-burgundy/80"
+        className="absolute size-1 rounded-full bg-noir/80"
         style={{ x: dotXSpring, y: dotYSpring, translateX: '-50%', translateY: '-50%' }}
         animate={{ opacity: visible && state === 'idle' ? 1 : 0 }}
         transition={{ duration: 0.2 }}

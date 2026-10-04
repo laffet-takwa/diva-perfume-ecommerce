@@ -6,7 +6,7 @@ import { BESTSELLERS, products } from '@/data/products'
 import { spellCount } from '@/lib/utils'
 
 /* ==========================================================================
-   Promotional banner — deep burgundy, light pool behind a large flacon
+   Promotional banner — deep noir, light pool behind a large flacon
    ========================================================================== */
 
 export function PromoBanner() {
@@ -14,7 +14,7 @@ export function PromoBanner() {
   const hero = BESTSELLERS.find((p) => p.badge === 'EXCLUSIVE') ?? BESTSELLERS[0]
 
   return (
-    <section className="relative overflow-hidden bg-burgundy" aria-labelledby="promo-title">
+    <section className="relative overflow-hidden bg-noir" aria-labelledby="promo-title">
       {/* Light source behind the product */}
       <div className="pointer-events-none absolute inset-0" aria-hidden="true">
         <div className="absolute left-1/2 top-1/2 size-[46rem] -translate-x-1/2 -translate-y-1/2 rounded-full bg-gold/12 blur-[100px]" />
@@ -27,7 +27,7 @@ export function PromoBanner() {
           <Reveal variant="up">
             <div className="eyebrow eyebrow-rule">
               <span className="h-px w-8 bg-gold" aria-hidden="true" />
-              <span className="text-cream/70">Limited run</span>
+              <span className="text-ivory/70">Limited run</span>
             </div>
           </Reveal>
 

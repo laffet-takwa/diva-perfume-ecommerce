@@ -52,7 +52,7 @@ export function SectionHeading({
               className={cn('h-px w-6', isDark ? 'bg-gold/50' : 'bg-gold/60')}
               aria-hidden="true"
             />
-            {eyebrow && <span className={isDark ? 'text-white/70' : 'text-burgundy/70'}>{eyebrow}</span>}
+            {eyebrow && <span className={isDark ? 'text-white/70' : 'text-noir/70'}>{eyebrow}</span>}
           </div>
         )}
 
@@ -85,7 +85,7 @@ export function SectionHeading({
             variant="ghost"
             size="sm"
             arrow
-            className={cn('px-0', isDark ? 'text-white hover:bg-transparent' : 'text-burgundy')}
+            className={cn('px-0', isDark ? 'text-white hover:bg-transparent' : 'text-noir')}
           >
             {action.label}
           </ButtonLink>

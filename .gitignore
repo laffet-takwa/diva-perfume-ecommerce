@@ -12,6 +12,12 @@ dist
 dist-ssr
 *.local
 
+# Product photography in public/images/products/ is tracked, because products
+# reference it directly: an uncommitted image 404s and the card falls back to
+# generated artwork. Several files are unlicensed retail or press images kept
+# for the prototype — see public/images/products/CREDITS.md and replace them
+# with licensed assets before launch.
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

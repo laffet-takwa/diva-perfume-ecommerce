@@ -30,7 +30,7 @@ export function Home() {
         title="House bestsellers"
         products={BESTSELLERS}
         action={{ label: 'Shop the icons', to: '/collections?edit=bestsellers' }}
-        className="bg-cream"
+        className="bg-ivory"
       />
       <EditorialSection />
       <NewArrivals />

@@ -7,7 +7,7 @@ import { cn } from '@/lib/utils'
 
    Every photograph in the house art direction is treated the same way:
    a hairline gold frame, a film grain pass, a warm light wash that ties the
-   image back to the cream palette, and an entrance reveal with an optional
+   image back to the ivory palette, and an entrance reveal with an optional
    slow parallax drift while the page scrolls.
    ========================================================================== */
 
@@ -31,7 +31,7 @@ export interface PhotoFrameProps {
    * small: each percent can nudge a top-anchored crop further off the subject.
    */
   parallax?: number
-  /** Fades the top-left into the page cream so the photo has no hard edge */
+  /** Fades the top-left into the page ivory so the photo has no hard edge */
   feather?: 'none' | 'left' | 'bottom'
   /** Seconds before the entrance animation begins */
   delay?: number
@@ -46,8 +46,8 @@ const FRAMES = {
 
 const FEATHERS = {
   none: '',
-  left: 'bg-[linear-gradient(90deg,var(--color-cream)_0%,rgba(247,241,234,0.35)_18%,transparent_46%)]',
-  bottom: 'bg-[linear-gradient(0deg,var(--color-cream)_0%,transparent_38%)]',
+  left: 'bg-[linear-gradient(90deg,var(--color-ivory)_0%,rgba(247,241,234,0.35)_18%,transparent_46%)]',
+  bottom: 'bg-[linear-gradient(0deg,var(--color-ivory)_0%,transparent_38%)]',
 } as const
 
 export function PhotoFrame({
@@ -73,7 +73,7 @@ export function PhotoFrame({
       animate={{ opacity: 1, scale: 1, y: 0 }}
       transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1], delay }}
       className={cn(
-        'group/photo relative overflow-hidden rounded-md bg-cream-deep/50 shadow-float ring-1 ring-gold/25',
+        'group/photo relative overflow-hidden rounded-md bg-sand/50 shadow-float ring-1 ring-gold/25',
         FRAMES[frame],
         className,
       )}
@@ -94,7 +94,7 @@ export function PhotoFrame({
         />
       </div>
 
-      {/* Warm wash + grain tie the photograph into the cream palette */}
+      {/* Warm wash + grain tie the photograph into the ivory palette */}
       <div
         aria-hidden="true"
         className="absolute inset-0 bg-[linear-gradient(160deg,rgba(255,255,255,0.16),rgba(232,216,195,0.22))] mix-blend-soft-light"

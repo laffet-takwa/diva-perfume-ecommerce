@@ -23,12 +23,12 @@ export function CheckoutSteps({ current }: { current: number }) {
               initial={false}
               animate={{
                 backgroundColor:
-                  state === 'todo' ? 'rgba(23,19,21,0.05)' : 'rgba(74,23,40,1)',
+                  state === 'todo' ? 'rgba(12,12,14,0.05)' : 'rgba(14,14,16,1)',
               }}
               transition={{ duration: 0.35 }}
               className={cn(
                 'flex size-7 shrink-0 items-center justify-center rounded-full text-[0.625rem] font-medium',
-                state === 'todo' ? 'text-muted' : 'text-cream',
+                state === 'todo' ? 'text-muted' : 'text-ivory',
               )}
               aria-current={state === 'active' ? 'step' : undefined}
             >

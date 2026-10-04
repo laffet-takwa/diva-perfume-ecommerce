@@ -7,12 +7,12 @@ import type { ProductBadge } from '@/types'
    ========================================================================== */
 
 const TONES: Record<ProductBadge | 'gold' | 'neutral', string> = {
-  NEW: 'bg-gold/15 text-[#8A6E33] border-gold/45',
-  BESTSELLER: 'bg-burgundy/8 text-burgundy border-burgundy/30',
-  LIMITED: 'bg-rose/18 text-[#7A3A50] border-rose/50',
+  NEW: 'bg-gold/15 text-[#8F7434] border-gold/45',
+  BESTSELLER: 'bg-noir/8 text-noir border-noir/30',
+  LIMITED: 'bg-rose/18 text-[#5C4238] border-rose/50',
   EXCLUSIVE: 'bg-dark/6 text-dark border-dark/20',
-  gold: 'bg-gold/15 text-[#8A6E33] border-gold/45',
-  neutral: 'bg-cream text-muted border-dark/12',
+  gold: 'bg-gold/15 text-[#8F7434] border-gold/45',
+  neutral: 'bg-ivory text-muted border-dark/12',
 }
 
 export interface BadgeProps {

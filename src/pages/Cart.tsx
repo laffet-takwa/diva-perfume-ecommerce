@@ -40,12 +40,12 @@ export function Cart() {
 
   return (
     <div className="pt-16 lg:pt-20">
-      <div className="border-b border-dark/10 bg-cream-deep/40">
+      <div className="border-b border-dark/10 bg-sand/40">
         <div className="container-lux py-12 md:py-16">
           <nav aria-label="Breadcrumb" className="mb-5">
             <ol className="flex items-center gap-2 text-[0.5625rem] uppercase tracking-[0.24em] text-muted">
               <li>
-                <Link to="/" className="transition-colors hover:text-burgundy">
+                <Link to="/" className="transition-colors hover:text-noir">
                   Home
                 </Link>
               </li>
@@ -91,7 +91,7 @@ export function Cart() {
                 clearCart()
                 notify('Your bag has been emptied.', 'info')
               }}
-              className="text-[0.625rem] uppercase tracking-[0.16em] text-muted transition-colors hover:text-burgundy"
+              className="text-[0.625rem] uppercase tracking-[0.16em] text-muted transition-colors hover:text-noir"
             >
               Empty bag
             </button>
@@ -100,7 +100,7 @@ export function Cart() {
 
         <Reveal variant="up" delay={0.08}>
           <aside className="lg:sticky lg:top-28">
-            <div className="rounded-md border border-dark/10 bg-cream p-6 md:p-7">
+            <div className="rounded-md border border-dark/10 bg-ivory p-6 md:p-7">
               <h2 className="eyebrow mb-6 text-dark">Summary</h2>
               <CartSummary>
                 <ButtonLink to="/checkout" variant="primary" size="lg" block arrow className="mt-6">

@@ -70,7 +70,7 @@ export function Modal({
             exit={{ opacity: 0, scale: 0.98, y: 8 }}
             transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
             className={cn(
-              'relative w-full overflow-hidden bg-cream shadow-panel outline-none',
+              'relative w-full overflow-hidden bg-ivory shadow-panel outline-none',
               fullscreen ? 'h-full' : 'max-w-lg rounded-md',
               className,
             )}

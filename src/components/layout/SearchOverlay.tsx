@@ -91,7 +91,7 @@ export function SearchOverlay() {
             role="search"
           >
             <div className="flex items-center gap-3 sm:gap-4">
-              <Search className="size-5 shrink-0 text-burgundy sm:size-6" aria-hidden="true" />
+              <Search className="size-5 shrink-0 text-noir sm:size-6" aria-hidden="true" />
               <label htmlFor="site-search" className="sr-only">
                 Search perfumes, brands, notes
               </label>
@@ -110,7 +110,7 @@ export function SearchOverlay() {
               <button
                 type="button"
                 onClick={closeSearch}
-                className="shrink-0 rounded-xs border border-dark/12 px-3 py-1.5 text-[0.5625rem] uppercase tracking-[0.2em] text-muted transition-colors hover:border-burgundy hover:text-burgundy"
+                className="shrink-0 rounded-xs border border-dark/12 px-3 py-1.5 text-[0.5625rem] uppercase tracking-[0.2em] text-muted transition-colors hover:border-noir hover:text-noir"
               >
                 Esc
               </button>
@@ -132,7 +132,7 @@ export function SearchOverlay() {
             >
               {recent.length > 0 && (
                 <motion.section variants={fadeUp}>
-                  <h3 className="eyebrow eyebrow-rule mb-5 text-burgundy/70">
+                  <h3 className="eyebrow eyebrow-rule mb-5 text-noir/70">
                     <Clock className="size-3" aria-hidden="true" />
                     Recent searches
                   </h3>
@@ -142,9 +142,9 @@ export function SearchOverlay() {
                         <button
                           type="button"
                           onClick={() => setRaw(term)}
-                          className="group flex w-full items-center justify-between border-b border-dark/8 py-2.5 text-left transition-colors hover:text-burgundy"
+                          className="group flex w-full items-center justify-between border-b border-dark/8 py-2.5 text-left transition-colors hover:text-noir"
                         >
-                          <span className="font-display text-base text-dark group-hover:text-burgundy">
+                          <span className="font-display text-base text-dark group-hover:text-noir">
                             {term}
                           </span>
                           <ArrowRight
@@ -159,7 +159,7 @@ export function SearchOverlay() {
               )}
 
               <motion.section variants={fadeUp}>
-                <h3 className="eyebrow eyebrow-rule mb-5 text-burgundy/70">
+                <h3 className="eyebrow eyebrow-rule mb-5 text-noir/70">
                   <TrendingUp className="size-3" aria-hidden="true" />
                   Trending notes
                 </h3>
@@ -169,7 +169,7 @@ export function SearchOverlay() {
                       key={note}
                       type="button"
                       onClick={() => setRaw(note)}
-                      className="rounded-xs border border-dark/12 px-3.5 py-2 text-[0.6875rem] uppercase tracking-[0.14em] text-dark transition-all duration-300 hover:border-burgundy hover:bg-burgundy hover:text-cream"
+                      className="rounded-xs border border-dark/12 px-3.5 py-2 text-[0.6875rem] uppercase tracking-[0.14em] text-dark transition-all duration-300 hover:border-noir hover:bg-noir hover:text-ivory"
                     >
                       {note}
                     </button>
@@ -202,9 +202,9 @@ export function SearchOverlay() {
                       <button
                         type="button"
                         onClick={() => goToProduct(product.slug)}
-                        className="group flex w-full items-center gap-4 border-b border-dark/8 py-3.5 text-left transition-colors hover:border-burgundy/40 sm:gap-6"
+                        className="group flex w-full items-center gap-4 border-b border-dark/8 py-3.5 text-left transition-colors hover:border-noir/40 sm:gap-6"
                       >
-                        <span className="flex size-16 shrink-0 items-center justify-center overflow-hidden rounded-xs bg-champagne/35 sm:size-20">
+                        <span className="flex size-16 shrink-0 items-center justify-center overflow-hidden rounded-xs bg-taupe/35 sm:size-20">
                           <Flacon
                             art={product.art}
                             photo={product.photo}
@@ -232,7 +232,7 @@ export function SearchOverlay() {
                           {formatPrice(product.price)}
                         </span>
                         <ArrowRight
-                          className="size-4 shrink-0 text-burgundy opacity-0 transition-all group-hover:translate-x-1 group-hover:opacity-100"
+                          className="size-4 shrink-0 text-noir opacity-0 transition-all group-hover:translate-x-1 group-hover:opacity-100"
                           aria-hidden="true"
                         />
                       </button>
@@ -252,7 +252,7 @@ export function SearchOverlay() {
                       closeSearch()
                       navigate('/perfumes')
                     }}
-                    className="mt-7 inline-flex items-center gap-2 text-[0.6875rem] font-medium uppercase tracking-[0.2em] text-burgundy"
+                    className="mt-7 inline-flex items-center gap-2 text-[0.6875rem] font-medium uppercase tracking-[0.2em] text-noir"
                   >
                     Explore all perfumes
                     <ArrowRight className="size-3.5" aria-hidden="true" />
@@ -264,7 +264,7 @@ export function SearchOverlay() {
                 <button
                   type="button"
                   onClick={submitSearch}
-                  className="mt-8 inline-flex items-center gap-2 text-[0.6875rem] font-medium uppercase tracking-[0.2em] text-burgundy transition-colors hover:text-burgundy-deep"
+                  className="mt-8 inline-flex items-center gap-2 text-[0.6875rem] font-medium uppercase tracking-[0.2em] text-noir transition-colors hover:text-noir-deep"
                 >
                   View all results
                   <ArrowRight className="size-3.5" aria-hidden="true" />

@@ -90,7 +90,7 @@ export function BottleArt({
           <stop offset="0%" stopColor="#FFFFFF" stopOpacity="0.95" />
           <stop offset="18%" stopColor={art.glass} />
           <stop offset="62%" stopColor={art.glass} />
-          <stop offset="100%" stopColor="#7A6068" stopOpacity="0.45" />
+          <stop offset="100%" stopColor="#6B5B52" stopOpacity="0.45" />
         </linearGradient>
 
         <linearGradient id={`juice-${uid}`} x1="0" y1="0" x2="0" y2="1">
@@ -101,8 +101,8 @@ export function BottleArt({
         <linearGradient id={`juiceEdge-${uid}`} x1="0" y1="0" x2="1" y2="0">
           <stop offset="0%" stopColor="#FFFFFF" stopOpacity="0.5" />
           <stop offset="22%" stopColor="#FFFFFF" stopOpacity="0" />
-          <stop offset="78%" stopColor="#3A1020" stopOpacity="0" />
-          <stop offset="100%" stopColor="#3A1020" stopOpacity="0.28" />
+          <stop offset="78%" stopColor="#0E0E10" stopOpacity="0" />
+          <stop offset="100%" stopColor="#0E0E10" stopOpacity="0.28" />
         </linearGradient>
 
         <linearGradient id={`cap-${uid}`} x1="0" y1="0" x2="1" y2="1">
@@ -112,10 +112,10 @@ export function BottleArt({
         </linearGradient>
 
         <linearGradient id={`metal-${uid}`} x1="0" y1="0" x2="1" y2="0">
-          <stop offset="0%" stopColor="#8A6E33" />
+          <stop offset="0%" stopColor="#8F7434" />
           <stop offset="30%" stopColor={art.hardware} />
           <stop offset="55%" stopColor="#F3E3BE" />
-          <stop offset="100%" stopColor="#8A6E33" />
+          <stop offset="100%" stopColor="#8F7434" />
         </linearGradient>
 
         <radialGradient id={`halo-${uid}`} cx="0.5" cy="0.5" r="0.5">
@@ -157,7 +157,7 @@ export function BottleArt({
             cy={322}
             rx={72}
             ry={9}
-            fill="#171315"
+            fill="#121214"
             opacity="0.16"
             filter={`url(#soft-${uid})`}
           />
@@ -195,7 +195,7 @@ export function BottleArt({
           width="2"
           height={s.neck.h + 4}
           rx="1"
-          fill="#3A1020"
+          fill="#0E0E10"
           opacity="0.18"
         />
 
@@ -253,7 +253,7 @@ export function BottleArt({
             width="64"
             height="34"
             rx="3"
-            fill="#F7F1EA"
+            fill="#FAF7F1"
             stroke={art.hardware}
             strokeOpacity="0.6"
             strokeWidth="0.75"
@@ -265,7 +265,7 @@ export function BottleArt({
             fontFamily="'Playfair Display', Georgia, serif"
             fontSize="9.5"
             letterSpacing="1.4"
-            fill="#4A1728"
+            fill="#0E0E10"
           >
             DIVA
           </text>
@@ -277,7 +277,7 @@ export function BottleArt({
             fontFamily="Inter, sans-serif"
             fontSize="4"
             letterSpacing="1.6"
-            fill="#8E8588"
+            fill="#7C776F"
           >
             {art.silhouette === 'tall' ? 'EAU DE P.' : 'PARIS'}
           </text>

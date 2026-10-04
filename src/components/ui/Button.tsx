@@ -5,10 +5,16 @@ import { cn } from '@/lib/utils'
 
 /* ==========================================================================
    Button — the single interactive primitive of the design system.
-   Burgundy ink on cream paper; gold only ever appears as an accent.
+   Black ink on off-white paper; gold only ever appears as an accent.
    ========================================================================== */
 
-export type ButtonVariant = 'primary' | 'secondary' | 'outline' | 'ghost' | 'gold'
+export type ButtonVariant =
+  | 'primary'
+  | 'secondary'
+  | 'outline'
+  | 'ghost'
+  | 'gold'
+  | 'whatsapp'
 export type ButtonSize = 'sm' | 'md' | 'lg'
 
 const BASE =
@@ -16,13 +22,15 @@ const BASE =
 
 const VARIANTS: Record<ButtonVariant, string> = {
   primary:
-    'bg-burgundy text-cream hover:bg-burgundy-deep active:bg-burgundy-deep shadow-[0_1px_2px_rgba(23,19,21,0.12)] hover:shadow-[0_14px_30px_-16px_rgba(74,23,40,0.85)]',
+    'bg-noir text-ivory hover:bg-noir-deep active:bg-noir-deep shadow-[0_1px_2px_rgba(12,12,14,0.12)] hover:shadow-[0_14px_30px_-16px_rgba(14,14,16,0.85)]',
   secondary:
-    'bg-cream text-burgundy hover:bg-champagne active:bg-champagne shadow-[0_1px_2px_rgba(23,19,21,0.08)]',
+    'bg-ivory text-noir hover:bg-taupe active:bg-taupe shadow-[0_1px_2px_rgba(12,12,14,0.08)]',
   outline:
-    'border border-burgundy/35 bg-transparent text-burgundy hover:border-burgundy hover:bg-burgundy/5 active:bg-burgundy/10',
+    'border border-noir/35 bg-transparent text-noir hover:border-noir hover:bg-noir/5 active:bg-noir/10',
   ghost: 'bg-transparent text-dark hover:bg-dark/5 active:bg-dark/10',
-  gold: 'bg-gold text-dark hover:bg-[#B8934B] active:bg-[#A9863F]',
+  gold: 'bg-gold text-dark hover:bg-[#A88B41] active:bg-[#987D37]',
+  whatsapp:
+    'bg-whatsapp text-noir-deep hover:bg-[#1FBC5B] active:bg-[#1CA551] shadow-[0_14px_30px_-16px_rgba(37,211,102,0.9)]',
 }
 
 const SIZES: Record<ButtonSize, string> = {

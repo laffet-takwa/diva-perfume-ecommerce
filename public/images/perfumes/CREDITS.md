@@ -1,15 +1,16 @@
-﻿# Image credits
+﻿# Reference photography credits
 
-Perfume photography collected for this storefront from openly licensed sources.
-Every file listed here is public domain or released under a Creative Commons licence that
+Unbranded and historical flacon photography collected for art direction, split by the
+section each set was gathered for. **None of these files are imported by the storefront**
+â€” products render generated artwork from their `art` recipe. They exist as visual
+reference only, and nothing serves them in production.
+
+Every file below is public domain or released under a Creative Commons licence that
 permits commercial use (CC0, CC BY, CC BY-SA). Attribution is a licence condition, so this
 file must stay with the images if you redistribute them.
 
-- `women/` - women's fragrance imagery
-- `men/` - men's fragrance imagery
-
-This store sells a fictional house. Images showing identifiable commercial branding were
-deliberately excluded, so these are unbranded or historical flacon photography.
+- `women/` - gathered for women's fragrance art direction
+- `men/` - gathered for men's fragrance art direction
 
 ## Women
 
@@ -61,4 +62,11 @@ deliberately excluded, so these are unbranded or historical flacon photography.
 
 Sources: [Wikimedia Commons](https://commons.wikimedia.org/) and
 [Openverse](https://openverse.org/), which aggregates Creative Commons media.
+
+## Known gaps
+
+- Two Commons entries have no resolved author and are listed as `Unknown`; the file and
+  its licence string are correct, but the creator field is incomplete.
+- `m-bottle-paleblue-white.jpg` has no resolved title, creator or licence in the source
+  manifest. Confirm before redistributing.
 

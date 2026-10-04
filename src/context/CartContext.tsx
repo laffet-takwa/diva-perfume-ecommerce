@@ -8,8 +8,8 @@ import {
   useState,
 } from 'react'
 import type { ReactNode } from 'react'
-import type { CartLine, ShippingMethod } from '@/types'
-import { getPriceForSize, getProductById } from '@/data/products'
+import type { CartLine, DecantSize, ShippingMethod } from '@/types'
+import { getPriceForSize, getProductById, HERO_DECANT, DECANT_SIZES } from '@/data/products'
 import { productLineKey, readStorage, writeStorage } from '@/lib/utils'
 
 /* ==========================================================================
@@ -17,24 +17,27 @@ import { productLineKey, readStorage, writeStorage } from '@/lib/utils'
    One line per product + volume. Persisted to localStorage.
    ========================================================================== */
 
-const STORAGE_KEY = 'diva.cart.v1'
+/* v2 — the decant model added `fullBottlePrice` to every line, so a stored bag
+   from the full-bottle era is dropped rather than mis-priced. */
+const STORAGE_KEY = 'diva.cart.v2'
 
+/** Decants are light, so free delivery after three or so. */
 export const FREE_SHIPPING_THRESHOLD = 150
 
 export const SHIPPING_METHODS: ShippingMethod[] = [
   {
     id: 'standard',
     label: 'Standard delivery',
-    detail: '3 – 5 business days',
-    price: 7,
-    etaDays: [3, 5],
+    detail: '2 – 4 business days',
+    price: 5,
+    etaDays: [2, 4],
   },
   {
     id: 'express',
     label: 'Express delivery',
-    detail: '1 – 2 business days',
-    price: 15,
-    etaDays: [1, 2],
+    detail: 'Next business day',
+    price: 12,
+    etaDays: [1, 1],
   },
 ]
 
@@ -50,7 +53,15 @@ type CartAction =
   | { type: 'clear' }
 
 function isValidLine(line: CartLine): boolean {
-  return typeof line?.productId === 'string' && getProductById(line.productId) !== undefined
+  if (typeof line?.productId !== 'string') return false
+  const product = getProductById(line.productId)
+  if (!product) return false
+  // Price and reference price are re-derived from the catalogue, never trusted.
+  return (
+    DECANT_SIZES.includes(line.ml as DecantSize) &&
+    line.unitPrice === getPriceForSize(product, line.ml) &&
+    line.fullBottlePrice === product.fullBottle.price
+  )
 }
 
 function reducer(state: CartState, action: CartAction): CartState {
@@ -91,6 +102,10 @@ interface CartContextValue {
   lines: CartLine[]
   count: number
   subtotal: number
+  /** What the same decants would cost inside the full bottles */
+  fullBottleTotal: number
+  /** Difference between the two — the number every surface wants to show */
+  savings: number
   shipping: number
   freeShippingRemaining: number
   freeShippingProgress: number
@@ -126,7 +141,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
     return () => window.removeEventListener('storage', onStorage)
   }, [])
 
-  const addToCart = useCallback((productId: string, ml = 50, quantity = 1) => {
+  const addToCart = useCallback((productId: string, ml = HERO_DECANT, quantity = 1) => {
     const product = getProductById(productId)
     if (!product) return
     dispatch({
@@ -142,6 +157,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
         photoTone: product.photoTone,
         ml,
         unitPrice: getPriceForSize(product, ml),
+        fullBottlePrice: product.fullBottle.price,
         quantity: Math.min(Math.max(quantity, 1), 20),
       },
     })
@@ -163,11 +179,17 @@ export function CartProvider({ children }: { children: ReactNode }) {
   const value = useMemo<CartContextValue>(() => {
     const count = state.lines.reduce((sum, l) => sum + l.quantity, 0)
     const subtotal = state.lines.reduce((sum, l) => sum + l.unitPrice * l.quantity, 0)
+    const fullBottleTotal = state.lines.reduce(
+      (sum, l) => sum + l.fullBottlePrice * l.quantity,
+      0,
+    )
     const remaining = Math.max(FREE_SHIPPING_THRESHOLD - subtotal, 0)
     return {
       lines: state.lines,
       count,
       subtotal,
+      fullBottleTotal,
+      savings: Math.max(fullBottleTotal - subtotal, 0),
       shipping: subtotal > 0 ? SHIPPING_METHODS[0].price : 0,
       freeShippingRemaining: remaining,
       freeShippingProgress: Math.min(subtotal / FREE_SHIPPING_THRESHOLD, 1),

@@ -26,8 +26,8 @@ const ToastContext = createContext<ToastContextValue | null>(null)
 
 const TONE_STYLES: Record<ToastTone, { icon: typeof Check; accent: string }> = {
   success: { icon: Check, accent: 'bg-gold' },
-  info: { icon: Info, accent: 'bg-burgundy' },
-  error: { icon: X, accent: 'bg-burgundy' },
+  info: { icon: Info, accent: 'bg-noir' },
+  error: { icon: X, accent: 'bg-noir' },
 }
 
 const DURATION = 2800
@@ -73,13 +73,13 @@ export function ToastProvider({ children }: { children: ReactNode }) {
                 exit={{ opacity: 0, y: 8, transition: { duration: 0.2 } }}
                 layout
                 className={cn(
-                  'pointer-events-auto flex w-full max-w-sm items-center gap-3 rounded-xs border border-dark/10 bg-cream/95 py-3 pl-3 pr-2.5 backdrop-blur-md',
-                  'shadow-[0_18px_44px_-20px_rgba(23,19,21,0.5)]',
+                  'pointer-events-auto flex w-full max-w-sm items-center gap-3 rounded-xs border border-dark/10 bg-ivory/95 py-3 pl-3 pr-2.5 backdrop-blur-md',
+                  'shadow-[0_18px_44px_-20px_rgba(12,12,14,0.5)]',
                 )}
               >
                 <span
                   className={cn(
-                    'flex size-6 shrink-0 items-center justify-center rounded-full text-cream',
+                    'flex size-6 shrink-0 items-center justify-center rounded-full text-ivory',
                     accent,
                   )}
                 >

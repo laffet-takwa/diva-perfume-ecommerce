@@ -31,8 +31,8 @@ const TIERS: Tier[] = [
     label: 'Heart Notes',
     caption: 'The character · 15 min – 3 h',
     radius: 104,
-    dot: 'bg-burgundy',
-    ring: 'border-burgundy/35',
+    dot: 'bg-noir',
+    ring: 'border-noir/35',
   },
   {
     key: 'base',
@@ -54,7 +54,7 @@ export function ProductNotes({ notes, className }: ProductNotesProps) {
     <section className={className} aria-labelledby="scent-title">
       <div className="eyebrow eyebrow-rule mb-4">
         <span className="h-px w-6 bg-gold/60" aria-hidden="true" />
-        <span className="text-burgundy/70">The Scent</span>
+        <span className="text-noir/70">The Scent</span>
       </div>
       <h2 id="scent-title" className="display-title text-[clamp(1.6rem,3.4vw,2.4rem)]">
         How it unfolds
@@ -83,12 +83,12 @@ export function ProductNotes({ notes, className }: ProductNotesProps) {
                 style={{
                   width: `${size * 100}%`,
                   height: `${size * 100}%`,
-                  borderColor: tier.key === 'top' ? 'rgba(201,164,92,0.45)' : tier.key === 'heart' ? 'rgba(74,23,40,0.32)' : 'rgba(201,143,159,0.5)',
+                  borderColor: tier.key === 'top' ? 'rgba(201,164,92,0.45)' : tier.key === 'heart' ? 'rgba(14,14,16,0.32)' : 'rgba(201,143,159,0.5)',
                 }}
               >
                 {/* Tier label */}
                 <span
-                  className="absolute left-1/2 top-0 -translate-x-1/2 -translate-y-1/2 whitespace-nowrap bg-cream px-2 font-sans text-[0.5rem] uppercase tracking-[0.22em] text-muted"
+                  className="absolute left-1/2 top-0 -translate-x-1/2 -translate-y-1/2 whitespace-nowrap bg-ivory px-2 font-sans text-[0.5rem] uppercase tracking-[0.22em] text-muted"
                 >
                   {tier.label}
                 </span>
@@ -105,7 +105,7 @@ export function ProductNotes({ notes, className }: ProductNotesProps) {
                       transition={{ delay: 0.25 + i * 0.14 + d * 0.09, duration: 0.5 }}
                       className="absolute left-1/2 top-1/2 h-2 w-2 -translate-x-1/2 -translate-y-1/2 rounded-full"
                       style={{
-                        background: tier.key === 'top' ? '#C9A45C' : tier.key === 'heart' ? '#4A1728' : '#C98F9F',
+                        background: tier.key === 'top' ? '#B99A52' : tier.key === 'heart' ? '#0E0E10' : '#B08579',
                         boxShadow: '0 0 0 4px rgba(247,241,234,0.85)',
                         transform: `translate(-50%, -50%) translate(${Math.cos(angle) * tier.radius * 0.92}px, ${Math.sin(angle) * tier.radius * 0.92}px)`,
                       }}
@@ -118,7 +118,7 @@ export function ProductNotes({ notes, className }: ProductNotesProps) {
             )
           })}
 
-          <span className="absolute left-1/2 top-1/2 size-2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-burgundy" aria-hidden="true" />
+          <span className="absolute left-1/2 top-1/2 size-2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-noir" aria-hidden="true" />
         </div>
 
         {/* Linear breakdown — the accessible, readable version */}

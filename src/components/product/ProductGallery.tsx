@@ -70,7 +70,7 @@ export function ProductGallery({ product, className }: ProductGalleryProps) {
             className={cn(
               'relative w-16 shrink-0 overflow-hidden rounded-xs border transition-all duration-300 sm:w-20',
               i === index
-                ? 'border-burgundy'
+                ? 'border-noir'
                 : 'border-transparent opacity-60 hover:opacity-100',
             )}
           >
@@ -82,7 +82,7 @@ export function ProductGallery({ product, className }: ProductGalleryProps) {
       {/* Main frame */}
       <div className="relative min-w-0 flex-1 overflow-hidden rounded-md">
         <div
-          className="group/frame relative overflow-hidden rounded-md bg-champagne/35"
+          className="group/frame relative overflow-hidden rounded-md bg-taupe/35"
           onTouchStart={(e) => {
             touchStart.current = e.touches[0]?.clientX ?? null
           }}
@@ -126,7 +126,7 @@ export function ProductGallery({ product, className }: ProductGalleryProps) {
             type="button"
             onClick={() => step(-1)}
             aria-label="Previous image"
-            className="absolute left-3 top-1/2 hidden size-10 -translate-y-1/2 place-items-center rounded-full bg-cream/85 text-dark opacity-0 shadow-sm backdrop-blur-sm transition-all duration-300 hover:bg-cream hover:text-burgundy group-hover/frame:opacity-100 focus-visible:opacity-100 md:grid"
+            className="absolute left-3 top-1/2 hidden size-10 -translate-y-1/2 place-items-center rounded-full bg-ivory/85 text-dark opacity-0 shadow-sm backdrop-blur-sm transition-all duration-300 hover:bg-ivory hover:text-noir group-hover/frame:opacity-100 focus-visible:opacity-100 md:grid"
           >
             <ChevronLeft className="size-4" aria-hidden="true" />
           </button>
@@ -134,13 +134,13 @@ export function ProductGallery({ product, className }: ProductGalleryProps) {
             type="button"
             onClick={() => step(1)}
             aria-label="Next image"
-            className="absolute right-3 top-1/2 hidden size-10 -translate-y-1/2 place-items-center rounded-full bg-cream/85 text-dark opacity-0 shadow-sm backdrop-blur-sm transition-all duration-300 hover:bg-cream hover:text-burgundy group-hover/frame:opacity-100 focus-visible:opacity-100 md:grid"
+            className="absolute right-3 top-1/2 hidden size-10 -translate-y-1/2 place-items-center rounded-full bg-ivory/85 text-dark opacity-0 shadow-sm backdrop-blur-sm transition-all duration-300 hover:bg-ivory hover:text-noir group-hover/frame:opacity-100 focus-visible:opacity-100 md:grid"
           >
             <ChevronRight className="size-4" aria-hidden="true" />
           </button>
 
           {/* Counter */}
-          <span className="absolute bottom-4 right-4 rounded-xs bg-cream/85 px-2.5 py-1 font-sans text-[0.5625rem] uppercase tracking-[0.2em] text-dark backdrop-blur-sm">
+          <span className="absolute bottom-4 right-4 rounded-xs bg-ivory/85 px-2.5 py-1 font-sans text-[0.5625rem] uppercase tracking-[0.2em] text-dark backdrop-blur-sm">
             {String(index + 1).padStart(2, '0')} / {String(VIEW_COUNT).padStart(2, '0')}
           </span>
         </div>

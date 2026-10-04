@@ -108,12 +108,12 @@ export function Collections() {
   return (
     <div className="pt-16 lg:pt-20">
       {/* Head */}
-      <section className="border-b border-dark/10 bg-cream-deep/40" aria-labelledby="collections-title">
+      <section className="border-b border-dark/10 bg-sand/40" aria-labelledby="collections-title">
         <div className="container-lux py-16 md:py-24">
           <Reveal variant="up">
             <div className="eyebrow eyebrow-rule mb-6">
               <span className="h-px w-8 bg-gold" aria-hidden="true" />
-              <span className="text-burgundy/70">Curated edits</span>
+              <span className="text-noir/70">Curated edits</span>
             </div>
             <h1 id="collections-title" className="display-title text-[clamp(2.1rem,5.4vw,3.6rem)]">
               Collections
@@ -134,8 +134,8 @@ export function Collections() {
                       aria-current={active ? 'true' : undefined}
                       className={`rounded-xs border px-4 py-2.5 text-[0.6875rem] uppercase tracking-[0.16em] transition-all duration-300 ${
                         active
-                          ? 'border-burgundy bg-burgundy text-cream'
-                          : 'border-dark/15 text-dark hover:border-burgundy/50 hover:text-burgundy'
+                          ? 'border-noir bg-noir text-ivory'
+                          : 'border-dark/15 text-dark hover:border-noir/50 hover:text-noir'
                       }`}
                     >
                       {edit.name}
@@ -183,7 +183,7 @@ export function Collections() {
       ))}
 
       {/* A discovery prompt rather than a dead end */}
-      <section className="border-t border-dark/10 bg-cream-deep/40 py-16 md:py-20">
+      <section className="border-t border-dark/10 bg-sand/40 py-16 md:py-20">
         <div className="container-lux flex flex-col items-center gap-6 text-center">
           <Reveal variant="up">
             <h2 className="display-title max-w-2xl text-[clamp(1.6rem,3.4vw,2.4rem)]">

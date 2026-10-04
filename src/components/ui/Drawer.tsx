@@ -80,7 +80,7 @@ export function Drawer({
             exit={VARIANTS[side].closed}
             transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
             className={cn(
-              'absolute inset-y-0 flex w-full max-w-[26rem] flex-col bg-cream shadow-panel outline-none',
+              'absolute inset-y-0 flex w-full max-w-[26rem] flex-col bg-ivory shadow-panel outline-none',
               side === 'right' ? 'right-0' : 'left-0',
               className,
             )}
@@ -104,7 +104,7 @@ export function Drawer({
             <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain">{children}</div>
 
             {footer && (
-              <div className="border-t border-dark/10 bg-cream px-6 pb-[calc(env(safe-area-inset-bottom,0px)+1.25rem)] pt-5">
+              <div className="border-t border-dark/10 bg-ivory px-6 pb-[calc(env(safe-area-inset-bottom,0px)+1.25rem)] pt-5">
                 {footer}
               </div>
             )}

@@ -51,7 +51,7 @@ const CHAPTERS: Chapter[] = [
     id: 'promise',
     index: '04',
     title: 'Our promise',
-    body: 'Every bottle we sell is authentic, sourced through authorised distribution, and stored the way the house intended. No false scarcity, no borrowed luxury — just the real thing, described honestly, in our own words. If a fragrance does not earn its place in your wardrobe, we would rather know.',
+    body: 'We sell the house lines we actually wear, at the prices we actually paid. No false scarcity, no borrowed luxury — the real thing, described honestly, in our own words. If a fragrance does not earn its place in your wardrobe, we would rather know.',
     scene: 'promise',
     reversed: true,
     pull: 'The real thing, described honestly.',
@@ -62,7 +62,7 @@ export function About() {
   useSeo({
     title: 'About DIVA STORE',
     description:
-      'We believe every woman has a signature. Meet the boutique behind DIVA STORE — how we choose, what we refuse, and why every bottle is authentic.',
+      'We believe every woman has a signature. Meet the boutique behind DIVA STORE — how we choose, what we refuse, and how we keep the edit tight.',
     canonicalPath: '/about',
   })
 
@@ -75,7 +75,7 @@ export function About() {
             <Reveal variant="up">
               <div className="eyebrow eyebrow-rule mb-7">
                 <span className="h-px w-8 bg-gold" aria-hidden="true" />
-                <span className="text-burgundy/70">The house</span>
+                <span className="text-noir/70">The house</span>
               </div>
             </Reveal>
             <Reveal variant="up" delay={0.08}>
@@ -84,7 +84,7 @@ export function About() {
                 className="display-title text-[clamp(2.1rem,5.6vw,3.9rem)]"
               >
                 We believe every woman has a{' '}
-                <span className="italic text-burgundy">signature.</span>
+                <span className="italic text-noir">signature.</span>
               </h1>
             </Reveal>
             <Reveal variant="up" delay={0.16}>
@@ -107,11 +107,11 @@ export function About() {
 
           <div className="relative min-h-[24rem] overflow-hidden lg:min-h-full">
             <ArtScene variant="hero" grain={0.35} className="absolute inset-0 h-full w-full" />
-            <div className="absolute inset-y-0 left-0 hidden w-32 bg-gradient-to-r from-cream to-transparent lg:block" />
+            <div className="absolute inset-y-0 left-0 hidden w-32 bg-gradient-to-r from-ivory to-transparent lg:block" />
             <div className="absolute inset-0 flex items-center justify-center">
               <BottleArt
                 art={BESTSELLERS[0].art}
-                className="h-auto w-[58%] drop-shadow-[0_40px_60px_rgba(23,19,21,0.16)]"
+                className="h-auto w-[58%] drop-shadow-[0_40px_60px_rgba(12,12,14,0.16)]"
               />
             </div>
             <span className="absolute bottom-6 left-1/2 -translate-x-1/2 whitespace-nowrap text-[0.5625rem] uppercase tracking-[0.28em] text-muted">
@@ -140,7 +140,7 @@ export function About() {
                 <div className="aspect-[4/5] overflow-hidden rounded-md">
                   <ArtScene variant={chapter.scene} grain={0.35} className="h-full w-full" />
                 </div>
-                <span className="absolute -bottom-5 left-6 bg-cream px-4 py-2 font-display text-3xl text-gold">
+                <span className="absolute -bottom-5 left-6 bg-ivory px-4 py-2 font-display text-3xl text-gold">
                   {chapter.index}
                 </span>
               </Reveal>
@@ -148,7 +148,7 @@ export function About() {
               <Reveal variant="up" delay={0.1}>
                 <div className="eyebrow eyebrow-rule mb-5">
                   <span className="h-px w-6 bg-gold/60" aria-hidden="true" />
-                  <span className="text-burgundy/70">{chapter.title}</span>
+                  <span className="text-noir/70">{chapter.title}</span>
                 </div>
                 <h2 id={`${chapter.id}-title`} className="display-title text-[clamp(1.7rem,3.8vw,2.6rem)]">
                   {chapter.pull ?? chapter.title}
@@ -163,12 +163,12 @@ export function About() {
       ))}
 
       {/* Career's note + journal anchor */}
-      <section className="border-b border-dark/10 bg-cream-deep/40 py-20 md:py-24" aria-labelledby="careers-title">
+      <section className="border-b border-dark/10 bg-sand/40 py-20 md:py-24" aria-labelledby="careers-title">
         <div className="container-lux grid gap-10 lg:grid-cols-[1.3fr_1fr] lg:items-center lg:gap-16">
           <Reveal variant="up">
             <div className="eyebrow eyebrow-rule mb-5">
               <span className="h-px w-6 bg-gold/60" aria-hidden="true" />
-              <span className="text-burgundy/70">Careers &amp; journal</span>
+              <span className="text-noir/70">Careers &amp; journal</span>
             </div>
             <h2 id="careers-title" className="display-title text-[clamp(1.7rem,3.8vw,2.6rem)]">
               We are always looking for hands that care about the details.

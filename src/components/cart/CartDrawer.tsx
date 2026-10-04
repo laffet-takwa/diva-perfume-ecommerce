@@ -43,7 +43,7 @@ export function CartDrawer() {
     >
       {lines.length === 0 ? (
         <div className="flex h-full flex-col items-center justify-center px-8 text-center">
-          <span className="mb-6 flex size-16 items-center justify-center rounded-full border border-gold/40 text-burgundy/60">
+          <span className="mb-6 flex size-16 items-center justify-center rounded-full border border-gold/40 text-noir/60">
             <ShoppingBag className="size-6" aria-hidden="true" />
           </span>
           <p className="eyebrow mb-3 text-muted">Empty</p>

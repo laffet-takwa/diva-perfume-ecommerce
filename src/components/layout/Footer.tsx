@@ -17,7 +17,7 @@ export function Footer() {
   const { openSearch } = useUI()
 
   return (
-    <footer className="border-t border-dark/10 bg-cream">
+    <footer className="border-t border-dark/10 bg-ivory">
       <Newsletter />
 
       <div className="container-lux pb-10 pt-16 md:pt-20">
@@ -39,7 +39,7 @@ export function Footer() {
             <button
               type="button"
               onClick={openSearch}
-              className="self-start text-[0.6875rem] font-medium uppercase tracking-[0.2em] text-burgundy underline decoration-gold decoration-1 underline-offset-8 transition-colors hover:text-burgundy-deep"
+              className="self-start text-[0.6875rem] font-medium uppercase tracking-[0.2em] text-noir underline decoration-gold decoration-1 underline-offset-8 transition-colors hover:text-noir-deep"
             >
               Search the collection
             </button>
@@ -53,7 +53,7 @@ export function Footer() {
                   <li key={`${column.title}-${link.label}`}>
                     <Link
                       to={link.to}
-                      className="link-underline text-[0.8125rem] text-muted transition-colors hover:text-burgundy"
+                      className="link-underline text-[0.8125rem] text-muted transition-colors hover:text-noir"
                     >
                       {link.label}
                     </Link>
@@ -72,7 +72,7 @@ export function Footer() {
                     href={social.href}
                     target="_blank"
                     rel="noreferrer noopener"
-                    className="link-underline text-[0.8125rem] text-muted transition-colors hover:text-burgundy"
+                    className="link-underline text-[0.8125rem] text-muted transition-colors hover:text-noir"
                   >
                     {social.label}
                   </a>
@@ -110,12 +110,12 @@ function Newsletter() {
   }
 
   return (
-    <section className="border-b border-dark/10 bg-cream-deep/40" aria-labelledby="newsletter-title">
+    <section className="border-b border-dark/10 bg-sand/40" aria-labelledby="newsletter-title">
       <div className="container-lux grid gap-10 py-16 md:py-20 lg:grid-cols-2 lg:items-center lg:gap-16">
         <div>
           <div className="eyebrow eyebrow-rule mb-4">
             <span className="h-px w-6 bg-gold/60" aria-hidden="true" />
-            <span className="text-burgundy/70">The Diva World</span>
+            <span className="text-noir/70">The Diva World</span>
           </div>
           <h2 id="newsletter-title" className="display-title text-[clamp(1.75rem,3.6vw,2.6rem)]">
             Join the Diva World
@@ -133,7 +133,7 @@ function Newsletter() {
             role="status"
             className="flex items-center gap-4 border-b border-gold/60 pb-4"
           >
-            <span className="flex size-9 shrink-0 items-center justify-center rounded-full bg-burgundy text-cream">
+            <span className="flex size-9 shrink-0 items-center justify-center rounded-full bg-noir text-ivory">
               <svg viewBox="0 0 16 16" className="size-4" fill="none" stroke="currentColor" strokeWidth="1.6">
                 <path d="M3 8.5l3.2 3.2L13 5" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
@@ -147,7 +147,7 @@ function Newsletter() {
             <label htmlFor="newsletter-email" className="sr-only">
               Your email address
             </label>
-            <div className="flex items-center gap-3 border-b border-dark/25 pb-3 transition-colors focus-within:border-burgundy">
+            <div className="flex items-center gap-3 border-b border-dark/25 pb-3 transition-colors focus-within:border-noir">
               <input
                 id="newsletter-email"
                 type="email"

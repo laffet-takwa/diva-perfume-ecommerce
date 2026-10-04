@@ -15,6 +15,9 @@ export type FragranceFamily =
   | 'Gourmand'
   | 'Musk'
 
+/** The volumes we decant. The house does not sell full bottles. */
+export type DecantSize = 3 | 5 | 10
+
 export interface PerfumeNotes {
   top: string[]
   heart: string[]
@@ -22,9 +25,15 @@ export interface PerfumeNotes {
 }
 
 export interface ProductSize {
-  /** Volume in millilitres */
-  ml: 30 | 50 | 100
+  /** Decant volume in millilitres */
+  ml: DecantSize
   /** Price for this volume, in DT */
+  price: number
+}
+
+/** The original bottle a decant is poured from — the price comparison. */
+export interface FullBottle {
+  ml: number
   price: number
 }
 
@@ -33,9 +42,10 @@ export interface Product {
   slug: string
   name: string
   brand: string
-  /** Price of the default (featured) volume, in DT */
+  /** Price of the hero decant (5 ml), in DT */
   price: number
-  oldPrice?: number
+  /** Retail reference for the bottle this fragrance is decanted from */
+  fullBottle: FullBottle
   category: FragranceFamily
   categoryLabel: string
   gender: Gender
@@ -45,6 +55,7 @@ export interface Product {
   notes: PerfumeNotes
   description: string
   longDescription: string
+  /** The 3 / 5 / 10 ml ladder, always all three, smallest first */
   sizes: ProductSize[]
   /** Real product photography, served from /public. Absent = drawn flacon. */
   photo?: string
@@ -102,6 +113,8 @@ export interface CartLine {
   photoTone?: 'light' | 'dark'
   ml: number
   unitPrice: number
+  /** Retail price of the full bottle, so the bag can show what the decant saved */
+  fullBottlePrice: number
   quantity: number
 }
 

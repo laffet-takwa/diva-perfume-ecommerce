@@ -18,13 +18,13 @@ export interface OrderSummaryProps {
 export function OrderSummary({ lines, shipping, onEditShipping, className }: OrderSummaryProps) {
   return (
     <aside className={className} aria-label="Order summary">
-      <div className="rounded-md border border-dark/10 bg-cream-deep/30 p-6 md:p-7">
+      <div className="rounded-md border border-dark/10 bg-sand/30 p-6 md:p-7">
         <h2 className="eyebrow mb-6 text-dark">Order summary</h2>
 
         <ul className="flex flex-col gap-4">
           {lines.map((line) => (
             <li key={line.key} className="flex items-center gap-3.5">
-              <span className="relative flex size-16 shrink-0 items-center justify-center overflow-hidden rounded-sm bg-champagne/40">
+              <span className="relative flex size-16 shrink-0 items-center justify-center overflow-hidden rounded-sm bg-taupe/40">
                 <Flacon
                   art={line.image}
                   photo={line.photo}
@@ -34,14 +34,14 @@ export function OrderSummary({ lines, shipping, onEditShipping, className }: Ord
                   bare
                   className="h-[130%] w-[130%] object-contain"
                 />
-                <span className="absolute -right-1 -top-1 flex size-5 items-center justify-center rounded-full bg-dark text-[0.5625rem] text-cream">
+                <span className="absolute -right-1 -top-1 flex size-5 items-center justify-center rounded-full bg-dark text-[0.5625rem] text-ivory">
                   {line.quantity}
                 </span>
               </span>
               <span className="min-w-0 flex-1">
                 <Link
                   to={`/product/${line.slug}`}
-                  className="block truncate font-display text-[0.875rem] text-dark hover:text-burgundy"
+                  className="block truncate font-display text-[0.875rem] text-dark hover:text-noir"
                 >
                   {line.name}
                 </Link>
@@ -64,7 +64,7 @@ export function OrderSummary({ lines, shipping, onEditShipping, className }: Ord
             <button
               type="button"
               onClick={onEditShipping}
-              className="shrink-0 text-[0.625rem] uppercase tracking-[0.16em] text-burgundy"
+              className="shrink-0 text-[0.625rem] uppercase tracking-[0.16em] text-noir"
             >
               Change
             </button>

@@ -25,7 +25,7 @@ export function NewArrivals() {
   const items = useMemo(() => applySort(NEWEST_PRODUCTS, tab).slice(0, 8), [tab])
 
   return (
-    <section className="bg-cream-deep/40 py-20 md:py-28" aria-labelledby="just-in-title">
+    <section className="bg-sand/40 py-20 md:py-28" aria-labelledby="just-in-title">
       <div className="container-lux">
         <Reveal variant="up" className="flex flex-col gap-7 lg:flex-row lg:items-end lg:justify-between">
           <SectionHeading
@@ -49,13 +49,13 @@ export function NewArrivals() {
                 onClick={() => setTab(item.value)}
                 className={cn(
                   'relative rounded-xs px-4 py-2 text-[0.625rem] font-medium uppercase tracking-[0.18em] transition-colors duration-300',
-                  tab === item.value ? 'text-cream' : 'text-muted hover:text-dark',
+                  tab === item.value ? 'text-ivory' : 'text-muted hover:text-dark',
                 )}
               >
                 {tab === item.value && (
                   <motion.span
                     layoutId="justin-pill"
-                    className="absolute inset-0 rounded-xs bg-burgundy"
+                    className="absolute inset-0 rounded-xs bg-noir"
                     transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
                   />
                 )}

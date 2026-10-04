@@ -1,40 +1,54 @@
-import { memo } from 'react'
+import { memo, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { Heart, Plus } from 'lucide-react'
-import type { Product } from '@/types'
+import { Heart, ShoppingBag } from 'lucide-react'
+import type { DecantSize, Product } from '@/types'
 import { useCart, useToast, useWishlist } from '@/context'
 import { Badge } from '@/components/ui/Badge'
 import { Flacon } from '@/components/product/Flacon'
+import { DecantSizePicker } from '@/components/product/DecantSizePicker'
 import { ProductRating } from './ProductRating'
+import { getPriceForSize, HERO_DECANT, savingsPercent } from '@/data/products'
 import { cn, formatPrice } from '@/lib/utils'
 
 /* ==========================================================================
    ProductCard
-   Hover: image scale, bottle swap, Quick Add reveal, 4px lift.
+   The card is a mini product page: pick a volume, see that volume's price and
+   what it saves against the full bottle, add it. Hover lifts the plate and
+   reveals the bottle swap; nothing important is hidden behind the hover.
    ========================================================================== */
 
 export interface ProductCardProps {
   product: Product
   /** Cards in dense contexts (drawers, carousels) drop the hover extras. */
   compact?: boolean
+  /** Force a volume, e.g. when a shelf is scoped to 10 ml */
+  ml?: DecantSize
   className?: string
 }
 
-function ProductCardBase({ product, compact = false, className }: ProductCardProps) {
+function ProductCardBase({ product, compact = false, ml, className }: ProductCardProps) {
   const { addToCart } = useCart()
   const { isInWishlist, toggleWishlist } = useWishlist()
   const { notify } = useToast()
   const wished = isInWishlist(product.id)
 
+  const [selected, setSelected] = useState<number>(ml ?? HERO_DECANT)
+
+  const price = getPriceForSize(product, selected)
+  const saving = savingsPercent(product, selected)
+
   const handleAdd = () => {
-    addToCart(product.id, 50, 1)
-    notify(`${product.name} added to your bag.`)
+    addToCart(product.id, selected, 1)
+    notify(`${product.name} · ${selected} ml added to your bag.`)
   }
 
   const handleWish = () => {
     const added = toggleWishlist(product.id)
-    notify(added ? `${product.name} added to wishlist.` : `${product.name} removed from wishlist.`, 'info')
+    notify(
+      added ? `${product.name} added to wishlist.` : `${product.name} removed from wishlist.`,
+      'info',
+    )
   }
 
   return (
@@ -45,7 +59,7 @@ function ProductCardBase({ product, compact = false, className }: ProductCardPro
     >
       <Link
         to={`/product/${product.slug}`}
-        className="relative block overflow-hidden rounded-md bg-champagne/35"
+        className="relative block overflow-hidden rounded-md bg-sand/70"
         aria-label={`${product.name} by ${product.brand}`}
       >
         <div className="relative aspect-[3/4] w-full overflow-hidden">
@@ -61,7 +75,7 @@ function ProductCardBase({ product, compact = false, className }: ProductCardPro
           {/* Paper wash on hover — deepens without going muddy */}
           <div
             aria-hidden="true"
-            className="absolute inset-0 bg-burgundy/0 transition-colors duration-500 group-hover/card:bg-burgundy/[0.04]"
+            className="absolute inset-0 bg-noir/0 transition-colors duration-500 group-hover/card:bg-noir/[0.04]"
           />
 
           {product.badge && !compact && (
@@ -70,43 +84,35 @@ function ProductCardBase({ product, compact = false, className }: ProductCardPro
             </div>
           )}
 
+          {/* The saving is the reason the card exists — it never hides */}
           {!compact && (
-            <button
-              type="button"
-              onClick={(e) => {
-                e.preventDefault()
-                handleWish()
-              }}
-              aria-pressed={wished}
-              aria-label={wished ? `Remove ${product.name} from wishlist` : `Add ${product.name} to wishlist`}
-              className={cn(
-                'absolute right-3 top-3 flex size-9 items-center justify-center rounded-full border transition-all duration-300',
-                'bg-cream/85 backdrop-blur-sm hover:bg-cream',
-                wished ? 'border-burgundy/40 text-burgundy' : 'border-dark/12 text-muted hover:text-burgundy',
+            <div className="absolute right-3 top-3 flex flex-col items-end gap-1.5">
+              <span className="rounded-full bg-noir px-2.5 py-1 font-sans text-[0.5625rem] font-medium uppercase tracking-[0.14em] text-ivory">
+                Save {saving}%
+              </span>
+              {!compact && (
+                <button
+                  type="button"
+                  onClick={(e) => {
+                    e.preventDefault()
+                    handleWish()
+                  }}
+                  aria-pressed={wished}
+                  aria-label={
+                    wished ? `Remove ${product.name} from wishlist` : `Add ${product.name} to wishlist`
+                  }
+                  className={cn(
+                    'flex size-9 items-center justify-center rounded-full border bg-ivory/85 backdrop-blur-sm transition-all duration-300 hover:bg-ivory',
+                    wished ? 'border-noir/40 text-noir' : 'border-noir/10 text-muted hover:text-noir',
+                  )}
+                >
+                  <Heart
+                    className={cn('size-4 transition-transform', wished && 'scale-110')}
+                    fill={wished ? 'currentColor' : 'none'}
+                    aria-hidden="true"
+                  />
+                </button>
               )}
-            >
-              <Heart
-                className={cn('size-4 transition-transform', wished && 'scale-110')}
-                fill={wished ? 'currentColor' : 'none'}
-                aria-hidden="true"
-              />
-            </button>
-          )}
-
-          {/* Quick Add */}
-          {!compact && (
-            <div className="pointer-events-none absolute inset-x-3 bottom-3 translate-y-3 opacity-0 transition-all duration-400 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover/card:pointer-events-auto group-hover/card:translate-y-0 group-hover/card:opacity-100 group-focus-within/card:pointer-events-auto group-focus-within/card:translate-y-0 group-focus-within/card:opacity-100">
-              <button
-                type="button"
-                onClick={(e) => {
-                  e.preventDefault()
-                  handleAdd()
-                }}
-                className="flex h-11 w-full items-center justify-center gap-2 rounded-xs bg-cream/95 text-[0.625rem] font-medium uppercase tracking-[0.2em] text-dark backdrop-blur-sm transition-colors hover:bg-burgundy hover:text-cream"
-              >
-                <Plus className="size-3.5" aria-hidden="true" />
-                Quick add · 50ml
-              </button>
             </div>
           )}
         </div>
@@ -126,14 +132,34 @@ function ProductCardBase({ product, compact = false, className }: ProductCardPro
           </Link>
         </h3>
 
-        <p className="text-[0.6875rem] uppercase tracking-[0.14em] text-muted/85">{product.categoryLabel}</p>
+        <p className="text-[0.6875rem] uppercase tracking-[0.14em] text-muted/85">
+          {product.categoryLabel}
+        </p>
 
-        <div className="mt-auto flex items-center gap-2 pt-2">
-          <span className="font-display text-sm text-dark">{formatPrice(product.price)}</span>
-          {product.oldPrice && (
+        <div className="mt-3">
+          <DecantSizePicker sizes={product.sizes} value={selected} onChange={setSelected} />
+        </div>
+
+        <div className="mt-auto flex flex-col gap-3 pt-4">
+          <div className="flex items-baseline gap-2">
+            <span className="font-display text-lg text-dark">{formatPrice(price)}</span>
             <span className="text-[0.6875rem] text-muted line-through">
-              {formatPrice(product.oldPrice)}
+              {formatPrice(product.fullBottle.price)}
             </span>
+            <span className="ml-auto text-[0.5625rem] uppercase tracking-[0.16em] text-muted">
+              {product.fullBottle.ml} ml bottle
+            </span>
+          </div>
+
+          {!compact && (
+            <button
+              type="button"
+              onClick={handleAdd}
+              className="flex h-11 w-full items-center justify-center gap-2 rounded-xs bg-noir text-[0.625rem] font-medium uppercase tracking-[0.2em] text-ivory transition-colors duration-300 hover:bg-noir-deep"
+            >
+              <ShoppingBag className="size-3.5" aria-hidden="true" />
+              Add to cart
+            </button>
           )}
         </div>
       </div>

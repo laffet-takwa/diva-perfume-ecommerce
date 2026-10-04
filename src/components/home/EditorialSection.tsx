@@ -13,7 +13,7 @@ import { imageReveal, imageRevealAlt } from '@/lib/motion'
 
 export function EditorialSection() {
   return (
-    <section className="relative overflow-hidden bg-cream py-20 md:py-28 lg:py-32" aria-labelledby="editorial-title">
+    <section className="relative overflow-hidden bg-ivory py-20 md:py-28 lg:py-32" aria-labelledby="editorial-title">
       <div className="container-lux">
         <div className="relative grid gap-12 lg:grid-cols-12 lg:gap-10">
           {/* Index + vertical caption, desktop only */}
@@ -44,12 +44,12 @@ export function EditorialSection() {
               whileInView="visible"
               viewport={{ once: true, amount: 0.25 }}
               transition={{ delay: 0.18 }}
-              className="absolute -bottom-10 -right-4 hidden aspect-square w-44 overflow-hidden rounded-md border-[6px] border-cream shadow-float sm:block lg:-right-10 lg:w-52"
+              className="absolute -bottom-10 -right-4 hidden aspect-square w-44 overflow-hidden rounded-md border-[6px] border-ivory shadow-float sm:block lg:-right-10 lg:w-52"
             >
               <ArtScene variant="ritual" grain={0.5} className="h-full w-full" />
             </motion.div>
 
-            <div className="absolute left-5 top-5 flex items-center gap-2 rounded-xs bg-cream/85 px-3 py-1.5 backdrop-blur-sm">
+            <div className="absolute left-5 top-5 flex items-center gap-2 rounded-xs bg-ivory/85 px-3 py-1.5 backdrop-blur-sm">
               <span className="size-1.5 rounded-full bg-gold" aria-hidden="true" />
               <span className="text-[0.5625rem] uppercase tracking-[0.22em] text-dark">Since 2026</span>
             </div>
@@ -60,7 +60,7 @@ export function EditorialSection() {
             <Reveal variant="up">
               <div className="eyebrow eyebrow-rule mb-6">
                 <span className="h-px w-6 bg-gold/60" aria-hidden="true" />
-                <span className="text-burgundy/70">The Art of Perfume</span>
+                <span className="text-noir/70">The Art of Perfume</span>
               </div>
             </Reveal>
 
@@ -70,7 +70,7 @@ export function EditorialSection() {
                 <br />
                 than a scent.
                 <br />
-                <span className="italic text-burgundy">It is a memory,</span>
+                <span className="italic text-noir">It is a memory,</span>
                 <br />
                 a mood and a signature.
               </h2>

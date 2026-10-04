@@ -98,7 +98,7 @@ export function Shop() {
 
   const subtitle = gender
     ? `${SUBTITLES[gender]} ${products.filter((p) => p.gender === gender).length} bottles, from the great houses.`
-    : `The complete DIVA STORE shelf. ${products.length} fragrances, all authentic.`
+    : `The complete DIVA STORE shelf. ${products.length} fragrances, from the great houses.`
 
   useSeo({
     title: gender ? `${heading} perfumes` : queryParam ? heading : 'Shop all perfumes',
@@ -150,13 +150,13 @@ export function Shop() {
   return (
     <div className="pt-16 lg:pt-20">
       {/* Page head */}
-      <div className="border-b border-dark/10 bg-cream-deep/40">
+      <div className="border-b border-dark/10 bg-sand/40">
         <div className="container-lux py-14 md:py-20">
           <Reveal variant="up">
             <nav aria-label="Breadcrumb" className="mb-6">
               <ol className="flex items-center gap-2 text-[0.5625rem] uppercase tracking-[0.24em] text-muted">
                 <li>
-                  <Link to="/" className="transition-colors hover:text-burgundy">
+                  <Link to="/" className="transition-colors hover:text-noir">
                     Home
                   </Link>
                 </li>
@@ -195,7 +195,7 @@ export function Shop() {
                 <SlidersHorizontal className="size-3.5" aria-hidden="true" />
                 Filter &amp; sort
                 {activeCount > 0 && (
-                  <span className="flex size-4 items-center justify-center rounded-full bg-burgundy text-[0.5rem] text-cream">
+                  <span className="flex size-4 items-center justify-center rounded-full bg-noir text-[0.5rem] text-ivory">
                     {activeCount}
                   </span>
                 )}
@@ -221,7 +221,7 @@ export function Shop() {
                         if (chip.key === 'genders') navigate('/perfumes', { replace: true })
                         else toggleFacet(chip.key, chip.value)
                       }}
-                      className="inline-flex items-center gap-1.5 rounded-xs border border-dark/12 px-3 py-1.5 text-[0.6875rem] uppercase tracking-[0.14em] text-muted transition-colors hover:border-burgundy hover:text-burgundy"
+                      className="inline-flex items-center gap-1.5 rounded-xs border border-dark/12 px-3 py-1.5 text-[0.6875rem] uppercase tracking-[0.14em] text-muted transition-colors hover:border-noir hover:text-noir"
                     >
                       {chip.label}
                       <X className="size-3" aria-hidden="true" />
@@ -287,7 +287,7 @@ export function Shop() {
             <button
               type="button"
               onClick={clearAll}
-              className="mt-4 text-[0.625rem] uppercase tracking-[0.16em] text-burgundy"
+              className="mt-4 text-[0.625rem] uppercase tracking-[0.16em] text-noir"
             >
               Clear all filters
             </button>
