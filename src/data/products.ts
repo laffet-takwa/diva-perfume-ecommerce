@@ -12,12 +12,13 @@ import type { DecantSize, Product, ProductArt, ProductSize } from '@/types'
    the full-bottle reference are all derived from it in `toProduct`, so a price
    is only ever written down once.
 
-   Products that have real photography set `photo` + `photoAlt` (+ optional
-   `photoTone`) and Flacon renders the photograph in place of the drawn bottle.
-   `photoTone: 'light'` is a white-studio shot multiplied into the house plate;
-   `'dark'` fills the frame instead. Everything else is drawn from the product's
-   `art` recipe. File naming follows the slug: /images/products/<slug>.<ext>.
-   Every photograph is listed in public/images/products/CREDITS.md.
+   Every product sets `photo` + `photoAlt` + `photoTone` and Flacon renders the
+   photograph in place of the drawn bottle. `photoTone: 'light'` is a
+   white-studio shot multiplied into the house plate; `'dark'` fills the frame
+   instead. The `art` recipe stays as the vector fallback and as the tint of the
+   plate the photograph multiplies into. File naming follows the slug:
+   /images/products/<slug>.<ext>. Every photograph is listed in
+   public/images/products/CREDITS.md.
    ========================================================================== */
 
 /** Volume of the original bottle every fragrance is decanted from. */
@@ -79,6 +80,30 @@ function decants(bottle100: number): ProductSize[] {
 /** A catalogue entry as authored: `retail` is the price of the 100 ml bottle. */
 type ProductSeed = Omit<Product, 'price' | 'sizes' | 'fullBottle'> & { retail: number }
 
+/**
+ * The house studio plate.
+ *
+ * Every photograph in `public/images/products` was measured for this build and
+ * the set shares one look: a high-key white sweep, near-neutral and low in
+ * saturation, with the bottle shot straight on and centred. Backdrop luma
+ * across the light shots sits in a narrow L208–L255 band, and the recurring
+ * accents are a near-black cap and warm gold hardware.
+ *
+ * These plates reproduce that band in vector form so a drawn flacon sits on the
+ * same sweep as a photograph beside it — L243–L248, saturation under 0.05,
+ * warm-leaning to match the ivory of the storefront. Keyed by olfactive family
+ * so a drawn bottle still carries a whisper of its fragrance's hue.
+ */
+const STUDIO_PLATES = {
+  Floral: '#FAF6F3',
+  Oriental: '#F9F2EC',
+  Woody: '#F8F4EB',
+  Fresh: '#F4F8F8',
+  Citrus: '#FBF8EE',
+  Gourmand: '#FAF4EA',
+  Musk: '#F8F6F1',
+} as const
+
 const SEED: ProductSeed[] = [
   /* ---------------------------------------------------------------- WOMEN */
   {
@@ -104,7 +129,7 @@ const SEED: ProductSeed[] = [
     photo: '/images/products/chanel-coco-mademoiselle.jpg',
     photoAlt: 'Chanel Coco Mademoiselle Eau de Parfum bottle',
     photoTone: 'light',
-    art: { juice: '#EFC3B0', glass: '#F8E4DC', cap: '#F2EFEA', hardware: '#B99A52', backdrop: '#F6E9E3', silhouette: 'rect' },
+    art: { juice: '#EFC3B0', glass: '#F8E4DC', cap: '#F2EFEA', hardware: '#B99A52', backdrop: '#FAF6F3', silhouette: 'rect' },
     moods: ['Elegant', 'Confident'],
     noteTags: ['Jasmine', 'Musk', 'Vanilla', 'Woody', 'Rose'],
     releasedAt: '2024-11-04',
@@ -133,7 +158,7 @@ const SEED: ProductSeed[] = [
     photo: '/images/products/dior-jadore.jpg',
     photoAlt: 'Dior Jadore Eau de Parfum bottle',
     photoTone: 'light',
-    art: { juice: '#F0C563', glass: '#FBEBC6', cap: '#B99A52', hardware: '#8E6B2E', backdrop: '#F7EFDC', silhouette: 'oval' },
+    art: { juice: '#F0C563', glass: '#FBEBC6', cap: '#B99A52', hardware: '#8E6B2E', backdrop: '#FAF6F3', silhouette: 'oval' },
     moods: ['Elegant', 'Romantic'],
     noteTags: ['Rose', 'Jasmine', 'Musk', 'Vanilla'],
     releasedAt: '2024-06-18',
@@ -162,7 +187,7 @@ const SEED: ProductSeed[] = [
     photo: '/images/products/parfums-de-marly-delina.jpg',
     photoAlt: 'Parfums de Marly Delina Eau de Parfum bottle and box',
     photoTone: 'light',
-    art: { juice: '#E8A9B4', glass: '#F7DCE2', cap: '#D8A7B4', hardware: '#B99A52', backdrop: '#F6E4E6', silhouette: 'faceted' },
+    art: { juice: '#E8A9B4', glass: '#F7DCE2', cap: '#D8A7B4', hardware: '#B99A52', backdrop: '#FAF6F3', silhouette: 'faceted' },
     moods: ['Romantic', 'Confident'],
     noteTags: ['Rose', 'Jasmine', 'Amber', 'Vanilla', 'Musk'],
     releasedAt: '2025-09-02',
@@ -191,7 +216,7 @@ const SEED: ProductSeed[] = [
     photo: '/images/products/viktor-rolf-flowerbomb.jpg',
     photoAlt: 'Viktor and Rolf Flowerbomb Eau de Parfum bottle',
     photoTone: 'light',
-    art: { juice: '#F2C0CB', glass: '#FADFE5', cap: '#D9A9B6', hardware: '#B99A52', backdrop: '#F7E6E8', silhouette: 'faceted' },
+    art: { juice: '#F2C0CB', glass: '#FADFE5', cap: '#D9A9B6', hardware: '#B99A52', backdrop: '#FAF6F3', silhouette: 'faceted' },
     moods: ['Romantic', 'Elegant'],
     noteTags: ['Jasmine', 'Rose', 'Vanilla', 'Musk'],
     releasedAt: '2024-12-12',
@@ -220,7 +245,7 @@ const SEED: ProductSeed[] = [
     photo: '/images/products/gucci-bloom.jpg',
     photoAlt: 'Gucci Bloom Eau de Toilette bottle',
     photoTone: 'light',
-    art: { juice: '#F4DCE0', glass: '#FAEBEE', cap: '#E3BFC7', hardware: '#B99A52', backdrop: '#F7EAEC', silhouette: 'rect' },
+    art: { juice: '#F4DCE0', glass: '#FAEBEE', cap: '#E3BFC7', hardware: '#B99A52', backdrop: '#FAF6F3', silhouette: 'rect' },
     moods: ['Fresh', 'Romantic'],
     noteTags: ['Rose', 'Jasmine', 'Musk', 'Vanilla', 'Citrus'],
     releasedAt: '2024-04-22',
@@ -248,7 +273,7 @@ const SEED: ProductSeed[] = [
     photo: '/images/products/ysl-mon-paris.jpg',
     photoAlt: 'YSL Mon Paris Eau de Parfum bottle',
     photoTone: 'light',
-    art: { juice: '#F0C9D2', glass: '#FAE3E8', cap: '#B99A52', hardware: '#0E0E10', backdrop: '#F6E7EA', silhouette: 'rect' },
+    art: { juice: '#F0C9D2', glass: '#FAE3E8', cap: '#B99A52', hardware: '#0E0E10', backdrop: '#FAF6F3', silhouette: 'rect' },
     moods: ['Romantic', 'Energetic'],
     noteTags: ['Rose', 'Jasmine', 'Musk', 'Vanilla', 'Citrus'],
     releasedAt: '2025-01-16',
@@ -276,7 +301,7 @@ const SEED: ProductSeed[] = [
     photo: '/images/products/giorgio-armani-si.jpg',
     photoAlt: 'Giorgio Armani Si Eau de Parfum bottle with box',
     photoTone: 'light',
-    art: { juice: '#EED9BC', glass: '#F7EBDA', cap: '#2B2426', hardware: '#B99A52', backdrop: '#F6EDE0', silhouette: 'rect' },
+    art: { juice: '#EED9BC', glass: '#F7EBDA', cap: '#2B2426', hardware: '#B99A52', backdrop: '#F9F2EC', silhouette: 'rect' },
     moods: ['Elegant', 'Confident'],
     noteTags: ['Rose', 'Jasmine', 'Amber', 'Musk', 'Citrus'],
     releasedAt: '2024-08-30',
@@ -305,7 +330,7 @@ const SEED: ProductSeed[] = [
     photo: '/images/products/chanel-no-5.jpg',
     photoAlt: 'Chanel N5 Eau de Parfum bottle',
     photoTone: 'dark',
-    art: { juice: '#F6EAD8', glass: '#FBF6EC', cap: '#EFEAE0', hardware: '#B99A52', backdrop: '#F4EDE2', silhouette: 'rect' },
+    art: { juice: '#F6EAD8', glass: '#FBF6EC', cap: '#EFEAE0', hardware: '#B99A52', backdrop: '#FAF6F3', silhouette: 'rect' },
     moods: ['Elegant', 'Mysterious'],
     noteTags: ['Jasmine', 'Rose', 'Vanilla', 'Amber', 'Musk', 'Woody'],
     releasedAt: '2025-03-08',
@@ -330,7 +355,10 @@ const SEED: ProductSeed[] = [
     description: 'A couture white floral that refuses to whisper.',
     longDescription:
       'Good Girl opens with mandarin and bergamot, then rose, jasmine and iris at full volume. The base is amber, patchouli and vanilla — a warm, plush landing that makes it last well past midnight. The stiletto cap is the joke; the scent inside is entirely serious.',
-    art: { juice: '#F3DCC8', glass: '#F9EDE2', cap: '#0E0E10', hardware: '#B99A52', backdrop: '#F5EBE2', silhouette: 'rect' },
+    photo: '/images/products/carolina-herrera-good-girl.jpg',
+    photoAlt: 'Carolina Herrera Good Girl Eau de Parfum bottle',
+    photoTone: 'light',
+    art: { juice: '#F3DCC8', glass: '#F9EDE2', cap: '#0E0E10', hardware: '#B99A52', backdrop: '#FAF6F3', silhouette: 'rect' },
     moods: ['Confident', 'Romantic'],
     noteTags: ['Rose', 'Jasmine', 'Amber', 'Vanilla', 'Musk'],
     releasedAt: '2025-02-27',
@@ -358,7 +386,7 @@ const SEED: ProductSeed[] = [
     photo: '/images/products/lancome-la-vie-est-belle.jpg',
     photoAlt: 'Lancome La Vie Est Belle Eau de Parfum bottle and box',
     photoTone: 'light',
-    art: { juice: '#F1D3C0', glass: '#F9E8DD', cap: '#E0A88F', hardware: '#B99A52', backdrop: '#F6EAE2', silhouette: 'oval' },
+    art: { juice: '#F1D3C0', glass: '#F9E8DD', cap: '#E0A88F', hardware: '#B99A52', backdrop: '#FAF4EA', silhouette: 'oval' },
     moods: ['Romantic', 'Elegant'],
     noteTags: ['Vanilla', 'Jasmine', 'Musk'],
     releasedAt: '2024-03-14',
@@ -383,7 +411,10 @@ const SEED: ProductSeed[] = [
     description: 'Coffee, blood orange and a scandalously sweet amber base.',
     longDescription:
       'Scandal pairs blood orange and bergamot with a coffee-tinged heart of jasmine and tuberose. The base is pure indulgence: amber, benzoin, musk and vanilla. It reads leather-and-cigar from a distance and caramel up close — Gaultier at his most theatrical without the joke.',
-    art: { juice: '#B8483F', glass: '#D97A6C', cap: '#0E0E10', hardware: '#B99A52', backdrop: '#F3E0DC', silhouette: 'oval' },
+    photo: '/images/products/jean-paul-gaultier-scandal.jpg',
+    photoAlt: 'Jean Paul Gaultier Scandal Eau de Parfum bottle',
+    photoTone: 'light',
+    art: { juice: '#B8483F', glass: '#D97A6C', cap: '#0E0E10', hardware: '#B99A52', backdrop: '#F9F2EC', silhouette: 'oval' },
     moods: ['Mysterious', 'Confident'],
     noteTags: ['Amber', 'Musk', 'Vanilla', 'Jasmine', 'Woody'],
     releasedAt: '2025-05-20',
@@ -411,7 +442,7 @@ const SEED: ProductSeed[] = [
     photo: '/images/products/narciso-rodriguez-for-her.jpg',
     photoAlt: 'Narciso Rodriguez For Her Eau de Parfum bottle',
     photoTone: 'light',
-    art: { juice: '#F4DCE4', glass: '#FAE9EE', cap: '#E7C2CF', hardware: '#B99A52', backdrop: '#F6E7EC', silhouette: 'rect' },
+    art: { juice: '#F4DCE4', glass: '#FAE9EE', cap: '#E7C2CF', hardware: '#B99A52', backdrop: '#F8F6F1', silhouette: 'rect' },
     moods: ['Fresh', 'Elegant'],
     noteTags: ['Musk', 'Rose', 'Jasmine', 'Vanilla'],
     releasedAt: '2024-10-09',
@@ -439,10 +470,10 @@ const SEED: ProductSeed[] = [
     description: 'The benchmark modern masculine. Sharp, warm, unshakeable.',
     longDescription:
       'Sauvage opens on a blast of bergamot and peppers, calms to lavender and Sichuan pepper, and dries down to ambroxan and vetiver. It is the most worn masculine of the last decade because it adapts to everyone — office at nine, evening at eleven. The blue bottle is instantly recognisable across a room.',
-    photo: '/images/products/dior-sauvage.jpg',
-    photoAlt: 'Dior Sauvage Eau de Parfum box',
-    photoTone: 'dark',
-    art: { juice: '#DCE4E8', glass: '#EEF3F6', cap: '#2B3238', hardware: '#B99A52', backdrop: '#E9EEF2', silhouette: 'rect' },
+photo: '/images/products/dior-sauvage.jpg',
+    photoAlt: 'Dior Sauvage Eau de Parfum bottle',
+    photoTone: 'light',
+    art: { juice: '#DCE4E8', glass: '#EEF3F6', cap: '#2B3238', hardware: '#B99A52', backdrop: '#F4F8F8', silhouette: 'rect' },
     moods: ['Confident', 'Fresh'],
     noteTags: ['Citrus', 'Woody', 'Amber', 'Musk'],
     releasedAt: '2025-06-11',
@@ -471,7 +502,7 @@ const SEED: ProductSeed[] = [
     photo: '/images/products/tom-ford-ombre-leather.jpg',
     photoAlt: 'Tom Ford Ombre Leather Eau de Parfum bottle',
     photoTone: 'light',
-    art: { juice: '#8E4A2E', glass: '#A8663F', cap: '#2E2320', hardware: '#B99A52', backdrop: '#EFE2D6', silhouette: 'rect' },
+    art: { juice: '#8E4A2E', glass: '#A8663F', cap: '#2E2320', hardware: '#B99A52', backdrop: '#F8F4EB', silhouette: 'rect' },
     moods: ['Confident', 'Mysterious'],
     noteTags: ['Woody', 'Amber', 'Oud', 'Jasmine'],
     releasedAt: '2025-07-30',
@@ -496,7 +527,10 @@ const SEED: ProductSeed[] = [
     description: 'Cold, clean and quietly expensive.',
     longDescription:
       'Y opens with bergamot, crisp apple and a lift of ginger, then sage and juniper for a herbal, almost outdoorsy middle. Sandalwood, amber and cedarwood keep it composed and quietly expensive. It is the YSL man who does not need to raise his voice.',
-    art: { juice: '#DDE6E2', glass: '#EDF3F0', cap: '#2B3238', hardware: '#B99A52', backdrop: '#E8EFEC', silhouette: 'rect' },
+    photo: '/images/products/ysl-y-edp.jpg',
+    photoAlt: 'YSL Y Eau de Parfum bottle',
+    photoTone: 'light',
+    art: { juice: '#DDE6E2', glass: '#EDF3F0', cap: '#2B3238', hardware: '#B99A52', backdrop: '#F4F8F8', silhouette: 'rect' },
     moods: ['Fresh', 'Elegant'],
     noteTags: ['Citrus', 'Woody', 'Amber', 'Musk'],
     releasedAt: '2024-09-26',
@@ -521,10 +555,10 @@ const SEED: ProductSeed[] = [
     description: 'A sports-fresh lavender that still smells expensive.',
     longDescription:
       'Luna Rossa combines lemon, mandarin and lavender with basil and coriander for a sharp, athletic opening. Amber, sandalwood and musk give it a dry, woody base that outlives its sporty reputation. The silver-blue bottle has barely changed since 2017.',
-    photo: '/images/products/prada-luna-rossa.jpg',
-    photoAlt: 'Prada Luna Rossa Eau de Parfum box with bottle',
-    photoTone: 'dark',
-    art: { juice: '#D7E4EC', glass: '#EAF2F7', cap: '#9FB6C6', hardware: '#B99A52', backdrop: '#E9F0F5', silhouette: 'rect' },
+photo: '/images/products/prada-luna-rossa.jpg',
+    photoAlt: 'Prada Luna Rossa Eau de Parfum bottle',
+    photoTone: 'light',
+    art: { juice: '#D7E4EC', glass: '#EAF2F7', cap: '#9FB6C6', hardware: '#B99A52', backdrop: '#F8F4EB', silhouette: 'rect' },
     moods: ['Fresh', 'Energetic'],
     noteTags: ['Citrus', 'Woody', 'Musk'],
     releasedAt: '2024-05-19',
@@ -549,10 +583,10 @@ const SEED: ProductSeed[] = [
     description: 'Mint, tonka and vanilla — the sweet spot of the blue bottle.',
     longDescription:
       'Eros opens cold with mint, lemon and apple, then tonka bean and violet warm it up. The base is amber, sandalwood, cedar and just enough vanilla to soften the citrus. Loud packaging aside, it is genuinely easy to wear and consistently the first one a customer buys.',
-    photo: '/images/products/versace-eros.jpg',
+photo: '/images/products/versace-eros.jpg',
     photoAlt: 'Versace Eros Eau de Parfum bottle',
-    photoTone: 'light',
-    art: { juice: '#CFE0E8', glass: '#E3EFF4', cap: '#2E6E8E', hardware: '#B99A52', backdrop: '#E4EFF4', silhouette: 'oval' },
+    photoTone: 'dark',
+    art: { juice: '#CFE0E8', glass: '#E3EFF4', cap: '#2E6E8E', hardware: '#B99A52', backdrop: '#F4F8F8', silhouette: 'oval' },
     moods: ['Fresh', 'Energetic'],
     noteTags: ['Citrus', 'Vanilla', 'Woody', 'Amber', 'Musk'],
     releasedAt: '2024-02-08',
@@ -580,7 +614,7 @@ const SEED: ProductSeed[] = [
     photo: '/images/products/giorgio-armani-acqua-di-gio.jpg',
     photoAlt: 'Giorgio Armani Acqua di Gio Pour Homme bottle',
     photoTone: 'light',
-    art: { juice: '#CFE3E4', glass: '#E5F0F0', cap: '#8FA9AC', hardware: '#B99A52', backdrop: '#E6F0F0', silhouette: 'rect' },
+    art: { juice: '#CFE3E4', glass: '#E5F0F0', cap: '#8FA9AC', hardware: '#B99A52', backdrop: '#F4F8F8', silhouette: 'rect' },
     moods: ['Fresh', 'Elegant'],
     noteTags: ['Citrus', 'Musk', 'Woody', 'Amber'],
     releasedAt: '2024-01-24',
@@ -605,7 +639,10 @@ const SEED: ProductSeed[] = [
     description: 'A spiral-capped woody that hides its sweetness well.',
     longDescription:
       'B.zero1 opens with lemon, basil and mandarin, moves through juniper, iris and a touch of rose, then settles on amber, cedar, sandalwood and patchouli. The gold spiral cap is a design object in its own right. Built for the man who likes his woodwork turned up slightly.',
-    art: { juice: '#D8C08A', glass: '#EBDCBC', cap: '#B99A52', hardware: '#8E6B2E', backdrop: '#F1E7D2', silhouette: 'rect' },
+    photo: '/images/products/bvlgari-bzero1.jpg',
+    photoAlt: 'Bvlgari B.zero1 Eau de Toilette bottle',
+    photoTone: 'light',
+    art: { juice: '#D8C08A', glass: '#EBDCBC', cap: '#B99A52', hardware: '#8E6B2E', backdrop: '#F8F4EB', silhouette: 'rect' },
     moods: ['Elegant', 'Confident'],
     noteTags: ['Woody', 'Amber', 'Citrus', 'Rose'],
     releasedAt: '2024-07-15',
@@ -630,7 +667,10 @@ const SEED: ProductSeed[] = [
     description: 'A citrus-wood trail built for open air.',
     longDescription:
       'Explorer opens sharp with grapefruit, lemon and bergamot, settles into clary sage and cedar with a violet leaf edge, then lands on amber, cedarwood and benzoin. It reads as confident rather than casual, which is a neat trick for something this easy to wear.',
-    art: { juice: '#CBD8C8', glass: '#E1EADF', cap: '#3A4A3E', hardware: '#B99A52', backdrop: '#E6EDE4', silhouette: 'faceted' },
+    photo: '/images/products/montblanc-explorer.jpg',
+    photoAlt: 'Montblanc Explorer Eau de Parfum bottle',
+    photoTone: 'light',
+    art: { juice: '#CBD8C8', glass: '#E1EADF', cap: '#3A4A3E', hardware: '#B99A52', backdrop: '#F8F4EB', silhouette: 'faceted' },
     moods: ['Fresh', 'Energetic'],
     noteTags: ['Woody', 'Citrus', 'Amber', 'Musk'],
     releasedAt: '2025-04-02',
@@ -658,7 +698,7 @@ const SEED: ProductSeed[] = [
     photo: '/images/products/paco-rabanne-invictus.jpg',
     photoAlt: 'Paco Rabanne Invictus Eau de Parfum bottle and box',
     photoTone: 'light',
-    art: { juice: '#BBD6DC', glass: '#DCE9EC', cap: '#2E6E8E', hardware: '#B99A52', backdrop: '#E1EDF0', silhouette: 'oval' },
+    art: { juice: '#BBD6DC', glass: '#DCE9EC', cap: '#2E6E8E', hardware: '#B99A52', backdrop: '#F4F8F8', silhouette: 'oval' },
     moods: ['Fresh', 'Energetic'],
     noteTags: ['Citrus', 'Amber', 'Musk', 'Woody'],
     releasedAt: '2024-06-05',
@@ -683,7 +723,10 @@ const SEED: ProductSeed[] = [
     description: 'The softest musk on the floor, and the least expected.',
     longDescription:
       'Pour Homme starts on bergamot, ginger and maté, then folds into rose and cinnamon over a musk base that feels closer to a shirt than a perfume. Sandalwood and vanilla keep it warm. Narciso Rodriguez proved a man could wear a musk before anyone else dared.',
-    art: { juice: '#D6D9C8', glass: '#E7E9DE', cap: '#3A4046', hardware: '#B99A52', backdrop: '#E9EBE2', silhouette: 'rect' },
+    photo: '/images/products/narciso-rodriguez-pour-homme.jpg',
+    photoAlt: 'Narciso Rodriguez Pour Homme Eau de Toilette bottle',
+    photoTone: 'light',
+    art: { juice: '#D6D9C8', glass: '#E7E9DE', cap: '#3A4046', hardware: '#B99A52', backdrop: '#F8F6F1', silhouette: 'rect' },
     moods: ['Fresh', 'Elegant'],
     noteTags: ['Musk', 'Rose', 'Vanilla', 'Woody', 'Citrus'],
     releasedAt: '2024-11-20',
@@ -710,7 +753,10 @@ const SEED: ProductSeed[] = [
     description: 'Skin, warmed. The anti-perfume that became a favourite.',
     longDescription:
       'You is built on ambrette, iris and rose over amber, musk and patchouli — no fruit, no fireworks. It reads as clean skin with a little heat under it, and it genuinely works on everyone. The pink cylinder is deliberately plain; the formula is the whole argument.',
-    art: { juice: '#E9C8C0', glass: '#F6E2DE', cap: '#B08579', hardware: '#B99A52', backdrop: '#F5E5E2', silhouette: 'rect' },
+    photo: '/images/products/glossier-you.jpg',
+    photoAlt: 'Glossier You Eau de Parfum bottle',
+    photoTone: 'dark',
+    art: { juice: '#E9C8C0', glass: '#F6E2DE', cap: '#B08579', hardware: '#B99A52', backdrop: '#F8F6F1', silhouette: 'rect' },
     moods: ['Romantic', 'Energetic'],
     noteTags: ['Musk', 'Amber', 'Rose', 'Vanilla'],
     releasedAt: '2025-08-14',
@@ -736,10 +782,10 @@ const SEED: ProductSeed[] = [
     description: 'Chanel decided citrus could be couture. It could.',
     longDescription:
       'Cristalle opens on a bright, slightly bitter citrus and holds it with lily of the valley and jasmine, refusing to turn sweet. Sandalwood, cedar and amber give it real weight. Wear it in summer and watch people ask what it is.',
-    photo: '/images/products/chanel-cristalle.jpg',
+photo: '/images/products/chanel-cristalle.jpg',
     photoAlt: 'Chanel Cristalle Eau de Parfum bottle',
-    photoTone: 'dark',
-    art: { juice: '#DCE8DC', glass: '#EBF2EB', cap: '#E6E2DA', hardware: '#B99A52', backdrop: '#EAF0EA', silhouette: 'faceted' },
+    photoTone: 'light',
+    art: { juice: '#DCE8DC', glass: '#EBF2EB', cap: '#E6E2DA', hardware: '#B99A52', backdrop: '#FAF6F3', silhouette: 'faceted' },
     moods: ['Fresh', 'Elegant'],
     noteTags: ['Citrus', 'Jasmine', 'Woody', 'Amber', 'Musk'],
     releasedAt: '2025-01-09',
@@ -765,7 +811,10 @@ const SEED: ProductSeed[] = [
     description: 'The Amalfi coast, bottled. Best seller of the Private Collection.',
     longDescription:
       'Neroli Portofino is sunlight: Calabrian bergamot and orange blossom over a neroli heart that lasts for hours. Rosemary gives it a herbal edge, and cedar, amber and benzoin settle it into something warm and expensive. If it were a place, you would never want to leave.',
-    art: { juice: '#F4E2B8', glass: '#FAF0D8', cap: '#B99A52', hardware: '#8E6B2E', backdrop: '#F5EEDC', silhouette: 'oval' },
+    photo: '/images/products/tom-ford-neroli-portofino.jpg',
+    photoAlt: 'Tom Ford Neroli Portofino Eau de Parfum bottle',
+    photoTone: 'light',
+    art: { juice: '#F4E2B8', glass: '#FAF0D8', cap: '#B99A52', hardware: '#8E6B2E', backdrop: '#F8F4EB', silhouette: 'oval' },
     moods: ['Elegant', 'Romantic'],
     noteTags: ['Citrus', 'Musk', 'Amber', 'Woody'],
     releasedAt: '2025-09-18',
@@ -790,7 +839,10 @@ const SEED: ProductSeed[] = [
     description: 'A cologne sharp enough to wake the room up.',
     longDescription:
       'Lime Basil & Neroli is a cologne with an edge: lime and bergamot over basil and neroli, with lavender cooling it down. White musk and tonka leave a clean, slightly powdery trail. The bottle is unlabelled and the price is unapologetic.',
-    art: { juice: '#DCE8C8', glass: '#ECF2E2', cap: '#B99A52', hardware: '#B99A52', backdrop: '#EAF0E4', silhouette: 'rect' },
+    photo: '/images/products/jo-malone-lime-basil-neroli.jpg',
+    photoAlt: 'Jo Malone Lime Basil & Neroli cologne bottle',
+    photoTone: 'light',
+    art: { juice: '#DCE8C8', glass: '#ECF2E2', cap: '#B99A52', hardware: '#B99A52', backdrop: '#FBF8EE', silhouette: 'rect' },
     moods: ['Fresh', 'Energetic'],
     noteTags: ['Citrus', 'Musk', 'Woody'],
     releasedAt: '2025-04-24',
@@ -819,7 +871,7 @@ const SEED: ProductSeed[] = [
     photo: '/images/products/le-labo-bergamote-22.jpg',
     photoAlt: 'Le Labo Bergamote 22 Eau de Parfum bottle',
     photoTone: 'dark',
-    art: { juice: '#E8E2B8', glass: '#F2EEDC', cap: '#2E2320', hardware: '#B99A52', backdrop: '#EFEDDF', silhouette: 'tall' },
+    art: { juice: '#E8E2B8', glass: '#F2EEDC', cap: '#2E2320', hardware: '#B99A52', backdrop: '#FBF8EE', silhouette: 'tall' },
     moods: ['Elegant', 'Mysterious'],
     noteTags: ['Citrus', 'Woody', 'Musk', 'Amber'],
     releasedAt: '2025-10-02',
@@ -935,7 +987,7 @@ export const DEFAULT_ART: ProductArt = {
   glass: '#F6DDE2',
   cap: '#0E0E10',
   hardware: '#B99A52',
-  backdrop: '#F3E3E1',
+  backdrop: STUDIO_PLATES.Floral,
   silhouette: 'rect',
 }
 

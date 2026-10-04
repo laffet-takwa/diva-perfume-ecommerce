@@ -1,7 +1,8 @@
 import { Link, useParams } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { ChevronRight, Mail, MapPin, Package, RefreshCw, Search, Truck } from 'lucide-react'
+import { ArrowUpRight, ChevronRight, Mail, MapPin, Package, RefreshCw, Search, Truck } from 'lucide-react'
 import { WhatsAppLink } from '@/components/ui/WhatsAppLink'
+import { InstagramIcon } from '@/components/ui/InstagramIcon'
 import { EmptyState } from '@/components/ui/EmptyState'
 import { Field, validateField, validators } from '@/components/ui/Field'
 import Reveal from '@/components/ui/Reveal'
@@ -10,6 +11,7 @@ import { useSeo } from '@/hooks/useSeo'
 import { useState } from 'react'
 import { products } from '@/data/products'
 import { whatsappEnquiry, WHATSAPP_DISPLAY, WHATSAPP_HOURS } from '@/lib/whatsapp'
+import { INSTAGRAM_HANDLE, INSTAGRAM_LINK } from '@/lib/instagram'
 import { spellCount } from '@/lib/utils'
 
 /* ==========================================================================
@@ -224,6 +226,19 @@ export function Help() {
                   <span className="flex items-center gap-2">
                     WhatsApp {WHATSAPP_DISPLAY} · {WHATSAPP_HOURS}
                   </span>
+                  <a
+                    href={INSTAGRAM_LINK}
+                    target="_blank"
+                    rel="noreferrer noopener"
+                    className="group/ig flex items-center gap-2 text-dark transition-colors hover:text-noir"
+                  >
+                    <InstagramIcon className="size-3.5" />
+                    Instagram {INSTAGRAM_HANDLE}
+                    <ArrowUpRight
+                      className="size-3 transition-transform duration-300 group-hover/ig:-translate-y-0.5 group-hover/ig:translate-x-0.5"
+                      aria-hidden="true"
+                    />
+                  </a>
                 </p>
               </form>
             </Reveal>

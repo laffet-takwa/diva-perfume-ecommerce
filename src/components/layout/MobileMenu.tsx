@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { ArrowRight } from 'lucide-react'
 import { Drawer } from '@/components/ui/Drawer'
+import { InstagramIcon } from '@/components/ui/InstagramIcon'
 import { WhatsAppIcon } from '@/components/ui/WhatsAppIcon'
 import Logo from './Logo'
 import { NAV_ITEMS, SOCIAL_LINKS } from '@/data/navigation'
@@ -16,7 +17,6 @@ import { fadeUp, staggerContainer } from '@/lib/motion'
    ========================================================================== */
 
 const SOCIAL_INITIAL: Record<string, string> = {
-  Instagram: 'IG',
   TikTok: 'TT',
 }
 
@@ -124,6 +124,8 @@ export function MobileMenu() {
               >
                 {social.label === 'WhatsApp' ? (
                   <WhatsAppIcon className="size-4 text-whatsapp" />
+                ) : social.label === 'Instagram' ? (
+                  <InstagramIcon className="size-4" />
                 ) : (
                   SOCIAL_INITIAL[social.label]
                 )}

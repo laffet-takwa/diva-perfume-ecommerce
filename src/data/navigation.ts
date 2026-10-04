@@ -3,6 +3,7 @@
    ========================================================================== */
 
 import { WHATSAPP_LINK } from '@/lib/whatsapp'
+import { INSTAGRAM_HANDLE, INSTAGRAM_LINK } from '@/lib/instagram'
 
 export interface NavItem {
   label: string
@@ -66,8 +67,8 @@ export interface SocialLink {
 
 /** Only the three channels the house actually runs. */
 export const SOCIAL_LINKS: SocialLink[] = [
-  { label: 'Instagram', handle: '@divastore', href: 'https://instagram.com/divastore' },
-  { label: 'TikTok', handle: '@divastore', href: 'https://tiktok.com/@divastore' },
+  { label: 'Instagram', handle: INSTAGRAM_HANDLE, href: INSTAGRAM_LINK },
+  { label: 'TikTok', handle: '@la_diva_store.202', href: 'https://tiktok.com/@la_diva_store.202' },
   { label: 'WhatsApp', handle: 'Chat with us', href: WHATSAPP_LINK },
 ]
 

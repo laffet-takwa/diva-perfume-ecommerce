@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { ArrowUpRight, Mail, MapPin } from 'lucide-react'
 import { FOOTER_COLUMNS, SOCIAL_LINKS } from '@/data/navigation'
+import { InstagramIcon } from '@/components/ui/InstagramIcon'
 import { WhatsAppIcon } from '@/components/ui/WhatsAppIcon'
 import { whatsappEnquiry, WHATSAPP_DISPLAY, WHATSAPP_HOURS, WHATSAPP_REPLY_TIME } from '@/lib/whatsapp'
 import Logo from './Logo'
@@ -19,13 +20,7 @@ import { Button } from '@/components/ui/Button'
    ========================================================================== */
 
 const SOCIAL_GLYPH: Record<string, React.ReactNode> = {
-  Instagram: (
-    <svg viewBox="0 0 24 24" className="size-[1.15rem]" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true">
-      <rect x="3" y="3" width="18" height="18" rx="5" />
-      <circle cx="12" cy="12" r="3.8" />
-      <circle cx="17.2" cy="6.8" r="1" fill="currentColor" stroke="none" />
-    </svg>
-  ),
+  Instagram: <InstagramIcon className="size-[1.15rem]" />,
   TikTok: (
     <svg viewBox="0 0 24 24" className="size-[1.15rem]" fill="currentColor" aria-hidden="true">
       <path d="M16.5 3a5.4 5.4 0 0 0 4.2 4.1v2.7a8 8 0 0 1-4.2-1.3v6.1a5.7 5.7 0 1 1-5.7-5.7c.3 0 .6 0 .9.1v2.8a2.9 2.9 0 1 0 2 2.8V3h2.8Z" />

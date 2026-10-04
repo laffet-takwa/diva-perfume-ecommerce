@@ -5,8 +5,8 @@ three-step checkout and a scent finder. Built as a front-end only application �
 backend, so payments, auth and orders are simulated in the browser.
 
 The house is invented. `src/data/products.ts` states it plainly: *fictional house, fictional
-names, no real brand packaging*. Product imagery is generated vector artwork, not photographs
-of commercial bottles.
+names, no real brand packaging*. Every product renders real photography, lit and graded to one
+shared studio look so the grid reads as a single shoot.
 
 ---
 
@@ -88,7 +88,8 @@ src/
   pages/               one file per route
   types/               shared domain types
 public/
-  images/perfumes/     women/ + men/ reference photography, see CREDITS.md
+  images/products/    the catalogue photography, one file per slug, see CREDITS.md
+  images/perfumes/     women/ + men/ reference photography, not wired into the UI
 ```
 
 ## Routes
@@ -126,20 +127,30 @@ individual files. Each hook throws outside its provider.
 cart lines are validated against the catalogue on read and silently dropped if the product is
 gone. The newsletter form in the footer uses `diva.newsletter.v1`.
 
-## Product artwork
+## Product imagery
 
-There are no product photographs in the catalogue. Each product carries an `art` recipe —
-five colours plus a silhouette (`rect`, `oval`, `tall`, `faceted`) — and `BottleArt` draws it
-as an inline SVG. `ProductShot` composes that drawing with a backdrop, light pool and plinth
-to fake a studio photograph, and its four `view` indices (front / detail / angled / label)
-give the product page a gallery without any assets.
+Every product carries a `photo`, a `photoAlt` and a `photoTone`, and `Flacon` renders the
+photograph in place of the drawn bottle. `photoTone: 'light'` is a white-studio shot multiplied
+into the house plate so its own white sweep disappears into the page; `photoTone: 'dark'` fills
+the frame instead, for the four shots that genuinely carry a dark or mid backdrop. The
+`photoTone` records what a frame actually is, so a photograph is never falsely flattened onto
+the white plate.
 
-The payoff: the catalogue stays visually cohesive, weighs nothing, and never renders a broken
-image. The cost is that art direction lives in `products.ts`, not in a design tool — change a
-recipe and every surface using it updates.
+The set was graded to one look by measuring it rather than eyeballing it: backdrop luma in a
+narrow **L208–L255** band, `#FFFFFF` the most common dominant colour, mean saturation 0.02–0.28,
+a near-black cap and warm gold hardware recurring across the frames. `STUDIO_PLATES` in
+`products.ts` reproduces that same band in vector form, keyed by olfactive family, so a drawn
+flacon sits on the same sweep as a photograph beside it. `public/images/products/CREDITS.md`
+records the measurement and the licence status of every file.
 
-Real reference photography lives in `public/images/perfumes/{women,men}/` and is **not** wired
-into the UI. See `public/images/perfumes/CREDITS.md` for licensing; the CC BY and CC BY-SA
+The `art` recipe — five colours plus a silhouette (`rect`, `oval`, `tall`, `faceted`) — is still
+there as the vector fallback and as the tint of the plate a photograph multiplies into.
+`ProductShot` composes the drawing with a backdrop, light pool and plinth when a product has no
+photograph, and its four `view` indices (front / detail / angled / label) give the product page a
+gallery from one asset.
+
+Secondary reference photography lives in `public/images/perfumes/{women,men}/` and is **not**
+wired into the UI. See `public/images/perfumes/CREDITS.md` for licensing; the CC BY and CC BY-SA
 entries require attribution, so keep that file if you redistribute them.
 
 ## Conventions worth knowing
@@ -218,6 +229,8 @@ Worth fixing if you are working in this area:
 - `SearchOverlay` re-declares the `'diva.recentSearches.v1'` key as a local constant instead
   of importing `RECENT_SEARCH_STORAGE` from `@/lib/utils`.
 - There is no pagination. `Shop` renders every match; `NewArrivals` hard-caps at 8.
-- `src/images/produit/` holds nine unused files named after real brands (Chanel, Dior,
-  Prada, Gucci and others), downloaded and committed by hand. Nothing in `src/` imports
-  them. They are unreferenced and should be deleted rather than shipped.
+- `src/images/` holds nineteen files named after real brands (Chanel, Dior, Prada, Gucci and
+  others), a uniform 474 px white-sweep studio set. Nothing in `src/` imports them; they are the
+  source the catalogue photography was graded from. Sixteen were promoted into
+  `public/images/products/` under their product slug, so the folder is kept as the master set
+  rather than deleted.
