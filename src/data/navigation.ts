@@ -74,5 +74,11 @@ export const SOCIAL_LINKS: SocialLink[] = [
 
 export const FREE_SHIPPING_COPY = 'Free delivery over 150 DT'
 
+/** The deployed build of this storefront, linked from the About page. */
+export const PROJECT_DEMO = {
+  label: 'View live demo',
+  href: 'https://diva-perfume-ecommerce-src.vercel.app/',
+}
+
 export const ANNOUNCEMENT =
   'Decanted to order · 3 / 5 / 10 ml · Free delivery over 150 DT · Pay cash on delivery'

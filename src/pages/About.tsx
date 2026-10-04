@@ -1,10 +1,11 @@
 import ArtScene from '@/components/art/ArtScene'
 import { BottleArt } from '@/components/art/BottleArt'
 import Reveal from '@/components/ui/Reveal'
-import { ButtonLink } from '@/components/ui/Button'
+import { ButtonLink, buttonStyles } from '@/components/ui/Button'
 import { InstagramIcon } from '@/components/ui/InstagramIcon'
 import { useSeo } from '@/hooks/useSeo'
 import { BESTSELLERS, products } from '@/data/products'
+import { PROJECT_DEMO } from '@/data/navigation'
 import { spellCount } from '@/lib/utils'
 import {
   INSTAGRAM_FORMER_HANDLES,
@@ -14,6 +15,7 @@ import {
   INSTAGRAM_LOCATION,
 } from '@/lib/instagram'
 import type { SceneVariant } from '@/components/art/ArtScene'
+import { ArrowUpRight } from 'lucide-react'
 
 /* ==========================================================================
    About — the house story
@@ -123,6 +125,15 @@ export function About() {
                 <ButtonLink to="/collections" variant="outline" size="lg">
                   See collections
                 </ButtonLink>
+                <a
+                  href={PROJECT_DEMO.href}
+                  target="_blank"
+                  rel="noreferrer noopener"
+                  className={buttonStyles({ variant: 'outline', size: 'lg' })}
+                >
+                  {PROJECT_DEMO.label}
+                  <ArrowUpRight className="size-4" aria-hidden="true" />
+                </a>
               </div>
             </Reveal>
           </div>
