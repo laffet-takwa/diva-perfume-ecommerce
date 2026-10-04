@@ -1,22 +1,35 @@
 import { useCallback, useMemo, useState } from 'react'
-import type { FragranceFamily, Gender, Product, ProductBadge } from '@/types'
-import { ALL_BRANDS, ALL_FAMILIES, ALL_NOTES, products } from '@/data/products'
+import type { DecantSize, FragranceFamily, Gender, Product, ProductBadge } from '@/types'
+import {
+  ALL_BRANDS,
+  ALL_FAMILIES,
+  ALL_NOTES,
+  DECANT_SIZES,
+  HERO_DECANT,
+  getPriceForSize,
+  products,
+} from '@/data/products'
 
 export { ALL_BRANDS, ALL_NOTES }
 
 /* ==========================================================================
    Catalogue filtering, sorting and search.
    Pure functions where possible so they can be reused by the shop page,
-   the search overlay and the scent finder.
+   the search overlay and the scent shelf.
+
+   The catalogue is priced per volume, so every filter and sort works on the
+   price of the volume currently being shopped (`size`). Change the size and
+   the price range, the price sort and the price range slider all follow.
    ========================================================================== */
 
-export type SortKey = 'featured' | 'newest' | 'price-asc' | 'price-desc' | 'rating'
+export type SortKey = 'featured' | 'newest' | 'price-asc' | 'price-desc' | 'rating' | 'saving'
 
 export const SORT_OPTIONS: { value: SortKey; label: string }[] = [
   { value: 'featured', label: 'Featured' },
   { value: 'newest', label: 'Newest' },
   { value: 'price-asc', label: 'Price low to high' },
   { value: 'price-desc', label: 'Price high to low' },
+  { value: 'saving', label: 'Biggest saving' },
   { value: 'rating', label: 'Best rated' },
 ]
 
@@ -27,14 +40,20 @@ export interface CatalogFilters {
   notes: string[]
   badges: ProductBadge[]
   minRating: number
+  /** Price bounds at the shopped volume */
   priceRange: [number, number]
   query: string
 }
 
-export const PRICE_BOUNDS: [number, number] = [
-  Math.floor(Math.min(...products.map((p) => p.price))),
-  Math.ceil(Math.max(...products.map((p) => p.price))),
-]
+/** Price bounds are derived per volume, so each size gets its own range. */
+export function priceBoundsFor(size: DecantSize): [number, number] {
+  const prices = products.map((p) => getPriceForSize(p, size))
+  return [Math.floor(Math.min(...prices)), Math.ceil(Math.max(...prices))]
+}
+
+export function isDecantSize(value: string | null): boolean {
+  return value !== null && DECANT_SIZES.includes(Number(value) as DecantSize)
+}
 
 export const EMPTY_FILTERS: CatalogFilters = {
   genders: [],
@@ -43,7 +62,7 @@ export const EMPTY_FILTERS: CatalogFilters = {
   notes: [],
   badges: [],
   minRating: 0,
-  priceRange: [PRICE_BOUNDS[0], PRICE_BOUNDS[1]],
+  priceRange: priceBoundsFor(HERO_DECANT),
   query: '',
 }
 
@@ -92,7 +111,7 @@ export function matchesQuery(product: Product, query: string): boolean {
     .every((term) => haystack.includes(term))
 }
 
-export function applyFilters(list: Product[], filters: CatalogFilters): Product[] {
+export function applyFilters(list: Product[], filters: CatalogFilters, size: DecantSize): Product[] {
   const [minPrice, maxPrice] = filters.priceRange
 
   return list.filter((product) => {
@@ -100,7 +119,8 @@ export function applyFilters(list: Product[], filters: CatalogFilters): Product[
     if (filters.families.length && !filters.families.includes(product.category)) return false
     if (filters.brands.length && !filters.brands.includes(product.brand)) return false
     if (filters.badges.length && (!product.badge || !filters.badges.includes(product.badge))) return false
-    if (product.price < minPrice || product.price > maxPrice) return false
+    const price = getPriceForSize(product, size)
+    if (price < minPrice || price > maxPrice) return false
     if (filters.minRating > 0 && product.rating < filters.minRating) return false
     if (filters.notes.length && !filters.notes.some((n) => product.noteTags.includes(n))) return false
     if (!matchesQuery(product, filters.query)) return false
@@ -108,15 +128,24 @@ export function applyFilters(list: Product[], filters: CatalogFilters): Product[
   })
 }
 
-export function applySort(list: Product[], sort: SortKey): Product[] {
+/** Percentage saved against the full bottle, at the shopped volume. */
+function savingPercent(product: Product, size: DecantSize): number {
+  const perMl = getPriceForSize(product, size) / size
+  const fullPerMl = product.fullBottle.price / product.fullBottle.ml
+  return 1 - perMl / fullPerMl
+}
+
+export function applySort(list: Product[], sort: SortKey, size: DecantSize): Product[] {
   const copy = [...list]
   switch (sort) {
     case 'newest':
       return copy.sort((a, b) => Date.parse(b.releasedAt) - Date.parse(a.releasedAt))
     case 'price-asc':
-      return copy.sort((a, b) => a.price - b.price)
+      return copy.sort((a, b) => getPriceForSize(a, size) - getPriceForSize(b, size))
     case 'price-desc':
-      return copy.sort((a, b) => b.price - a.price)
+      return copy.sort((a, b) => getPriceForSize(b, size) - getPriceForSize(a, size))
+    case 'saving':
+      return copy.sort((a, b) => savingPercent(b, size) - savingPercent(a, size))
     case 'rating':
       return copy.sort((a, b) => b.rating - a.rating || b.reviews - a.reviews)
     case 'featured':
@@ -129,7 +158,10 @@ export function applySort(list: Product[], sort: SortKey): Product[] {
 
 export function searchProducts(query: string, limit = 8): Product[] {
   if (!query.trim()) return []
-  return applySort(applyFilters(products, { ...EMPTY_FILTERS, query }), 'featured').slice(0, limit)
+  return applySort(applyFilters(products, { ...EMPTY_FILTERS, query }, HERO_DECANT), 'featured', HERO_DECANT).slice(
+    0,
+    limit,
+  )
 }
 
 /* --------------------------------------------------------------------------
@@ -150,7 +182,7 @@ export function countBy(list: Product[], pick: (p: Product) => string | undefine
    Hook
    -------------------------------------------------------------------------- */
 
-export function countActiveFilters(filters: CatalogFilters): number {
+export function countActiveFilters(filters: CatalogFilters, bounds: [number, number]): number {
   return (
     filters.genders.length +
     filters.families.length +
@@ -158,7 +190,7 @@ export function countActiveFilters(filters: CatalogFilters): number {
     filters.notes.length +
     filters.badges.length +
     (filters.minRating > 0 ? 1 : 0) +
-    (filters.priceRange[0] !== PRICE_BOUNDS[0] || filters.priceRange[1] !== PRICE_BOUNDS[1] ? 1 : 0) +
+    (filters.priceRange[0] !== bounds[0] || filters.priceRange[1] !== bounds[1] ? 1 : 0) +
     (filters.query ? 1 : 0)
   )
 }
@@ -168,6 +200,8 @@ type FacetKey = 'genders' | 'families' | 'brands' | 'notes' | 'badges'
 export interface CatalogApi {
   filters: CatalogFilters
   sort: SortKey
+  /** The volume currently being shopped */
+  size: DecantSize
   results: Product[]
   activeCount: number
   setSort: (sort: SortKey) => void
@@ -176,14 +210,19 @@ export interface CatalogApi {
   setPriceRange: (range: [number, number]) => void
   setMinRating: (rating: number) => void
   setQuery: (query: string) => void
+  setSize: (size: DecantSize) => void
   resetFilters: () => void
 }
 
 export function useCatalog(initial?: Partial<CatalogFilters>): CatalogApi {
   const [filters, setFiltersState] = useState<CatalogFilters>(() => ({ ...EMPTY_FILTERS, ...initial }))
   const [sort, setSort] = useState<SortKey>('featured')
+  const [size, setSizeState] = useState<DecantSize>(HERO_DECANT)
 
-  const results = useMemo(() => applySort(applyFilters(products, filters), sort), [filters, sort])
+  const results = useMemo(
+    () => applySort(applyFilters(products, filters, size), sort, size),
+    [filters, sort, size],
+  )
 
   const setFilters = useCallback(
     (updater: (prev: CatalogFilters) => CatalogFilters) => setFiltersState(updater),
@@ -211,22 +250,31 @@ export function useCatalog(initial?: Partial<CatalogFilters>): CatalogApi {
       setFiltersState((prev) => (prev.query === query ? prev : { ...prev, query })),
     [],
   )
+
+  // Switching volume re-bases the price window onto that volume's own range.
+  const setSize = useCallback((next: DecantSize) => {
+    setSizeState(next)
+    setFiltersState((prev) => ({ ...prev, priceRange: priceBoundsFor(next) }))
+  }, [])
+
   const resetFilters = useCallback(() => setFiltersState({ ...EMPTY_FILTERS }), [])
 
   return useMemo(
     () => ({
       filters,
       sort,
+      size,
       results,
-      activeCount: countActiveFilters(filters),
+      activeCount: countActiveFilters(filters, priceBoundsFor(size)),
       setSort,
       setFilters,
       toggleFacet,
       setPriceRange,
       setMinRating,
       setQuery,
+      setSize,
       resetFilters,
     }),
-    [filters, sort, results, setSort, setFilters, toggleFacet, setPriceRange, setMinRating, setQuery, resetFilters],
+    [filters, sort, size, results, setSort, setFilters, toggleFacet, setPriceRange, setMinRating, setQuery, setSize, resetFilters],
   )
 }

@@ -20,7 +20,7 @@ export function NotFound() {
           eyebrow="Error 404"
           title="This page has left the building."
           description="The page you are looking for does not exist, or it has moved somewhere more elegant. The collection is still here."
-          action={{ label: 'Explore all perfumes', to: '/perfumes' }}
+          action={{ label: 'Explore all decants', to: '/perfumes' }}
           secondaryAction={{ label: 'Back to home', to: '/' }}
           className="min-h-[60vh]"
         />

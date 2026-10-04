@@ -16,8 +16,16 @@ export interface CartSummaryProps {
 }
 
 export function CartSummary({ showShipping = true, tone = 'light', className, children }: CartSummaryProps) {
-  const { subtotal, shipping, freeShippingRemaining, freeShippingProgress, qualifiesForFreeShipping, count } =
-    useCart()
+  const {
+    subtotal,
+    shipping,
+    savings,
+    fullBottleTotal,
+    freeShippingRemaining,
+    freeShippingProgress,
+    qualifiesForFreeShipping,
+    count,
+  } = useCart()
   const total = subtotal + shipping
   const dark = tone === 'dark'
 
@@ -68,6 +76,14 @@ export function CartSummary({ showShipping = true, tone = 'light', className, ch
           dark={dark}
           mutedValue={shipping === 0}
         />
+        {savings > 0 && (
+          <Row
+            label={`Full bottles would cost ${formatPrice(fullBottleTotal)}`}
+            value={`You save ${formatPrice(savings)}`}
+            dark={dark}
+            mutedValue
+          />
+        )}
       </dl>
 
       <div className={cn('h-px w-full', dark ? 'bg-white/15' : 'bg-dark/12')} />

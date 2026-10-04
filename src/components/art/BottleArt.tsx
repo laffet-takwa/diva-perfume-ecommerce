@@ -48,8 +48,8 @@ const SILHOUETTES: Record<ProductArt['silhouette'], Silhouette> = {
   },
 }
 
-/** Volume nudges proportions a touch so the PDP feels considered. */
-const SIZE_SCALE: Record<number, number> = { 30: 0.88, 50: 1, 100: 1.08 }
+/** Volume nudges proportions a touch so a bigger decant reads as bigger. */
+const SIZE_SCALE: Record<number, number> = { 3: 0.84, 5: 1, 10: 1.09 }
 
 export interface BottleArtProps {
   art: ProductArt
@@ -63,7 +63,7 @@ export interface BottleArtProps {
 
 export function BottleArt({
   art,
-  sizeMl = 50,
+  sizeMl = 5,
   className,
   style,
   bare = false,

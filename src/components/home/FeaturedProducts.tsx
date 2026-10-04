@@ -11,19 +11,19 @@ import { products } from '@/data/products'
 const EDIT = [...products]
   .filter((p) => p.badge === 'BESTSELLER' || p.badge === 'EXCLUSIVE' || p.rating >= 4.8)
   .sort((a, b) => b.popularity - a.popularity)
-  .slice(0, 4)
+  .slice(0, 8)
 
 export function FeaturedProducts() {
   return (
-    <section id="the-diva-edit" className="relative py-20 md:py-28 lg:py-32" aria-labelledby="edit-title">
+    <section id="the-diva-edit" className="relative scroll-mt-24 py-20 md:py-28 lg:py-32" aria-labelledby="edit-title">
       <div className="container-lux">
         <Reveal variant="up">
           <SectionHeading
-            index="01"
-            eyebrow="The Diva Edit"
-            title={<span id="edit-title">Curated for every version of you</span>}
-            subtitle="Four signatures we cannot stop recommending. Each one is a complete mood, bottled."
-            action={{ label: 'View all perfumes', to: '/perfumes' }}
+            index="02"
+            eyebrow="Featured decants"
+            title={<span id="edit-title">The Diva Edit</span>}
+            subtitle="Eight signatures we would put in your hand first. Pick 3, 5 or 10 ml on the card and add it in one tap."
+            action={{ label: 'Shop all fragrances', to: '/perfumes' }}
           />
         </Reveal>
 

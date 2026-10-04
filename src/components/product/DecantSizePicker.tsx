@@ -1,5 +1,5 @@
 import { DECANT_SIZE_COPY } from '@/data/products'
-import type { ProductSize } from '@/types'
+import type { DecantSize, ProductSize } from '@/types'
 import { cn, formatPrice } from '@/lib/utils'
 
 /* ==========================================================================
@@ -12,8 +12,8 @@ import { cn, formatPrice } from '@/lib/utils'
 
 export interface DecantSizePickerProps {
   sizes: ProductSize[]
-  value: number
-  onChange: (ml: number) => void
+  value: DecantSize
+  onChange: (ml: DecantSize) => void
   /** `card` is a compact segmented row, `detail` is a row of priced tiles */
   layout?: 'card' | 'detail'
   /** Renders the volume kicker ("The signature") — detail layout only */
@@ -40,7 +40,7 @@ export function DecantSizePicker({
         <div className="mt-3 grid grid-cols-3 gap-2.5 sm:gap-3">
           {sizes.map((size) => {
             const selected = size.ml === value
-            const copy = DECANT_SIZE_COPY[size.ml as keyof typeof DECANT_SIZE_COPY]
+            const copy = DECANT_SIZE_COPY[size.ml]
             return (
               <button
                 key={size.ml}
@@ -80,7 +80,7 @@ export function DecantSizePicker({
           })}
         </div>
         <p className="mt-3 text-[0.6875rem] leading-relaxed text-muted">
-          {DECANT_SIZE_COPY[value as keyof typeof DECANT_SIZE_COPY]?.blurb}
+          {DECANT_SIZE_COPY[value].blurb}
         </p>
       </fieldset>
     )

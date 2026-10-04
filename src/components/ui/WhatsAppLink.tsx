@@ -20,6 +20,7 @@ export interface WhatsAppLinkProps {
   className?: string
   /** Renders the label for assistive tech only, for round icon buttons */
   iconOnly?: boolean
+  onClick?: () => void
   'aria-label'?: string
 }
 
@@ -31,11 +32,13 @@ export function WhatsAppLink({
   block,
   className,
   iconOnly,
+  onClick,
   ...rest
 }: WhatsAppLinkProps) {
   return (
     <a
       href={href}
+      onClick={onClick}
       target="_blank"
       rel="noreferrer noopener"
       className={cn(buttonStyles({ variant: tone, size, block }), className)}

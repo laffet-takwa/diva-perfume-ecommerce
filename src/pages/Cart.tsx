@@ -4,10 +4,12 @@ import { ChevronRight, ShoppingBag } from 'lucide-react'
 import { CartItem } from '@/components/cart/CartItem'
 import { CartSummary } from '@/components/cart/CartSummary'
 import { ButtonLink } from '@/components/ui/Button'
+import { WhatsAppLink } from '@/components/ui/WhatsAppLink'
 import { EmptyState } from '@/components/ui/EmptyState'
 import Reveal from '@/components/ui/Reveal'
 import { useCart, useToast } from '@/context'
 import { useSeo } from '@/hooks/useSeo'
+import { whatsappCheckout } from '@/lib/whatsapp'
 
 /* ==========================================================================
    Cart — /cart
@@ -15,12 +17,12 @@ import { useSeo } from '@/hooks/useSeo'
 
 export function Cart() {
   useSeo({
-    title: 'Your bag',
-    description: 'Review your DIVA STORE fragrances before checkout.',
+    title: 'Your cart',
+    description: 'Review your DIVA decants, then check out on WhatsApp in one tap.',
     canonicalPath: '/cart',
   })
 
-  const { lines, removeFromCart, clearCart } = useCart()
+  const { lines, removeFromCart, clearCart, subtotal, shipping } = useCart()
   const { notify } = useToast()
 
   if (lines.length === 0) {
@@ -29,10 +31,10 @@ export function Cart() {
         <EmptyState
           icon={<ShoppingBag className="size-6" aria-hidden="true" />}
           eyebrow="Empty"
-          title="Your bag is empty."
-          description="Nothing has been added yet. Start with the Diva Edit — four signatures we never stop recommending."
-          action={{ label: 'Discover perfumes', to: '/perfumes' }}
-          secondaryAction={{ label: 'View wishlist', to: '/wishlist' }}
+          title="Your cart is empty."
+          description="Nothing has been added yet. Start with a 3 ml decant — the cheapest, lowest-risk way to find a signature."
+          action={{ label: 'Shop 3 ml decants', to: '/perfumes?size=3' }}
+          secondaryAction={{ label: 'Shop all fragrances', to: '/perfumes' }}
         />
       </div>
     )
@@ -40,7 +42,7 @@ export function Cart() {
 
   return (
     <div className="pt-16 lg:pt-20">
-      <div className="border-b border-dark/10 bg-sand/40">
+      <div className="border-b border-noir/10 bg-sand/40">
         <div className="container-lux py-12 md:py-16">
           <nav aria-label="Breadcrumb" className="mb-5">
             <ol className="flex items-center gap-2 text-[0.5625rem] uppercase tracking-[0.24em] text-muted">
@@ -52,12 +54,12 @@ export function Cart() {
               <li aria-hidden="true">
                 <ChevronRight className="size-3" />
               </li>
-              <li className="text-dark">Your bag</li>
+              <li className="text-dark">Your cart</li>
             </ol>
           </nav>
-          <h1 className="display-title text-[clamp(2.1rem,5vw,3.2rem)]">Your bag</h1>
+          <h1 className="display-title text-[clamp(2.1rem,5vw,3.2rem)]">Your cart</h1>
           <p className="mt-3 text-[0.875rem] text-muted">
-            {lines.length} product{lines.length > 1 ? 's' : ''} reserved for 60 minutes.
+            {lines.length} decant{lines.length > 1 ? 's' : ''} reserved for 60 minutes.
           </p>
         </div>
       </div>
@@ -71,17 +73,17 @@ export function Cart() {
                   key={line.key}
                   line={line}
                   layout="stacked"
-                  className="border-b border-dark/10 pb-6 last:border-0 last:pb-0"
+                  className="border-b border-noir/10 pb-6 last:border-0 last:pb-0"
                   onRemove={() => {
                     removeFromCart(line.key)
-                    notify(`${line.name} removed from your bag.`, 'info')
+                    notify(`${line.name} removed from your cart.`, 'info')
                   }}
                 />
               ))}
             </AnimatePresence>
           </ul>
 
-          <div className="mt-10 flex flex-wrap items-center justify-between gap-4 border-t border-dark/10 pt-8">
+          <div className="mt-10 flex flex-wrap items-center justify-between gap-4 border-t border-noir/10 pt-8">
             <ButtonLink to="/perfumes" variant="ghost" size="md">
               ← Continue shopping
             </ButtonLink>
@@ -89,25 +91,40 @@ export function Cart() {
               type="button"
               onClick={() => {
                 clearCart()
-                notify('Your bag has been emptied.', 'info')
+                notify('Your cart has been emptied.', 'info')
               }}
               className="text-[0.625rem] uppercase tracking-[0.16em] text-muted transition-colors hover:text-noir"
             >
-              Empty bag
+              Empty cart
             </button>
           </div>
         </Reveal>
 
         <Reveal variant="up" delay={0.08}>
           <aside className="lg:sticky lg:top-28">
-            <div className="rounded-md border border-dark/10 bg-ivory p-6 md:p-7">
+            <div className="rounded-md border border-noir/10 bg-ivory p-6 md:p-7">
               <h2 className="eyebrow mb-6 text-dark">Summary</h2>
               <CartSummary>
-                <ButtonLink to="/checkout" variant="primary" size="lg" block arrow className="mt-6">
-                  Checkout
-                </ButtonLink>
+                <div className="mt-6 flex flex-col gap-2.5">
+                  <WhatsAppLink
+                    href={whatsappCheckout({
+                      lines,
+                      subtotal,
+                      shipping,
+                      total: subtotal + shipping,
+                    })}
+                    tone="whatsapp"
+                    size="lg"
+                    block
+                  >
+                    Checkout on WhatsApp
+                  </WhatsAppLink>
+                  <ButtonLink to="/checkout" variant="primary" size="lg" block arrow>
+                    Add delivery details
+                  </ButtonLink>
+                </div>
                 <p className="mt-4 text-center text-[0.625rem] uppercase tracking-[0.16em] text-muted">
-                  Card or cash on delivery
+                  Cash on delivery or bank transfer
                 </p>
               </CartSummary>
             </div>

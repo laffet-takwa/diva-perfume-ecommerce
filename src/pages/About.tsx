@@ -26,35 +26,35 @@ const CHAPTERS: Chapter[] = [
     id: 'story',
     index: '01',
     title: 'Our story',
-    body: `DIVA STORE began in 2026 with a simple frustration: perfume had become a wall of sameness. Every new release engineered for launch, then forgotten. We wanted the opposite — a boutique where a fragrance stays on the shelf because it is still worth wearing, not because a marketing calendar says so. ${spellCount(products.length)} bottles, chosen one at a time from the houses we genuinely admire.`,
+    body: `DIVA STORE started in 2026 with a frustration most perfume people share: the good bottles are the expensive ones, and the expensive ones are the ones you can only afford once. We built the opposite. Everything here is poured from a sealed, full-price bottle into a 3, 5 or 10 ml spray. ${spellCount(products.length)} fragrances, one point of view — and a ticket that does not require a special occasion.`,
     scene: 'story',
-    pull: 'A boutique, not a campaign.',
+    pull: 'A boutique, not a locked door.',
   },
   {
     id: 'philosophy',
     index: '02',
-    title: 'Our philosophy',
-    body: 'Perfume is architecture. There is a structure — top, heart, base — and if the structure is wrong, nothing else matters. We read it the same way: decide the character you are after, find the note that carries it, then leave everything else on the shelf. Restraint is the hardest part of the edit, and the reason this room stays quiet.',
+    title: 'How we decant',
+    body: 'Every flacon is filled from a bottle bought at full retail, opened in front of you on request, and decanted into a factory-sealed atomiser by hand. We photograph the batch and the fill date before it ships. If you want to see the source bottle first, ask on WhatsApp — we will send it before you pay anything.',
     scene: 'philosophy',
     reversed: true,
-    pull: 'Leave everything else on the shelf.',
+    pull: 'Opened in front of you, on request.',
   },
   {
     id: 'selection',
     index: '03',
-    title: 'Our selection',
-    body: 'Chanel, Dior, Gucci, YSL, Tom Ford and the rest of the great houses — plus the smaller ateliers worth knowing about. We test everything on skin, over days, not minutes. Roughly two thirds of what we are offered never makes it onto the shelf. What survives is chosen for longevity on skin and for character at three metres.',
+    title: 'The shelf',
+    body: 'Chanel, Dior, Gucci, YSL, Tom Ford and the smaller ateliers worth knowing about. We let a fragrance sit on skin for days, not minutes, and only decant what performs. Roughly two thirds of what we are offered never gets poured. What survives is chosen for longevity and for character at three metres.',
     scene: 'atelier',
-    pull: 'Two thirds of what we are offered never makes the shelf.',
+    pull: 'Two thirds of what we are offered never gets poured.',
   },
   {
     id: 'promise',
     index: '04',
-    title: 'Our promise',
-    body: 'We sell the house lines we actually wear, at the prices we actually paid. No false scarcity, no borrowed luxury — the real thing, described honestly, in our own words. If a fragrance does not earn its place in your wardrobe, we would rather know.',
+    title: 'What it costs',
+    body: 'A 100 ml bottle at 690 DT works out at 6.9 DT per millilitre. Our 10 ml decant of the same fragrance is 207 DT — 3 DT per millilitre. That is the whole trick: you pay for what you wear, not for shelf space you do not use. No false scarcity, no borrowed luxury.',
     scene: 'promise',
     reversed: true,
-    pull: 'The real thing, described honestly.',
+    pull: 'You pay for what you wear.',
   },
 ]
 
@@ -62,7 +62,7 @@ export function About() {
   useSeo({
     title: 'About DIVA STORE',
     description:
-      'We believe every woman has a signature. Meet the boutique behind DIVA STORE — how we choose, what we refuse, and how we keep the edit tight.',
+      'DIVA STORE decants Chanel, Dior, Gucci, YSL and Tom Ford into 3, 5 and 10 ml sprays. How we decant, how we prove it is authentic, and why it costs less.',
     canonicalPath: '/about',
   })
 
@@ -83,20 +83,21 @@ export function About() {
                 id="about-title"
                 className="display-title text-[clamp(2.1rem,5.6vw,3.9rem)]"
               >
-                We believe every woman has a{' '}
-                <span className="italic text-noir">signature.</span>
+                Luxury should not be a{' '}
+                <span className="italic text-noir">locked door.</span>
               </h1>
             </Reveal>
             <Reveal variant="up" delay={0.16}>
               <p className="mt-7 max-w-lg text-[1rem] leading-relaxed text-muted">
-                Ours is: quiet, deliberate, and made to be recognised on skin rather than on a shelf.
-                This is the story of how DIVA STORE came to be, and what we refuse to compromise.
+                We pour the great houses into 3, 5 and 10 ml sprays so you can wear a hundred of
+                them instead of owning ten. This is how DIVA STORE came to be, and what we refuse
+                to compromise.
               </p>
             </Reveal>
             <Reveal variant="up" delay={0.24}>
               <div className="mt-10 flex flex-wrap gap-3">
                 <ButtonLink to="/perfumes" variant="primary" size="lg" arrow>
-                  Explore the house
+                  Shop all decants
                 </ButtonLink>
                 <ButtonLink to="/collections" variant="outline" size="lg">
                   See collections
@@ -115,7 +116,7 @@ export function About() {
               />
             </div>
             <span className="absolute bottom-6 left-1/2 -translate-x-1/2 whitespace-nowrap text-[0.5625rem] uppercase tracking-[0.28em] text-muted">
-              Diva Store — Eau de Parfum
+              DIVA STORE — decants poured to order
             </span>
           </div>
         </div>
@@ -162,20 +163,21 @@ export function About() {
         </section>
       ))}
 
-      {/* Career's note + journal anchor */}
+      {/* Closing note */}
       <section className="border-b border-dark/10 bg-sand/40 py-20 md:py-24" aria-labelledby="careers-title">
         <div className="container-lux grid gap-10 lg:grid-cols-[1.3fr_1fr] lg:items-center lg:gap-16">
           <Reveal variant="up">
             <div className="eyebrow eyebrow-rule mb-5">
               <span className="h-px w-6 bg-gold/60" aria-hidden="true" />
-              <span className="text-noir/70">Careers &amp; journal</span>
+              <span className="text-noir/70">Talk to us</span>
             </div>
             <h2 id="careers-title" className="display-title text-[clamp(1.7rem,3.8vw,2.6rem)]">
-              We are always looking for hands that care about the details.
+              Ask before you buy. We would rather you did.
             </h2>
             <p className="mt-6 max-w-lg text-[0.9375rem] leading-relaxed text-muted">
-              The bench, the lab and the writing desk are all open. If you can tell the difference
-              between a good iris and a flat one, we would like to hear from you.
+              Not sure which house you like, or whether a 3 ml is worth it? Message us. There is
+              no script and no minimum order — we would rather answer one question than sell one
+              bottle you regret.
             </p>
           </Reveal>
 
@@ -184,11 +186,11 @@ export function About() {
               <ArtScene variant="journal" grain={0.3} className="aspect-[4/3] w-full" />
             </div>
             <div className="mt-6 flex flex-wrap gap-3">
-              <ButtonLink to="/about#story" variant="primary" size="md" arrow>
-                Read our story
+              <ButtonLink to="/perfumes?size=3" variant="primary" size="md" arrow>
+                Start with 3 ml
               </ButtonLink>
-              <ButtonLink to="/perfumes" variant="ghost" size="md">
-                Shop the house
+              <ButtonLink to="/help/contact" variant="ghost" size="md">
+                Contact us
               </ButtonLink>
             </div>
           </Reveal>

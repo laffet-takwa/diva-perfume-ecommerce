@@ -78,7 +78,7 @@ export function SearchOverlay() {
     <Modal open={isSearchOpen} onClose={closeSearch} fullscreen labelId="search-title" hideClose>
       <div className="flex h-full flex-col">
         <h2 id="search-title" className="sr-only">
-          Search perfumes
+          Search decants
         </h2>
 
         {/* Search field */}
@@ -93,7 +93,7 @@ export function SearchOverlay() {
             <div className="flex items-center gap-3 sm:gap-4">
               <Search className="size-5 shrink-0 text-noir sm:size-6" aria-hidden="true" />
               <label htmlFor="site-search" className="sr-only">
-                Search perfumes, brands, notes
+                Search decants, brands, notes
               </label>
               <input
                 id="site-search"
@@ -101,7 +101,7 @@ export function SearchOverlay() {
                 type="search"
                 value={raw}
                 onChange={(e) => setRaw(e.target.value.slice(0, 60))}
-                placeholder="Search perfumes, brands, notes..."
+                placeholder="Search decants, brands, notes..."
                 autoComplete="off"
                 spellCheck={false}
                 aria-describedby="search-hint"
@@ -116,7 +116,7 @@ export function SearchOverlay() {
               </button>
             </div>
             <p id="search-hint" className="sr-only">
-              Results update as you type. Press Enter to see all matching perfumes.
+              Results update as you type. Press Enter to see all matching decants.
             </p>
           </form>
         </div>
@@ -254,7 +254,7 @@ export function SearchOverlay() {
                     }}
                     className="mt-7 inline-flex items-center gap-2 text-[0.6875rem] font-medium uppercase tracking-[0.2em] text-noir"
                   >
-                    Explore all perfumes
+                    Explore all decants
                     <ArrowRight className="size-3.5" aria-hidden="true" />
                   </button>
                 </div>

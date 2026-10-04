@@ -108,12 +108,12 @@ export interface CartLine {
   name: string
   brand: string
   image: ProductArt
-  /** Product photography carried on the line so the bag shows the real flacon */
+  /** Product photography carried on the line so the cart shows the real flacon */
   photo?: string
   photoTone?: 'light' | 'dark'
   ml: number
   unitPrice: number
-  /** Retail price of the full bottle, so the bag can show what the decant saved */
+  /** Retail price of the full bottle, so the cart can show what the decant saved */
   fullBottlePrice: number
   quantity: number
 }
@@ -141,7 +141,8 @@ export interface CustomerDetails {
   notes?: string
 }
 
-export type PaymentMethod = 'card' | 'cod'
+/** A decant shop takes no card details — cash on delivery or bank transfer. */
+export type PaymentMethod = 'cod' | 'transfer'
 
 export interface Order {
   id: string

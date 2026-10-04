@@ -2,19 +2,21 @@ import { Star, X } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import type { Product } from '@/types'
 import type { CatalogFilters } from '@/hooks/useCatalog'
-import { ALL_NOTES, FAMILY_OPTIONS, GENDER_OPTIONS, PRICE_BOUNDS } from '@/hooks/useCatalog'
+import { ALL_NOTES, FAMILY_OPTIONS, GENDER_OPTIONS } from '@/hooks/useCatalog'
 import { Button } from '@/components/ui/Button'
 import { cn, formatPrice } from '@/lib/utils'
 
 /* ==========================================================================
    Filters — shared by the desktop sidebar and the mobile drawer.
-   Facet counts come from the currently visible pool, minus the facet itself
-   is too subtle; we simply show how many products carry each attribute.
+   Facet counts come from the currently visible pool; `bounds` is the price
+   window of the volume being shopped, since decants price from 25 DT to 210 DT.
    ========================================================================== */
 
 export interface FiltersProps {
   filters: CatalogFilters
   products: Product[]
+  /** Price bounds at the shopped volume */
+  bounds: [number, number]
   onToggleFacet: <K extends 'genders' | 'families' | 'brands' | 'notes' | 'badges'>(
     key: K,
     value: CatalogFilters[K][number],
@@ -31,6 +33,7 @@ const RATING_OPTIONS = [4, 3, 2]
 export function Filters({
   filters,
   products,
+  bounds,
   onToggleFacet,
   onPriceChange,
   onMinRating,
@@ -93,7 +96,7 @@ export function Filters({
       </Group>
 
       <Group title="Price">
-        <PriceRange value={filters.priceRange} onChange={onPriceChange} />
+        <PriceRange value={filters.priceRange} bounds={bounds} onChange={onPriceChange} />
       </Group>
 
       <Group title="Brand">
@@ -207,12 +210,15 @@ function CheckboxRow({
 
 function PriceRange({
   value,
+  bounds,
   onChange,
 }: {
   value: [number, number]
+  bounds: [number, number]
   onChange: (range: [number, number]) => void
 }) {
-  const [min, max] = PRICE_BOUNDS
+  const [min, max] = bounds
+  const step = Math.max(1, Math.round((max - min) / 20))
 
   return (
     <div className="flex flex-col gap-4">
@@ -226,10 +232,10 @@ function PriceRange({
           type="range"
           min={min}
           max={max}
-          step={5}
+          step={step}
           value={value[0]}
           onChange={(e) =>
-            onChange([Math.min(Number(e.target.value), value[1] - 5), value[1]])
+            onChange([Math.min(Number(e.target.value), value[1] - step), value[1]])
           }
           className="w-full"
         />
@@ -244,10 +250,10 @@ function PriceRange({
           type="range"
           min={min}
           max={max}
-          step={5}
+          step={step}
           value={value[1]}
           onChange={(e) =>
-            onChange([value[0], Math.max(Number(e.target.value), value[0] + 5)])
+            onChange([value[0], Math.max(Number(e.target.value), value[0] + step)])
           }
           className="w-full"
         />

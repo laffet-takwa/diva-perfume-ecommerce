@@ -6,15 +6,25 @@ import ProductGallery from '@/components/product/ProductGallery'
 import ProductNotes from '@/components/product/ProductNotes'
 import ProductRating from '@/components/product/ProductRating'
 import ProductGrid from '@/components/product/ProductGrid'
+import { DecantSizePicker } from '@/components/product/DecantSizePicker'
 import { QuantityStepper } from '@/components/cart/CartItem'
 import { Badge } from '@/components/ui/Badge'
 import { Button, ButtonLink } from '@/components/ui/Button'
+import { WhatsAppLink } from '@/components/ui/WhatsAppLink'
 import { EmptyState } from '@/components/ui/EmptyState'
 import Reveal from '@/components/ui/Reveal'
 import { SectionHeading } from '@/components/ui/SectionHeading'
-import { getProductBySlug, products } from '@/data/products'
+import {
+  getPriceForSize,
+  getProductBySlug,
+  HERO_DECANT,
+  products,
+  savingsPercent,
+} from '@/data/products'
+import type { DecantSize } from '@/types'
 import { useCart, useToast, useWishlist } from '@/context'
 import { useSeo } from '@/hooks/useSeo'
+import { whatsappProductEnquiry } from '@/lib/whatsapp'
 import { formatPrice } from '@/lib/utils'
 
 /* ==========================================================================
@@ -22,9 +32,9 @@ import { formatPrice } from '@/lib/utils'
    ========================================================================== */
 
 const ASSURANCES = [
-  { icon: Truck, label: 'Free shipping over 150 DT' },
-  { icon: ShieldCheck, label: '14-day easy returns' },
-  { icon: Sparkles, label: 'Curated shortlist' },
+  { icon: ShieldCheck, label: '100% authentic — poured from sealed bottles' },
+  { icon: Truck, label: 'Poured to order, dispatched within 24h' },
+  { icon: Sparkles, label: 'One-tap ordering on WhatsApp' },
 ]
 
 export function ProductDetails() {
@@ -35,7 +45,7 @@ export function ProductDetails() {
   const { isInWishlist, toggleWishlist } = useWishlist()
   const { notify } = useToast()
 
-  const [ml, setMl] = useState(50)
+  const [ml, setMl] = useState<DecantSize>(HERO_DECANT)
   const [quantity, setQuantity] = useState(1)
   const [justAdded, setJustAdded] = useState(false)
 
@@ -44,7 +54,7 @@ export function ProductDetails() {
   const lastSlug = useRef(slug)
   if (lastSlug.current !== slug) {
     lastSlug.current = slug
-    setMl(50)
+    setMl(HERO_DECANT)
     setQuantity(1)
     setJustAdded(false)
   }
@@ -77,21 +87,22 @@ export function ProductDetails() {
         <EmptyState
           eyebrow="404"
           title="This fragrance could not be found."
-          description="The page may have moved, or the flacon is no longer in production. The full collection is waiting."
-          action={{ label: 'Explore all perfumes', to: '/perfumes' }}
+          description="The page may have moved, or we have sold out of that batch. The full collection is waiting."
+          action={{ label: 'Explore all decants', to: '/perfumes' }}
         />
       </div>
     )
   }
 
   const wished = isInWishlist(product.id)
-  const selectedSize = product.sizes.find((s) => s.ml === ml) ?? product.sizes[1]
-  const price = selectedSize?.price ?? product.price
-  const hasDiscount = product.oldPrice ? product.oldPrice > price : false
+  const price = getPriceForSize(product, ml)
+  const saving = savingsPercent(product, ml)
+  const perMl = Math.round((price / ml) * 10) / 10
+  const fullPerMl = Math.round((product.fullBottle.price / product.fullBottle.ml) * 10) / 10
 
   const handleAdd = () => {
     addToCart(product.id, ml, quantity)
-    notify(`${product.name} (${ml}ml) added to your bag.`)
+    notify(`${product.name} · ${ml} ml added to your cart.`)
     setJustAdded(true)
     window.setTimeout(() => setJustAdded(false), 1800)
   }
@@ -117,7 +128,7 @@ export function ProductDetails() {
             </li>
             <li>
               <Link to="/perfumes" className="transition-colors hover:text-noir">
-                Perfumes
+                Decants
               </Link>
             </li>
             <li aria-hidden="true">
@@ -165,55 +176,34 @@ export function ProductDetails() {
             </span>
           </div>
 
-          <div className="mt-7 flex items-baseline gap-3">
-            <span className="font-display text-2xl text-dark">{formatPrice(price)}</span>
-            {hasDiscount && (
-              <>
-                <span className="text-[0.875rem] text-muted line-through">
-                  {formatPrice(product.oldPrice ?? 0)}
-                </span>
-                <Badge tone="gold">
-                  −{Math.round((1 - price / (product.oldPrice ?? price)) * 100)}%
-                </Badge>
-              </>
-            )}
+          {/* Price + the saving that justifies it */}
+          <div className="mt-7 rounded-md border border-gold/30 bg-sand/40 p-5">
+            <div className="flex flex-wrap items-baseline gap-3">
+              <span className="font-display text-3xl text-dark">{formatPrice(price)}</span>
+              <span className="text-[0.875rem] text-muted line-through">
+                {formatPrice(product.fullBottle.price)}
+              </span>
+              <Badge tone="gold">Save {saving}%</Badge>
+            </div>
+            <p className="mt-2 text-[0.6875rem] leading-relaxed text-muted">
+              {perMl} DT per ml · the {product.fullBottle.ml} ml bottle works out at {fullPerMl} DT
+              per ml. Free delivery over 150 DT.
+            </p>
           </div>
-          <p className="mt-1 text-[0.6875rem] text-muted">Tax included. Free shipping over 150 DT.</p>
 
           <p className="mt-7 max-w-lg text-[0.9375rem] leading-relaxed text-muted">
             {product.longDescription}
           </p>
 
           {/* Size */}
-          <fieldset className="mt-9">
-            <legend className="text-[0.6875rem] font-medium uppercase tracking-[0.18em] text-dark">
-              Size
-            </legend>
-            <div className="mt-3 flex flex-wrap gap-2.5">
-              {product.sizes.map((size) => (
-                <button
-                  key={size.ml}
-                  type="button"
-                  onClick={() => setMl(size.ml)}
-                  aria-pressed={ml === size.ml}
-                  className={`min-w-[6.5rem] rounded-xs border px-4 py-3 text-left transition-all duration-300 ${
-                    ml === size.ml
-                      ? 'border-noir bg-noir/[0.04]'
-                      : 'border-dark/15 hover:border-noir/50'
-                  }`}
-                >
-                  <span
-                    className={`block font-display text-sm ${ml === size.ml ? 'text-noir' : 'text-dark'}`}
-                  >
-                    {size.ml}ml
-                  </span>
-                  <span className="mt-0.5 block text-[0.6875rem] text-muted">
-                    {formatPrice(size.price)}
-                  </span>
-                </button>
-              ))}
-            </div>
-          </fieldset>
+          <DecantSizePicker
+            sizes={product.sizes}
+            value={ml}
+            onChange={setMl}
+            layout="detail"
+            showKicker
+            className="mt-9"
+          />
 
           {/* Quantity + CTA */}
           <div className="mt-8 flex flex-wrap items-center gap-4">
@@ -226,11 +216,19 @@ export function ProductDetails() {
             </div>
           </div>
 
-          {/* Desktop CTAs */}
-          <div className="mt-6 hidden gap-3 sm:flex">
+          {/* Desktop CTAs — cart first, then the chat that closes the sale */}
+          <div className="mt-6 hidden flex-wrap gap-3 sm:flex">
             <Button variant="primary" size="lg" onClick={handleAdd} className="flex-1" arrow>
-              Add to bag
+              Add to cart
             </Button>
+            <WhatsAppLink
+              href={whatsappProductEnquiry(product, ml, price * quantity)}
+              tone="whatsapp"
+              size="lg"
+              className="flex-1"
+            >
+              Order on WhatsApp
+            </WhatsAppLink>
             <Button
               variant="outline"
               size="lg"
@@ -241,7 +239,7 @@ export function ProductDetails() {
                 <Heart className="size-4" fill={wished ? 'currentColor' : 'none'} aria-hidden="true" />
               }
             >
-              {wished ? 'In wishlist' : 'Add to wishlist'}
+              {wished ? 'Saved' : 'Save'}
             </Button>
           </div>
 
@@ -287,7 +285,9 @@ export function ProductDetails() {
         <div className="flex items-center gap-3">
           <div className="min-w-0 flex-1">
             <p className="truncate font-display text-sm text-dark">{product.name}</p>
-            <p className="text-[0.6875rem] text-muted">{formatPrice(price * quantity)}</p>
+            <p className="text-[0.6875rem] text-muted">
+              {ml} ml · {formatPrice(price * quantity)}
+            </p>
           </div>
           <AnimatePresence mode="wait" initial={false}>
             <motion.div
@@ -305,7 +305,7 @@ export function ProductDetails() {
                     Added
                   </>
                 ) : (
-                  `Add to bag — ${formatPrice(price * quantity)}`
+                  `Add to cart — ${formatPrice(price * quantity)}`
                 )}
               </Button>
             </motion.div>
@@ -336,7 +336,7 @@ export function ProductDetails() {
             className="fixed bottom-8 right-8 z-50 hidden lg:block"
           >
             <ButtonLink to="/cart" variant="gold" size="lg" arrow>
-              View your bag
+              View your cart
             </ButtonLink>
           </motion.div>
         )}

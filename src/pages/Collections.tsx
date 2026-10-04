@@ -7,11 +7,14 @@ import { SectionHeading } from '@/components/ui/SectionHeading'
 import { EmptyState } from '@/components/ui/EmptyState'
 import { ButtonLink } from '@/components/ui/Button'
 import ArtScene from '@/components/art/ArtScene'
-import { BESTSELLERS, NEWEST_PRODUCTS, products } from '@/data/products'
+import { BESTSELLERS, NEWEST_PRODUCTS, getPriceForSize, pricePerMl, products } from '@/data/products'
+import type { DecantSize } from '@/types'
 import { useSeo } from '@/hooks/useSeo'
 
 /* ==========================================================================
    Collections — curated edits
+   Each edit is scoped to one volume, so a collection is a decision, not a mood
+   board: "3 ml to try", "10 ml because you already love it".
    ========================================================================== */
 
 interface Edit {
@@ -21,54 +24,62 @@ interface Edit {
   title: string
   line: string
   to: string
-  scene: 'women' | 'men' | 'unisex' | 'editorial' | 'ritual'
+  scene: 'women' | 'men' | 'unisex' | 'editorial' | 'ritual' | 'atelier'
+  /** Pins the card size picker to one volume */
+  ml?: DecantSize
   pick: () => typeof products
 }
 
 const EDITS: Edit[] = [
   {
     key: 'bestsellers',
-    name: 'Bestsellers',
+    name: 'Best Sellers',
     eyebrow: 'The Icons',
-    title: 'Proven, year after year',
-    line: 'The bottles that keep coming back — our most reordered signatures.',
-    to: '/perfumes?sort=rating',
+    title: 'Proven, order after order',
+    line: 'The fragrances our customers reorder most. Nothing here is a gamble.',
+    to: '/collections?edit=bestsellers',
     scene: 'ritual',
     pick: () => BESTSELLERS.slice(0, 8),
   },
   {
+    key: 'try-first',
+    name: 'Try first',
+    eyebrow: 'Start at 3 ml',
+    title: 'The lowest-risk way in',
+    line: 'Our cheapest decants. Cheap enough to try three of them before you commit to anything.',
+    to: '/perfumes?size=3&sort=price-asc',
+    scene: 'editorial',
+    ml: 3,
+    pick: () =>
+      [...products].sort((a, b) => getPriceForSize(a, 3) - getPriceForSize(b, 3)).slice(0, 8),
+  },
+  {
+    key: 'value',
+    name: 'Best value',
+    eyebrow: 'Go 10 ml',
+    title: 'Cheapest per millilitre',
+    line: 'Once a scent is yours, stop paying luxury prices for it. These cost the least per spray.',
+    to: '/perfumes?size=10&sort=price-asc',
+    scene: 'atelier',
+    ml: 10,
+    pick: () => [...products].sort((a, b) => pricePerMl(a, 10) - pricePerMl(b, 10)).slice(0, 8),
+  },
+  {
     key: 'new-arrivals',
     name: 'New Arrivals',
-    eyebrow: 'Just In',
-    title: 'Fresh from the bench',
-    line: 'The newest releases on the shelf. Limited runs included.',
+    eyebrow: 'Just poured',
+    title: 'Fresh in the decanter',
+    line: 'The newest bottles on the shelf, just added to the range.',
     to: '/perfumes?sort=newest',
-    scene: 'editorial',
+    scene: 'women',
     pick: () => NEWEST_PRODUCTS.slice(0, 8),
   },
   {
-    key: 'signatures',
-    name: 'House signatures',
-    eyebrow: 'The Core',
-    title: 'What defines the shelf',
-    line: 'Every fragrance we would build the edit around if we could only keep three.',
-    to: '/perfumes/unisex',
-    scene: 'unisex',
-    pick: () => {
-      const core = ['p-signature', 'p-ambre', 'p-muse']
-      const signatures = products.filter((p) => core.includes(p.id))
-      const exclusives = products.filter(
-        (p) => p.badge === 'EXCLUSIVE' && !core.includes(p.id),
-      )
-      return [...signatures, ...exclusives].slice(0, 6)
-    },
-  },
-  {
-    key: 'unisex',
-    name: 'Beyond labels',
-    eyebrow: 'For Everyone',
+    key: 'for-everyone',
+    name: 'Unisex',
+    eyebrow: 'For everyone',
     title: 'Composed without gender',
-    line: 'Zero gender, all character — the fragrances we recommend to everyone.',
+    line: 'Scents we hand to anyone without checking who it is for.',
     to: '/perfumes/unisex',
     scene: 'unisex',
     pick: () => products.filter((p) => p.gender === 'unisex'),
@@ -83,7 +94,7 @@ export function Collections() {
   useSeo({
     title: 'Collections',
     description:
-      'Curated edits from the DIVA STORE house — bestsellers, new arrivals and house signatures.',
+      'Curated decant edits from DIVA STORE — bestsellers, 3 ml to try first, 10 ml for best value and new arrivals.',
     canonicalPath: '/collections',
   })
 
@@ -99,7 +110,7 @@ export function Collections() {
           eyebrow="Not found"
           title="This collection could not be found."
           description="It may have been renamed. Browse the full house catalogue instead."
-          action={{ label: 'Explore all perfumes', to: '/perfumes' }}
+          action={{ label: 'Explore all decants', to: '/perfumes' }}
         />
       </div>
     )
@@ -119,8 +130,8 @@ export function Collections() {
               Collections
             </h1>
             <p className="mt-5 max-w-xl text-[0.9375rem] leading-relaxed text-muted">
-              The house is small on purpose. These are the edits we assemble most often — whether
-              you are buying your first bottle or your tenth.
+              Five ways in. Each edit is priced at one volume, so you always know what you are
+              committing to before you open the first card.
             </p>
 
             {/* Edit switcher */}
@@ -176,7 +187,7 @@ export function Collections() {
             </div>
 
             <div className="mt-12 lg:mt-16">
-              <ProductGrid products={edit.pick()} animationKey={`collection-${edit.key}`} />
+              <ProductGrid products={edit.pick()} ml={edit.ml} animationKey={`collection-${edit.key}`} />
             </div>
           </div>
         </motion.section>
@@ -190,13 +201,14 @@ export function Collections() {
               Not sure which edit is yours?
             </h2>
             <p className="mx-auto mt-4 max-w-md text-[0.9375rem] leading-relaxed text-muted">
-              Three questions, three recommendations. It takes less than a minute.
+              Start at 3 ml. It is the cheapest way to meet a fragrance, and the only volume where
+              trying something new costs less than a coffee.
             </p>
           </Reveal>
           <Reveal variant="up" delay={0.08}>
             <div className="flex flex-wrap justify-center gap-3">
-              <ButtonLink to="/#finder" variant="primary" size="lg" arrow>
-                Find my signature
+              <ButtonLink to="/perfumes?size=3" variant="primary" size="lg" arrow>
+                Shop all 3 ml decants
               </ButtonLink>
               <ButtonLink to="/perfumes" variant="ghost" size="lg">
                 Browse everything

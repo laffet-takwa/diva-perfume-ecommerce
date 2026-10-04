@@ -55,7 +55,7 @@ export function CartItem({ line, onRemove, layout = 'row', className }: CartItem
             <p className="text-[0.5625rem] uppercase tracking-[0.24em] text-muted">{line.brand}</p>
             <h3 className="mt-1 truncate font-display text-[0.9375rem] text-dark">{line.name}</h3>
             <p className="mt-0.5 text-[0.6875rem] uppercase tracking-[0.14em] text-muted">
-              {line.ml}ml Eau de Parfum
+              {line.ml} ml decant
             </p>
           </div>
           <p className="shrink-0 font-display text-sm text-dark">
@@ -72,7 +72,7 @@ export function CartItem({ line, onRemove, layout = 'row', className }: CartItem
           <button
             type="button"
             onClick={onRemove}
-            aria-label={`Remove ${line.name} from bag`}
+            aria-label={`Remove ${line.name} from cart`}
             className="inline-flex items-center gap-1.5 text-[0.625rem] uppercase tracking-[0.16em] text-muted transition-colors hover:text-noir"
           >
             <Trash2 className="size-3.5" aria-hidden="true" />

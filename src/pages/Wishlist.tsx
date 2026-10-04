@@ -31,7 +31,7 @@ export function Wishlist() {
           eyebrow="Saved"
           title="Your fragrance wishlist is waiting."
           description="Tap the heart on any flacon to save it here. Nothing is reserved, nothing expires — take your time."
-          action={{ label: 'Discover perfumes', to: '/perfumes' }}
+          action={{ label: 'Shop all decants', to: '/perfumes' }}
           secondaryAction={{ label: 'The Diva Edit', to: '/collections' }}
         />
       </div>
@@ -79,16 +79,16 @@ export function Wishlist() {
           <div>
             <h2 className="font-display text-xl text-dark">Ready to decide?</h2>
             <p className="mt-2 max-w-md text-[0.875rem] text-muted">
-              Not sure which one is yours? Answer three questions and we will match three
-              signatures to your mood, notes and occasion.
+              Not sure which volume? Start with 3 ml — enough to live with a scent for a week
+              before you commit to 10 ml.
             </p>
           </div>
           <div className="flex shrink-0 flex-col gap-3 sm:flex-row">
-            <ButtonLink to="/#finder" variant="primary" size="md" arrow>
-              Find my signature
+            <ButtonLink to="/perfumes?size=3" variant="primary" size="md" arrow>
+              Start with 3 ml
             </ButtonLink>
             <ButtonLink to="/perfumes" variant="ghost" size="md">
-              Shop perfumes
+              Shop all decants
             </ButtonLink>
           </div>
         </motion.div>

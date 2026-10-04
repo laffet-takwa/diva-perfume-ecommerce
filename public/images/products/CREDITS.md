@@ -25,7 +25,7 @@ recipe.
 | `prada-luna-rossa.jpg` | Prada Luna Rossa EDP | Flickr `15392637827` | CC BY-NC |
 | `narciso-rodriguez-for-her.jpg` | Narciso Rodriguez For Her EDP | Wikimedia Commons, `Narciso_Rodriguez_for_Her_Eau_de_Parfum.jpg` | CC BY-SA, attribution required |
 | `versace-eros.jpg` | Versace Eros EDP | Wikimedia Commons, `VersaceEros121.jpg` | CC BY-SA, attribution required |
-| `tom-ford-ombre-leather.png` | Tom Ford Ombré Leather EDP | tomfordbeauty.com, `tf_sku_T5Y201` | brand press asset, reference only |
+| `tom-ford-ombre-leather.jpg` | Tom Ford Ombré Leather EDP | tomfordbeauty.com, `tf_sku_T5Y201` | brand press asset, reference only |
 | `le-labo-bergamote-22.jpg` | Le Labo Bergamote 22 EDP | lelabofragrances.com, `050PB22100` | brand press asset, reference only |
 
 ## Before going live

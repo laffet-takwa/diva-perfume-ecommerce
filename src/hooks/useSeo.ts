@@ -9,7 +9,7 @@ import { sanitizeText } from '@/lib/utils'
    ========================================================================== */
 
 const SITE = 'DIVA STORE'
-const DEFAULT_TITLE = 'DIVA STORE — Premium Perfumes & Fragrances'
+const DEFAULT_TITLE = 'DIVA STORE — Luxury Perfume Decants | 3 / 5 / 10 ml'
 const DEFAULT_DESCRIPTION =
   'Discover your signature scent with DIVA STORE. Explore curated fragrances for women, men and everyone.'
 const DEFAULT_IMAGE = '/og-default.svg'

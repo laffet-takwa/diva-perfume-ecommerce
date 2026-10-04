@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import type { Product } from '@/types'
+import type { DecantSize, Product } from '@/types'
 import ProductCard from './ProductCard'
 import { ProductGridSkeleton } from '@/components/ui/Skeleton'
 import { fadeUp, staggerMedium } from '@/lib/motion'
@@ -16,6 +16,8 @@ export interface ProductGridProps {
   className?: string
   /** Change this to replay the entrance animation (filters, sorting) */
   animationKey?: string | number
+  /** Pins every card to one volume, e.g. when a shelf is scoped to 10 ml */
+  ml?: DecantSize
   loading?: boolean
   skeletonCount?: number
 }
@@ -30,6 +32,7 @@ export function ProductGrid({
   columns = 4,
   className,
   animationKey,
+  ml,
   loading = false,
   skeletonCount = 8,
 }: ProductGridProps) {
@@ -49,7 +52,7 @@ export function ProductGrid({
     >
       {products.map((product) => (
         <motion.div key={product.id} variants={fadeUp} layout="position" className="flex">
-          <ProductCard product={product} className="w-full" />
+          <ProductCard product={product} ml={ml} className="w-full" />
         </motion.div>
       ))}
     </motion.div>

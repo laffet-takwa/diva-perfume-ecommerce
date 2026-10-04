@@ -5,6 +5,7 @@ import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
 import MobileMenu from '@/components/layout/MobileMenu'
 import SearchOverlay from '@/components/layout/SearchOverlay'
+import WhatsAppFab from '@/components/layout/WhatsAppFab'
 import CartDrawer from '@/components/cart/CartDrawer'
 import ScrollToTop from '@/components/layout/ScrollToTop'
 import CustomCursor from '@/components/ui/CustomCursor'
@@ -187,6 +188,7 @@ export function App() {
       <MobileMenu />
       <CartDrawer />
       <SearchOverlay />
+      <WhatsAppFab />
     </div>
   )
 }

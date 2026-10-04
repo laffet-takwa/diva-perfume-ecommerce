@@ -10,17 +10,19 @@ import { Drawer } from '@/components/ui/Drawer'
 import { Button } from '@/components/ui/Button'
 import { EmptyState } from '@/components/ui/EmptyState'
 import Reveal from '@/components/ui/Reveal'
-import { useCatalog, GENDER_OPTIONS } from '@/hooks/useCatalog'
+import { useCatalog, GENDER_OPTIONS, priceBoundsFor } from '@/hooks/useCatalog'
 import type { SortKey } from '@/hooks/useCatalog'
 import { useSeo } from '@/hooks/useSeo'
-import { products } from '@/data/products'
+import { DECANT_SIZE_COPY, DECANT_SIZES, ENTRY_PRICE, HERO_DECANT, products } from '@/data/products'
 import { useToast } from '@/context'
-import type { Gender } from '@/types'
+import type { DecantSize, Gender } from '@/types'
+import { cn, formatPrice } from '@/lib/utils'
 
 /* ==========================================================================
-   Shop — /perfumes, /perfumes/women, /perfumes/men, /perfumes/unisex
-   Gender lives in the route; sort and search live in the query string;
-   the remaining facets stay in local state.
+   Shop — /perfumes, /perfumes/:gender, /perfumes?size=3|5|10
+   Gender lives in the route, the shopped volume and sort in the query string,
+   the remaining facets in local state. Every card is priced at the volume
+   selected here, so the size tabs are the shop's primary control.
    ========================================================================== */
 
 const GENDER_FROM_PATH = new Set<string>(['women', 'men', 'unisex'])
@@ -29,6 +31,12 @@ const SUBTITLES: Record<Gender, string> = {
   women: 'Elegant. Feminine. Unforgettable.',
   men: 'Bold. Refined. Magnetic.',
   unisex: 'Beyond labels — composed for everyone.',
+}
+
+const SIZE_QUESTIONS: Record<Gender, string> = {
+  women: 'her',
+  men: 'him',
+  unisex: 'everyone',
 }
 
 export function Shop() {
@@ -41,14 +49,17 @@ export function Shop() {
 
   const queryParam = searchParams.get('q') ?? ''
   const sortParam = searchParams.get('sort') as SortKey | null
+  const sizeParam = Number(searchParams.get('size'))
 
   const {
     filters,
     sort,
+    size,
     results,
     activeCount,
     setQuery,
     setSort,
+    setSize,
     toggleFacet,
     setPriceRange,
     setMinRating,
@@ -67,11 +78,17 @@ export function Shop() {
     if (sortParam) setSort(sortParam)
   }, [sortParam, setSort])
 
+  useEffect(() => {
+    if (DECANT_SIZES.includes(sizeParam as DecantSize)) setSize(sizeParam as DecantSize)
+  }, [sizeParam, setSize])
+
   // Brief skeleton on first paint so the grid never pops in.
   useEffect(() => {
     const id = window.setTimeout(() => setLoading(false), 420)
     return () => window.clearTimeout(id)
   }, [])
+
+  const bounds = useMemo(() => priceBoundsFor(size), [size])
 
   const scoped = useMemo(
     () => (gender ? products.filter((p) => p.gender === gender) : products),
@@ -94,20 +111,23 @@ export function Shop() {
     ? (GENDER_OPTIONS.find((g) => g.value === gender)?.label ?? 'Perfumes')
     : queryParam
       ? `Results for “${queryParam}”`
-      : 'All perfumes'
+      : 'All fragrances'
 
+  const sizeCopy = DECANT_SIZE_COPY[size]
+  const count = gender ? products.filter((p) => p.gender === gender).length : products.length
   const subtitle = gender
-    ? `${SUBTITLES[gender]} ${products.filter((p) => p.gender === gender).length} bottles, from the great houses.`
-    : `The complete DIVA STORE shelf. ${products.length} fragrances, from the great houses.`
+    ? `${SUBTITLES[gender]} ${count} fragrances, decanted from the ${size} ml up.`
+    : `The complete DIVA shelf — ${products.length} fragrances, decanted from the ${size} ml up.`
 
   useSeo({
-    title: gender ? `${heading} perfumes` : queryParam ? heading : 'Shop all perfumes',
-    description: `${heading} at DIVA STORE. ${subtitle} Curated eau de parfum, free shipping over 150 DT.`,
+    title: gender ? `${heading} decants` : queryParam ? heading : 'Shop all decants',
+    description: `${heading} at DIVA STORE. ${subtitle} Authentic ${size} ml decants from ${formatPrice(ENTRY_PRICE[size])}, free delivery over 150 DT.`,
     canonicalPath: gender ? `/perfumes/${gender}` : '/perfumes',
   })
 
   const clearAll = () => {
     resetFilters()
+    setSize(HERO_DECANT)
     navigate('/perfumes', { replace: true })
   }
 
@@ -130,6 +150,14 @@ export function Shop() {
     setSearchParams(params, { replace: true })
   }
 
+  const applySize = (next: DecantSize) => {
+    setSize(next)
+    const params = new URLSearchParams(searchParams)
+    if (next === HERO_DECANT) params.delete('size')
+    else params.set('size', String(next))
+    setSearchParams(params, { replace: true })
+  }
+
   const chips = [
     ...displayFilters.genders.map((g) => ({ key: 'genders' as const, value: g, label: g })),
     ...filters.families.map((f) => ({ key: 'families' as const, value: f, label: f })),
@@ -140,6 +168,7 @@ export function Shop() {
   const filterProps: FiltersProps = {
     filters: displayFilters,
     products: scoped,
+    bounds,
     onToggleFacet,
     onPriceChange: setPriceRange,
     onMinRating: setMinRating,
@@ -150,7 +179,7 @@ export function Shop() {
   return (
     <div className="pt-16 lg:pt-20">
       {/* Page head */}
-      <div className="border-b border-dark/10 bg-sand/40">
+      <div className="border-b border-noir/10 bg-sand/40">
         <div className="container-lux py-14 md:py-20">
           <Reveal variant="up">
             <nav aria-label="Breadcrumb" className="mb-6">
@@ -170,19 +199,59 @@ export function Shop() {
         </div>
       </div>
 
+      {/* Size tabs — the shop's primary control */}
+      <div className="sticky top-16 z-30 border-b border-noir/10 bg-ivory/92 backdrop-blur-lg lg:top-20">
+        <div className="container-lux no-scrollbar flex gap-2 overflow-x-auto py-3">
+          <span className="hidden shrink-0 items-center pr-3 text-[0.5625rem] uppercase tracking-[0.22em] text-muted sm:flex">
+            Shop by size
+          </span>
+          {DECANT_SIZES.map((ml) => {
+            const selected = ml === size
+            return (
+              <button
+                key={ml}
+                type="button"
+                onClick={() => applySize(ml)}
+                aria-pressed={selected}
+                className={cn(
+                  'shrink-0 rounded-full border px-4 py-2 text-left transition-all duration-300',
+                  selected
+                    ? 'border-noir bg-noir text-ivory'
+                    : 'border-noir/15 text-muted hover:border-noir/45 hover:text-noir',
+                )}
+              >
+                <span className="block font-display text-[0.8125rem] leading-tight">
+                  {DECANT_SIZE_COPY[ml].label}
+                </span>
+                <span
+                  className={cn(
+                    'block text-[0.5625rem] uppercase tracking-[0.14em]',
+                    selected ? 'text-gold' : 'text-muted/80',
+                  )}
+                >
+                  from {formatPrice(ENTRY_PRICE[ml])}
+                </span>
+              </button>
+            )
+          })}
+        </div>
+      </div>
+
       <div className="container-lux grid gap-10 py-12 lg:grid-cols-[16rem_1fr] lg:gap-14 lg:py-16">
         {/* Desktop sidebar */}
         <aside className="hidden lg:block">
-          <div className="sticky top-28 max-h-[calc(100vh-9rem)] overflow-y-auto pr-2">
+          <div className="sticky top-44 max-h-[calc(100vh-12rem)] overflow-y-auto pr-2">
             <Filters {...filterProps} />
           </div>
         </aside>
 
         <div className="min-w-0">
           {/* Toolbar */}
-          <div className="flex flex-wrap items-center justify-between gap-3 border-b border-dark/10 pb-5">
+          <div className="flex flex-wrap items-center justify-between gap-3 border-b border-noir/10 pb-5">
             <p className="text-[0.75rem] uppercase tracking-[0.18em] text-muted" aria-live="polite">
-              {loading ? 'Loading…' : `${visible.length} fragrance${visible.length === 1 ? '' : 's'}`}
+              {loading
+                ? 'Loading…'
+                : `${visible.length} fragrance${visible.length === 1 ? '' : 's'} · ${size} ml`}
             </p>
 
             <div className="flex items-center gap-2">
@@ -204,6 +273,15 @@ export function Shop() {
             </div>
           </div>
 
+          {/* Volume explainer — one line, always visible, never in the way */}
+          <p className="pt-5 text-[0.8125rem] leading-relaxed text-muted">
+            <span className="text-dark">{sizeCopy.kicker}:</span> {sizeCopy.blurb}{' '}
+            {sizeCopy.sprays}, and{' '}
+            {gender
+              ? `it is the easiest way to find a scent for ${SIZE_QUESTIONS[gender]}.`
+              : 'the volume most people start with.'}
+          </p>
+
           {/* Active chips */}
           <AnimatePresence initial={false}>
             {chips.length > 0 && (
@@ -221,7 +299,7 @@ export function Shop() {
                         if (chip.key === 'genders') navigate('/perfumes', { replace: true })
                         else toggleFacet(chip.key, chip.value)
                       }}
-                      className="inline-flex items-center gap-1.5 rounded-xs border border-dark/12 px-3 py-1.5 text-[0.6875rem] uppercase tracking-[0.14em] text-muted transition-colors hover:border-noir hover:text-noir"
+                      className="inline-flex items-center gap-1.5 rounded-xs border border-noir/12 px-3 py-1.5 text-[0.6875rem] uppercase tracking-[0.14em] text-muted transition-colors hover:border-noir hover:text-noir"
                     >
                       {chip.label}
                       <X className="size-3" aria-hidden="true" />
@@ -238,14 +316,15 @@ export function Shop() {
               <EmptyState
                 icon={<SlidersHorizontal className="size-6" aria-hidden="true" />}
                 eyebrow="No match"
-                title="No fragrance found."
-                description="Nothing on the shelf matches this combination. Loosen a filter, or start again."
-                action={{ label: 'Explore all perfumes', to: '/perfumes' }}
+                title="Nothing matches that."
+                description="No fragrance matches this combination at this size. Loosen a filter, or start again."
+                action={{ label: 'Explore all fragrances', to: '/perfumes' }}
               />
             ) : (
               <ProductGrid
                 products={visible}
-                animationKey={`${sort}-${gender ?? 'all'}-${activeCount}-${queryParam}`}
+                ml={size}
+                animationKey={`${sort}-${size}-${gender ?? 'all'}-${activeCount}-${queryParam}`}
                 loading={loading}
               />
             )}
@@ -274,6 +353,38 @@ export function Shop() {
         }
       >
         <div className="px-6 py-6">
+          <div className="mb-8">
+            <p className="mb-3 text-[0.75rem] font-medium uppercase tracking-[0.16em] text-dark">
+              Size
+            </p>
+            <div className="grid grid-cols-3 gap-2">
+              {DECANT_SIZES.map((ml) => (
+                <button
+                  key={ml}
+                  type="button"
+                  onClick={() => applySize(ml)}
+                  aria-pressed={ml === size}
+                  className={cn(
+                    'rounded-xs border px-3 py-2.5 text-center transition-colors',
+                    ml === size
+                      ? 'border-noir bg-noir text-ivory'
+                      : 'border-noir/15 text-muted hover:border-noir/45',
+                  )}
+                >
+                  <span className="block font-display text-[0.8125rem]">{DECANT_SIZE_COPY[ml].label}</span>
+                  <span
+                    className={cn(
+                      'block text-[0.5625rem] uppercase tracking-[0.14em]',
+                      ml === size ? 'text-gold' : 'text-muted/80',
+                    )}
+                  >
+                    {formatPrice(ENTRY_PRICE[ml])}
+                  </span>
+                </button>
+              ))}
+            </div>
+          </div>
+
           <div className="mb-8">
             <p className="mb-3 text-[0.75rem] font-medium uppercase tracking-[0.16em] text-dark">
               Sort by

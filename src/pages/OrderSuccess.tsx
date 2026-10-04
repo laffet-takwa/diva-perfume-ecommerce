@@ -33,7 +33,7 @@ export function OrderSuccess() {
           eyebrow="No order"
           title="There is no recent order to show."
           description="Once you place an order, your confirmation will appear here with the details and delivery window."
-          action={{ label: 'Discover perfumes', to: '/perfumes' }}
+          action={{ label: 'Shop all decants', to: '/perfumes' }}
         />
       </div>
     )
@@ -101,7 +101,7 @@ export function OrderSuccess() {
       {/* Order detail */}
       <div className="container-lux grid gap-10 py-16 md:py-20 lg:grid-cols-[1.4fr_1fr] lg:gap-16">
         <div>
-          <h2 className="eyebrow mb-6 text-dark">Your fragrances</h2>
+            <h2 className="eyebrow mb-6 text-dark">Your decants</h2>
           <ul className="flex flex-col gap-5">
             {lastOrder.items.map((line) => (
               <li key={line.key} className="flex items-center gap-4 border-b border-dark/10 pb-5 last:border-0">
@@ -124,7 +124,7 @@ export function OrderSuccess() {
                     {line.name}
                   </Link>
                   <p className="mt-0.5 text-[0.6875rem] uppercase tracking-[0.14em] text-muted">
-                    {line.ml}ml · Qty {line.quantity}
+                    {line.ml} ml · Qty {line.quantity}
                   </p>
                 </div>
                 <span className="shrink-0 font-display text-sm text-dark">
@@ -171,7 +171,7 @@ export function OrderSuccess() {
           <div className="rounded-md border border-dark/10 p-6">
             <h2 className="eyebrow mb-5 text-dark">Payment</h2>
             <p className="text-[0.8125rem] text-muted">
-              {lastOrder.payment === 'card' ? 'Paid by card' : 'Cash on delivery'}
+              {lastOrder.payment === 'transfer' ? 'Bank transfer' : 'Cash on delivery'}
             </p>
             <dl className="mt-5 flex flex-col gap-2 border-t border-dark/10 pt-5 text-[0.8125rem]">
               <div className="flex justify-between">

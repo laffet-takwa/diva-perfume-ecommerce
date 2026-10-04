@@ -50,7 +50,8 @@ export function Account() {
             </div>
             <h1 className="display-title text-[clamp(2.1rem,5vw,3.2rem)]">Account</h1>
             <p className="mt-4 max-w-xl text-[0.9375rem] leading-relaxed text-muted">
-              One place for your orders, saved fragrances and delivery details.
+              One place for your orders, saved fragrances and delivery details. Or skip it — most
+              of DIVA runs on WhatsApp.
             </p>
           </Reveal>
         </div>
@@ -156,7 +157,7 @@ export function Account() {
                     You have not placed an order yet.
                   </p>
                   <ButtonLink to="/perfumes" variant="primary" size="sm" arrow className="mt-5">
-                    Discover perfumes
+                    Shop all decants
                   </ButtonLink>
                 </div>
               )}
@@ -169,10 +170,10 @@ export function Account() {
               <h2 className="font-display text-xl text-dark">What membership includes</h2>
               <ul className="mt-5 flex flex-col gap-3.5">
                 {[
-                  'Early access to limited runs before public release',
-                  'Private offers reserved for the Diva World',
+                  'Early access to limited batches before they are listed',
+                  'First look at every new decant, on WhatsApp',
                   'Free returns extended to 30 days',
-                  'Fragrance notes recorded with every order',
+                  'The bottle and batch photo sent with every order',
                 ].map((perk) => (
                   <li key={perk} className="flex items-start gap-3 text-[0.8125rem] text-muted">
                     <Check className="mt-0.5 size-3.5 shrink-0 text-gold" aria-hidden="true" />
@@ -195,7 +196,7 @@ export function Account() {
           <SideLink
             to="/cart"
             icon={<Undo2 className="size-4" aria-hidden="true" />}
-            label="Your bag"
+            label="Your cart"
             count={cartCount}
           />
           <SideLink

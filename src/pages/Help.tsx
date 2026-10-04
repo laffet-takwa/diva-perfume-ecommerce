@@ -1,7 +1,7 @@
 import { Link, useParams } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { ChevronRight, Mail, MapPin, Package, RefreshCw, Search, Truck } from 'lucide-react'
-import { ButtonLink } from '@/components/ui/Button'
+import { WhatsAppLink } from '@/components/ui/WhatsAppLink'
 import { EmptyState } from '@/components/ui/EmptyState'
 import { Field, validateField, validators } from '@/components/ui/Field'
 import Reveal from '@/components/ui/Reveal'
@@ -9,6 +9,7 @@ import { useToast } from '@/context'
 import { useSeo } from '@/hooks/useSeo'
 import { useState } from 'react'
 import { products } from '@/data/products'
+import { whatsappEnquiry, WHATSAPP_DISPLAY, WHATSAPP_HOURS } from '@/lib/whatsapp'
 import { spellCount } from '@/lib/utils'
 
 /* ==========================================================================
@@ -28,72 +29,80 @@ const TOPICS: Topic[] = [
   {
     slug: 'contact',
     title: 'Contact',
-    lede: 'A small team reads every message. We answer within one business day.',
+    lede: 'Every order is confirmed in WhatsApp, and a small team reads every message.',
     icon: Mail,
     sections: [
       {
-        q: 'Where do I write?',
-        a: 'Use the form below or email hello@divastore.example. For order questions, include your order number so we can find you faster.',
+        q: 'How do I order?',
+        a: 'Add decants to your cart and press "Checkout on WhatsApp". Your bag is written out for you — you send it, we confirm the batch and dispatch time, and you pay on delivery or by transfer.',
       },
       {
         q: 'What are your opening hours?',
-        a: 'Monday to Friday, 9:00 – 18:00 CET. Messages sent outside those hours are answered the next morning.',
+        a: 'Every day, 9:00 – 22:00. We usually reply in under 15 minutes while the shop is open.',
+      },
+      {
+        q: 'Do you send a photo of the bottle?',
+        a: 'Yes. Ask before you pay and we will photograph the sealed source bottle with its batch code and expiry date.',
       },
     ],
   },
   {
     slug: 'shipping',
     title: 'Shipping',
-    lede: 'Free delivery on orders over 150 DT, everywhere we ship.',
+    lede: 'Free delivery on orders over 150 DT, everywhere we deliver.',
     icon: Truck,
     sections: [
       {
         q: 'How long does delivery take?',
-        a: 'Standard delivery is 3 – 5 business days. Express delivery is 1 – 2 business days and costs 15 DT.',
+        a: 'Standard delivery is 2 – 4 business days. Express delivery is next business day and costs 12 DT. Decants are poured to order, so an order placed before 2pm leaves the same day.',
       },
       {
         q: 'Do you ship perfume internationally?',
-        a: 'Yes. Fragrance is classified as a flammable liquid, so some routes add a handling day. We will always show the final delivery window before you pay.',
+        a: 'Yes. Decants travel as a small spray rather than a full bottle, which usually means fewer restrictions — but some routes still add a handling day. We always show the delivery window before you pay.',
       },
       {
         q: 'Is shipping free?',
-        a: 'It is free on standard delivery for orders over 150 DT. Below that, standard shipping is 7 DT.',
+        a: 'It is free on standard delivery for orders over 150 DT. Below that, standard delivery is 5 DT.',
       },
     ],
   },
   {
     slug: 'returns',
     title: 'Returns',
-    lede: 'Fourteen days to decide, opened or unopened.',
+    lede: 'Fourteen days to change your mind, sealed or not.',
     icon: RefreshCw,
     sections: [
       {
         q: 'What is your return window?',
-        a: 'Fourteen days from delivery for standard orders, extended to thirty days for Diva World members.',
+        a: 'Fourteen days from delivery. Unopened, sealed decants are refunded in full.',
       },
       {
-        q: 'Can I return an opened flacon?',
-        a: 'We cannot resell opened fragrance, so we refund it at 50%. Unopened, sealed bottles are refunded in full.',
+        q: 'Can I return a decant I have used?',
+        a: 'We cannot resell an opened spray, so we refund a used decant at 50% — unless it arrived damaged or wrong, which we always replace.',
       },
       {
         q: 'How do I start a return?',
-        a: 'Contact us with your order number and the product name. We will send a prepaid label or arrange a collection.',
+        a: 'Message us on WhatsApp with your order number and the fragrance. We arrange the collection from you.',
       },
     ],
   },
   {
     slug: 'faq',
     title: 'Frequently asked',
-    lede: 'The questions our clients ask most often.',
+    lede: 'The questions decant customers ask most often.',
     icon: Search,
     sections: [
       {
-        q: 'How do I choose a fragrance I have never smelled?',
-        a: 'Start with the scent finder. Three questions about mood, notes and occasion narrow the shelf to three fragrances that share a structure.',
+        q: 'Which size should I start with?',
+        a: 'Start at 3 ml. It is roughly forty sprays, enough to judge a fragrance over a full week of work and weekend — and it is the cheapest volume we sell.',
       },
       {
-        q: 'How long does a bottle last?',
-        a: 'Eau de parfum lasts 6 – 10 hours on skin depending on formula and skin type. Two sprays is the usual recommendation.',
+        q: 'How long does a decant last?',
+        a: 'An eau de parfum lasts 6 – 10 hours on skin depending on formula and skin type. Two sprays is the usual recommendation, so 5 ml is roughly a month of daily wear.',
+      },
+      {
+        q: 'How do I know the decant is authentic?',
+        a: 'Every decant is poured from a sealed bottle bought at full retail. We photograph the batch and the fill date before dispatch, and we will open the source bottle on a video call if you want to see it first.',
       },
       {
         q: 'Are your fragrances unisex?',
@@ -101,7 +110,7 @@ const TOPICS: Topic[] = [
       },
       {
         q: 'Can I change my order after placing it?',
-        a: 'Yes, within one hour of ordering. Contact us with your order number and the change you need.',
+        a: 'Yes, until the decant is poured — usually a couple of hours. Message us on WhatsApp with your order number and the change you need.',
       },
     ],
   },
@@ -113,15 +122,15 @@ const TOPICS: Topic[] = [
     sections: [
       {
         q: 'Where do I find my order number?',
-        a: 'On your confirmation page, and in your account. It always starts with DV- followed by eight characters.',
+        a: 'On your confirmation page, in your account, and in the WhatsApp thread where you sent the order.',
       },
       {
         q: 'Where can I see the status?',
-        a: 'Your account shows the current status and the estimated delivery window. We also email you at every stage.',
+        a: 'We send the tracking link in the same WhatsApp chat as soon as the parcel leaves us, and again if the courier updates it.',
       },
       {
         q: 'My order is late. What now?',
-        a: 'Contact us with your order number. If the parcel is lost we will reship immediately, at no cost to you.',
+        a: 'Message us with your order number. If the parcel is lost we reship immediately, at no cost to you.',
       },
     ],
   },
@@ -207,9 +216,14 @@ export function Help() {
                     Send message
                   </button>
                 </div>
-                <p className="mt-4 flex items-center gap-2 text-[0.6875rem] text-muted">
-                  <MapPin className="size-3.5" aria-hidden="true" />
-                  Atelier visits by appointment — Tunis.
+                <p className="mt-4 flex flex-wrap items-center gap-x-5 gap-y-2 text-[0.6875rem] text-muted">
+                  <span className="flex items-center gap-2">
+                    <MapPin className="size-3.5" aria-hidden="true" />
+                    Decanted by hand — Tunis
+                  </span>
+                  <span className="flex items-center gap-2">
+                    WhatsApp {WHATSAPP_DISPLAY} · {WHATSAPP_HOURS}
+                  </span>
                 </p>
               </form>
             </Reveal>
@@ -242,11 +256,19 @@ export function Help() {
           >
             <p className="font-display text-base text-dark">Still deciding?</p>
             <p className="mt-2 text-[0.8125rem] leading-relaxed text-muted">
-              Three questions, three signatures from {products.length} fragrances.
+              Message us and we will pick three from {products.length} fragrances — matched to your
+              taste and your budget.
             </p>
-            <ButtonLink to="/#finder" variant="ghost" size="sm" arrow className="mt-4 px-0">
-              Find my signature
-            </ButtonLink>
+            <WhatsAppLink
+              href={whatsappEnquiry(
+                'Hi DIVA! Can you recommend three fragrances for me? Here is what I usually like…',
+              )}
+              tone="whatsapp"
+              size="sm"
+              className="mt-4"
+            >
+              Ask for a recommendation
+            </WhatsAppLink>
           </motion.div>
         </aside>
       </div>
@@ -272,7 +294,7 @@ export function HelpIndex() {
         </Reveal>
 
         {TOPICS.length === 0 ? (
-          <EmptyState title="No help topics yet." action={{ label: 'Explore perfumes', to: '/perfumes' }} />
+          <EmptyState title="No help topics yet." action={{ label: 'Explore all decants', to: '/perfumes' }} />
         ) : (
           <ul className="mt-12 grid gap-4 sm:grid-cols-2">
             {TOPICS.map((topic, i) => (

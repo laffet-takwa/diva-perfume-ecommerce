@@ -17,7 +17,7 @@ import { productLineKey, readStorage, writeStorage } from '@/lib/utils'
    One line per product + volume. Persisted to localStorage.
    ========================================================================== */
 
-/* v2 — the decant model added `fullBottlePrice` to every line, so a stored bag
+/* v2 — the decant model added `fullBottlePrice` to every line, so a stored cart
    from the full-bottle era is dropped rather than mis-priced. */
 const STORAGE_KEY = 'diva.cart.v2'
 
@@ -111,7 +111,7 @@ interface CartContextValue {
   freeShippingProgress: number
   qualifiesForFreeShipping: boolean
   isDrawerOpen: boolean
-  addToCart: (productId: string, ml?: number, quantity?: number) => void
+  addToCart: (productId: string, ml?: DecantSize, quantity?: number) => void
   removeFromCart: (key: string) => void
   updateQuantity: (key: string, quantity: number) => void
   clearCart: () => void

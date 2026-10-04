@@ -1,3 +1,9 @@
+/* ==========================================================================
+   DIVA STORE — Navigation, footer and store constants
+   ========================================================================== */
+
+import { WHATSAPP_LINK } from '@/lib/whatsapp'
+
 export interface NavItem {
   label: string
   to: string
@@ -5,11 +11,12 @@ export interface NavItem {
 
 export const NAV_ITEMS: NavItem[] = [
   { label: 'Home', to: '/' },
-  { label: 'Perfumes', to: '/perfumes' },
-  { label: 'Women', to: '/perfumes/women' },
-  { label: 'Men', to: '/perfumes/men' },
-  { label: 'Unisex', to: '/perfumes/unisex' },
-  { label: 'Collections', to: '/collections' },
+  { label: 'Shop All', to: '/perfumes' },
+  { label: '3 ml', to: '/perfumes?size=3' },
+  { label: '5 ml', to: '/perfumes?size=5' },
+  { label: '10 ml', to: '/perfumes?size=10' },
+  { label: 'For Her', to: '/perfumes/women' },
+  { label: 'For Him', to: '/perfumes/men' },
   { label: 'About', to: '/about' },
 ]
 
@@ -22,42 +29,49 @@ export const FOOTER_COLUMNS: FooterColumn[] = [
   {
     title: 'Shop',
     links: [
-      { label: 'Women', to: '/perfumes/women' },
-      { label: 'Men', to: '/perfumes/men' },
-      { label: 'Unisex', to: '/perfumes/unisex' },
+      { label: 'All fragrances', to: '/perfumes' },
+      { label: '3 ml decants', to: '/perfumes?size=3' },
+      { label: '5 ml decants', to: '/perfumes?size=5' },
+      { label: '10 ml decants', to: '/perfumes?size=10' },
       { label: 'Best Sellers', to: '/collections?edit=bestsellers' },
-      { label: 'New Arrivals', to: '/collections?edit=new-arrivals' },
+    ],
+  },
+  {
+    title: 'For',
+    links: [
+      { label: 'For Her', to: '/perfumes/women' },
+      { label: 'For Him', to: '/perfumes/men' },
+      { label: 'Unisex', to: '/perfumes/unisex' },
+      { label: 'Try first · 3 ml', to: '/collections?edit=try-first' },
+      { label: 'Best value · 10 ml', to: '/collections?edit=value' },
     ],
   },
   {
     title: 'Help',
     links: [
       { label: 'Contact', to: '/help/contact' },
-      { label: 'Shipping', to: '/help/shipping' },
+      { label: 'How decants work', to: '/help/shipping' },
       { label: 'Returns', to: '/help/returns' },
       { label: 'FAQ', to: '/help/faq' },
-      { label: 'Track Order', to: '/help/track-order' },
-    ],
-  },
-  {
-    title: 'Diva Store',
-    links: [
-      { label: 'About Us', to: '/about' },
-      { label: 'Our Story', to: '/about#story' },
-      { label: 'Careers', to: '/about#careers' },
-      { label: 'Journal', to: '/about#journal' },
+      { label: 'Track order', to: '/help/track-order' },
     ],
   },
 ]
 
-export const SOCIAL_LINKS: { label: string; href: string }[] = [
-  { label: 'Instagram', href: 'https://instagram.com' },
-  { label: 'TikTok', href: 'https://tiktok.com' },
-  { label: 'Facebook', href: 'https://facebook.com' },
-  { label: 'Pinterest', href: 'https://pinterest.com' },
+export interface SocialLink {
+  label: string
+  href: string
+  handle: string
+}
+
+/** Only the three channels the house actually runs. */
+export const SOCIAL_LINKS: SocialLink[] = [
+  { label: 'Instagram', handle: '@divastore', href: 'https://instagram.com/divastore' },
+  { label: 'TikTok', handle: '@divastore', href: 'https://tiktok.com/@divastore' },
+  { label: 'WhatsApp', handle: 'Chat with us', href: WHATSAPP_LINK },
 ]
+
+export const FREE_SHIPPING_COPY = 'Free delivery over 150 DT'
 
 export const ANNOUNCEMENT =
-  'Free shipping on orders over 150 DT — Free delivery • Easy returns • Secure payment'
-
-export const FREE_SHIPPING_COPY = 'Free shipping on orders over 150 DT'
+  'Decanted to order · 3 / 5 / 10 ml · Free delivery over 150 DT · Pay cash on delivery'

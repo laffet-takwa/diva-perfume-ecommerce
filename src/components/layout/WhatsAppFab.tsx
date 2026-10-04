@@ -9,8 +9,8 @@ import { EASE_LUX } from '@/lib/motion'
 /* ==========================================================================
    WhatsAppFab — the persistent "order on WhatsApp" handle.
    Hidden until the customer has shown intent (scrolled past the hero or added
-   something to the bag) so it never competes with the hero CTA, and hidden
-   entirely while the bag drawer is open.
+   something to the cart) so it never competes with the hero CTA, and hidden
+   entirely while the cart drawer is open.
    ========================================================================== */
 
 export function WhatsAppFab() {
@@ -38,7 +38,7 @@ export function WhatsAppFab() {
     }
   }, [onHome])
 
-  // Adding to the bag is the strongest intent signal there is.
+  // Adding to the cart is the strongest intent signal there is.
   const shown = visible && !isDrawerOpen && count === 0
 
   return (

@@ -69,7 +69,7 @@ export function whatsappCheckout({
   subtotal: number
   shipping: number
   total: number
-  /** Omitted when checking out straight from the bag, before any details form */
+  /** Omitted when checking out straight from the cart, before any details form */
   customer?: CustomerDetails
 }): string {
   const rows = lines.map(

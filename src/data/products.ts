@@ -29,6 +29,16 @@ export const HERO_DECANT: DecantSize = 5
 /** Every volume we decant, smallest first — drives the size pickers. */
 export const DECANT_SIZES: readonly DecantSize[] = [3, 5, 10]
 
+/**
+ * What a decant costs as a share of the full bottle's price per millilitre.
+ * Small volumes pay a higher rate because the handling is the same whether we
+ * pour 3 ml or 10 — which is why 10 ml is always the best value per spray.
+ */
+const RATE_PER_ML: Record<DecantSize, number> = { 3: 0.85, 5: 0.78, 10: 0.68 }
+
+/** Entry prices never fall below these, however cheap the fragrance is. */
+const FLOOR: Record<DecantSize, number> = { 3: 15, 5: 20, 10: 30 }
+
 /** Copy per volume, used by the size pickers and the shop-by-size shelf. */
 export const DECANT_SIZE_COPY: Record<
   DecantSize,
@@ -55,21 +65,18 @@ export const DECANT_SIZE_COPY: Record<
 }
 
 /**
- * Derives the decant ladder from the retail price of the full bottle.
- * The curve is gently sub-linear — bigger decants cost less per millilitre, the
- * way they do in every decant house — with a floor so entry-level fragrances
- * never decants down to an unviable ticket.
+ * Derives the decant ladder from the retail price of the 100 ml bottle.
+ * Prices are worked out per millilitre rather than as a flat percentage, so the
+ * saving is real at every volume and 10 ml is always the cheapest per spray.
  */
-function decants(retail: number): ProductSize[] {
-  const price = (ratio: number, floor: number) => Math.max(floor, Math.round((retail * ratio) / 5) * 5)
-  return [
-    { ml: 3, price: price(0.12, 25) },
-    { ml: 5, price: price(0.18, 35) },
-    { ml: 10, price: price(0.3, 55) },
-  ]
+function decants(bottle100: number): ProductSize[] {
+  const perMl = bottle100 / FULL_BOTTLE_ML
+  const price = (ml: DecantSize) =>
+    Math.max(FLOOR[ml], Math.round((perMl * ml * RATE_PER_ML[ml]) / 5) * 5)
+  return DECANT_SIZES.map((ml) => ({ ml, price: price(ml) }))
 }
 
-/** A catalogue entry as authored: `retail` is the price of the full bottle. */
+/** A catalogue entry as authored: `retail` is the price of the 100 ml bottle. */
 type ProductSeed = Omit<Product, 'price' | 'sizes' | 'fullBottle'> & { retail: number }
 
 const SEED: ProductSeed[] = [
@@ -79,7 +86,7 @@ const SEED: ProductSeed[] = [
     slug: 'chanel-coco-mademoiselle',
     name: 'Coco Mademoiselle',
     brand: 'Chanel',
-    retail: 389,
+    retail: 1150,
     category: 'Floral',
     categoryLabel: 'Floral Eau de Parfum',
     gender: 'women',
@@ -108,7 +115,7 @@ const SEED: ProductSeed[] = [
     slug: 'dior-jadore',
     name: "J'adore",
     brand: 'Dior',
-    retail: 349,
+    retail: 880,
     category: 'Floral',
     categoryLabel: 'Floral Eau de Parfum',
     gender: 'women',
@@ -124,7 +131,7 @@ const SEED: ProductSeed[] = [
     longDescription:
       "J'adore is sunlight through glass. Pear, melon and magnolia arrive bright and golden, then rose and jasmine unfurl at the heart. It dries down to musk, vanilla and a whisper of violet leaf — polished, never sweet for the sake of it. The bottle's gold collar is as famous as the scent inside it.",
     photo: '/images/products/dior-jadore.jpg',
-    photoAlt: 'Dior J’adore Eau de Parfum bottle',
+    photoAlt: 'Dior Jadore Eau de Parfum bottle',
     photoTone: 'light',
     art: { juice: '#F0C563', glass: '#FBEBC6', cap: '#B99A52', hardware: '#8E6B2E', backdrop: '#F7EFDC', silhouette: 'oval' },
     moods: ['Elegant', 'Romantic'],
@@ -137,7 +144,7 @@ const SEED: ProductSeed[] = [
     slug: 'parfums-de-marly-delina',
     name: 'Delina',
     brand: 'Parfums de Marly',
-    retail: 520,
+    retail: 1450,
     category: 'Floral',
     categoryLabel: 'Floral Eau de Parfum',
     gender: 'women',
@@ -166,7 +173,7 @@ const SEED: ProductSeed[] = [
     slug: 'viktor-rolf-flowerbomb',
     name: 'Flowerbomb',
     brand: 'Viktor&Rolf',
-    retail: 389,
+    retail: 900,
     category: 'Floral',
     categoryLabel: 'Floral Eau de Parfum',
     gender: 'women',
@@ -195,7 +202,7 @@ const SEED: ProductSeed[] = [
     slug: 'gucci-bloom',
     name: 'Bloom',
     brand: 'Gucci',
-    retail: 249,
+    retail: 620,
     category: 'Floral',
     categoryLabel: 'Floral Eau de Toilette',
     gender: 'women',
@@ -224,7 +231,7 @@ const SEED: ProductSeed[] = [
     slug: 'ysl-mon-paris',
     name: 'Mon Paris',
     brand: 'YSL',
-    retail: 329,
+    retail: 980,
     category: 'Floral',
     categoryLabel: 'Floral Fruity Eau de Parfum',
     gender: 'women',
@@ -252,7 +259,7 @@ const SEED: ProductSeed[] = [
     slug: 'giorgio-armani-si',
     name: 'Sì',
     brand: 'Giorgio Armani',
-    retail: 289,
+    retail: 950,
     category: 'Oriental',
     categoryLabel: 'Floral Oriental Eau de Parfum',
     gender: 'women',
@@ -280,7 +287,7 @@ const SEED: ProductSeed[] = [
     slug: 'chanel-no-5',
     name: 'N°5 Eau de Parfum',
     brand: 'Chanel',
-    retail: 419,
+    retail: 850,
     category: 'Floral',
     categoryLabel: 'Floral Aldehyde Eau de Parfum',
     gender: 'women',
@@ -309,7 +316,7 @@ const SEED: ProductSeed[] = [
     slug: 'carolina-herrera-good-girl',
     name: 'Good Girl',
     brand: 'Carolina Herrera',
-    retail: 369,
+    retail: 780,
     category: 'Floral',
     categoryLabel: 'Floral Amber Eau de Parfum',
     gender: 'women',
@@ -334,7 +341,7 @@ const SEED: ProductSeed[] = [
     slug: 'lancome-la-vie-est-belle',
     name: 'La Vie Est Belle',
     brand: 'Lancôme',
-    retail: 259,
+    retail: 720,
     category: 'Gourmand',
     categoryLabel: 'Floral Gourmand Eau de Parfum',
     gender: 'women',
@@ -362,7 +369,7 @@ const SEED: ProductSeed[] = [
     slug: 'jean-paul-gaultier-scandal',
     name: 'Scandal',
     brand: 'Jean Paul Gaultier',
-    retail: 299,
+    retail: 700,
     category: 'Oriental',
     categoryLabel: 'Oriental Gourmand Eau de Parfum',
     gender: 'women',
@@ -387,7 +394,7 @@ const SEED: ProductSeed[] = [
     slug: 'narciso-rodriguez-for-her',
     name: 'For Her',
     brand: 'Narciso Rodriguez',
-    retail: 239,
+    retail: 640,
     category: 'Musk',
     categoryLabel: 'Musk Eau de Toilette',
     gender: 'women',
@@ -417,7 +424,7 @@ const SEED: ProductSeed[] = [
     slug: 'dior-sauvage',
     name: 'Sauvage',
     brand: 'Dior',
-    retail: 359,
+    retail: 820,
     category: 'Fresh',
     categoryLabel: 'Fresh Woody Eau de Parfum',
     gender: 'men',
@@ -446,7 +453,7 @@ const SEED: ProductSeed[] = [
     slug: 'tom-ford-ombre-leather',
     name: 'Ombré Leather',
     brand: 'Tom Ford',
-    retail: 690,
+    retail: 1150,
     category: 'Woody',
     categoryLabel: 'Woody Leather Parfum',
     gender: 'men',
@@ -461,7 +468,7 @@ const SEED: ProductSeed[] = [
     description: 'High leather, high stitch — the expensive one.',
     longDescription:
       'Cardamom, saffron and artemisia flare up front before leather takes over the middle. Jasmine and orris soften it just enough, and amber, benzoin, sandalwood and cedar give it a long, glossy trail. This is the fragrance people buy when they have something to prove.',
-    photo: '/images/products/tom-ford-ombre-leather.png',
+    photo: '/images/products/tom-ford-ombre-leather.jpg',
     photoAlt: 'Tom Ford Ombre Leather Eau de Parfum bottle',
     photoTone: 'light',
     art: { juice: '#8E4A2E', glass: '#A8663F', cap: '#2E2320', hardware: '#B99A52', backdrop: '#EFE2D6', silhouette: 'rect' },
@@ -475,7 +482,7 @@ const SEED: ProductSeed[] = [
     slug: 'ysl-y-edp',
     name: 'Y Eau de Parfum',
     brand: 'YSL',
-    retail: 309,
+    retail: 850,
     category: 'Fresh',
     categoryLabel: 'Fresh Woody Eau de Parfum',
     gender: 'men',
@@ -500,7 +507,7 @@ const SEED: ProductSeed[] = [
     slug: 'prada-luna-rossa',
     name: 'Luna Rossa',
     brand: 'Prada',
-    retail: 259,
+    retail: 780,
     category: 'Woody',
     categoryLabel: 'Aromatic Fresh Eau de Toilette',
     gender: 'men',
@@ -528,7 +535,7 @@ const SEED: ProductSeed[] = [
     slug: 'versace-eros',
     name: 'Eros',
     brand: 'Versace',
-    retail: 239,
+    retail: 480,
     category: 'Fresh',
     categoryLabel: 'Fresh Vanilla Eau de Parfum',
     gender: 'men',
@@ -556,7 +563,7 @@ const SEED: ProductSeed[] = [
     slug: 'giorgio-armani-acqua-di-gio',
     name: 'Acqua di Gio',
     brand: 'Giorgio Armani',
-    retail: 259,
+    retail: 620,
     category: 'Fresh',
     categoryLabel: 'Aquatic Fresh Eau de Toilette',
     gender: 'men',
@@ -584,7 +591,7 @@ const SEED: ProductSeed[] = [
     slug: 'bvlgari-bzero1',
     name: 'B.zero1',
     brand: 'Bvlgari',
-    retail: 289,
+    retail: 950,
     category: 'Woody',
     categoryLabel: 'Woody Aromatic Eau de Toilette',
     gender: 'men',
@@ -609,7 +616,7 @@ const SEED: ProductSeed[] = [
     slug: 'montblanc-explorer',
     name: 'Explorer',
     brand: 'Montblanc',
-    retail: 259,
+    retail: 680,
     category: 'Woody',
     categoryLabel: 'Woody Fresh Eau de Parfum',
     gender: 'men',
@@ -634,7 +641,7 @@ const SEED: ProductSeed[] = [
     slug: 'paco-rabanne-invictus',
     name: 'Invictus',
     brand: 'Paco Rabanne',
-    retail: 219,
+    retail: 460,
     category: 'Fresh',
     categoryLabel: 'Fresh Amber Eau de Toilette',
     gender: 'men',
@@ -662,7 +669,7 @@ const SEED: ProductSeed[] = [
     slug: 'narciso-rodriguez-pour-homme',
     name: 'Pour Homme',
     brand: 'Narciso Rodriguez',
-    retail: 229,
+    retail: 620,
     category: 'Musk',
     categoryLabel: 'Musk Eau de Toilette',
     gender: 'men',
@@ -689,7 +696,7 @@ const SEED: ProductSeed[] = [
     slug: 'glossier-you',
     name: 'You',
     brand: 'Glossier',
-    retail: 289,
+    retail: 750,
     category: 'Musk',
     categoryLabel: 'Amber Musk Eau de Parfum',
     gender: 'unisex',
@@ -714,7 +721,7 @@ const SEED: ProductSeed[] = [
     slug: 'chanel-cristalle',
     name: 'Cristalle',
     brand: 'Chanel',
-    retail: 419,
+    retail: 1100,
     category: 'Floral',
     categoryLabel: 'Citrus Floral Eau de Parfum',
     gender: 'unisex',
@@ -743,7 +750,7 @@ const SEED: ProductSeed[] = [
     slug: 'tom-ford-neroli-portofino',
     name: 'Neroli Portofino',
     brand: 'Tom Ford',
-    retail: 640,
+    retail: 1500,
     category: 'Woody',
     categoryLabel: 'Citrus Woody Eau de Parfum',
     gender: 'unisex',
@@ -769,7 +776,7 @@ const SEED: ProductSeed[] = [
     slug: 'jo-malone-lime-basil-neroli',
     name: 'Lime Basil & Neroli',
     brand: 'Jo Malone',
-    retail: 299,
+    retail: 560,
     category: 'Citrus',
     categoryLabel: 'Citrus Cologne Intense',
     gender: 'unisex',
@@ -794,7 +801,7 @@ const SEED: ProductSeed[] = [
     slug: 'le-labo-bergamote-22',
     name: 'Bergamote 22',
     brand: 'Le Labo',
-    retail: 390,
+    retail: 1000,
     category: 'Citrus',
     categoryLabel: 'Citrus Woody Eau de Parfum',
     gender: 'unisex',
@@ -858,17 +865,27 @@ export function getPriceForSize(product: Product, ml: number): number {
   return getSize(product.sizes, ml).price
 }
 
-/** What the same volume costs inside the original bottle — the savings story. */
+/** What the decant costs per millilitre, rounded for display. */
 export function pricePerMl(product: Product, ml: number): number {
-  return getPriceForSize(product, ml) / ml
+  return Math.round((getPriceForSize(product, ml) / ml) * 10) / 10
 }
 
+/** What the same volume costs inside the original bottle. */
 export function fullBottlePricePerMl(product: Product): number {
-  return product.fullBottle.price / product.fullBottle.ml
+  return Math.round((product.fullBottle.price / product.fullBottle.ml) * 10) / 10
 }
 
-/** Whole percent saved against the full bottle, e.g. 88. */
+/**
+ * Whole percent saved against buying the bottle — the hook every decant house
+ * leads with. Capped at 97% so the figure stays believable on cheap juices.
+ */
 export function savingsPercent(product: Product, ml: number): number {
+  const saving = Math.round((1 - getPriceForSize(product, ml) / product.fullBottle.price) * 100)
+  return Math.min(saving, 97)
+}
+
+/** Whole percent cheaper per millilitre than the bottle — the honest version. */
+export function rateSavingPercent(product: Product, ml: number): number {
   return Math.round((1 - pricePerMl(product, ml) / fullBottlePricePerMl(product)) * 100)
 }
 
@@ -893,12 +910,24 @@ export const FOR_EVERYONE = [...products]
   .filter((p) => p.gender === 'unisex')
   .sort((a, b) => b.popularity - a.popularity)
 
-/** Cheapest 3 ml across the house — the price the hero promises. */
-export const ENTRY_DECANT = Math.min(...products.map((p) => getPriceForSize(p, 3)))
+/** Cheapest price at each volume — the entry price for every size shelf. */
+export const ENTRY_PRICE: Record<DecantSize, number> = {
+  3: Math.min(...products.map((p) => getPriceForSize(p, 3))),
+  5: Math.min(...products.map((p) => getPriceForSize(p, 5))),
+  10: Math.min(...products.map((p) => getPriceForSize(p, 10))),
+}
 
-/** Everything is decanted from a 100 ml bottle, so this is the headline saving. */
-export const AVERAGE_SAVINGS = Math.round(
-  products.reduce((sum, p) => sum + savingsPercent(p, HERO_DECANT), 0) / products.length,
+/** The headline price the hero promises: our smallest ticket. */
+export const ENTRY_DECANT = ENTRY_PRICE[3]
+
+/** What the house's flagship 5 ml volume costs at the middle of the shelf. */
+export const MEDIAN_DECANT = [...products]
+  .map((p) => getPriceForSize(p, HERO_DECANT))
+  .sort((a, b) => a - b)[Math.floor(products.length / 2)]
+
+/** Every volume is cheaper per millilitre than the bottle it came from. */
+export const AVERAGE_RATE_SAVING = Math.round(
+  products.reduce((sum, p) => sum + rateSavingPercent(p, HERO_DECANT), 0) / products.length,
 )
 
 export const DEFAULT_ART: ProductArt = {
