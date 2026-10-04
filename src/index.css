@@ -1,0 +1,406 @@
+@import 'tailwindcss';
+
+/* ==========================================================================
+   DIVA STORE — DESIGN SYSTEM
+   Brand: Premium perfume house. Cream paper, deep burgundy ink, gold accents.
+   ========================================================================== */
+
+@theme {
+  /* --- Brand palette ---------------------------------------------------- */
+  --color-burgundy: #4a1728;
+  --color-burgundy-deep: #3a1020;
+  --color-burgundy-soft: #6b2438;
+  --color-rose: #c98f9f;
+  --color-rose-pale: #e6c3cd;
+  --color-gold: #c9a45c;
+  --color-gold-pale: #e3cd9d;
+  --color-cream: #f7f1ea;
+  --color-cream-deep: #f0e7dc;
+  --color-champagne: #e8d8c3;
+  --color-dark: #171315;
+  --color-ink: #2a2325;
+  --color-muted: #8e8588;
+
+  /* --- Typography -------------------------------------------------------- */
+  --font-display: 'Playfair Display', 'Iowan Old Style', Georgia, 'Times New Roman', serif;
+  --font-quote: 'Cormorant Garamond', 'Playfair Display', Georgia, serif;
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+
+  /* --- Radii (small + elegant, never pill-cartoons) ---------------------- */
+  --radius-xs: 4px;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-pill: 999px;
+
+  /* --- Motion ------------------------------------------------------------ */
+  --ease-lux: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-inout: cubic-bezier(0.65, 0, 0.35, 1);
+
+  /* --- Layout ------------------------------------------------------------ */
+  --spacing-header: 4.5rem;
+
+  --shadow-lift: 0 1px 2px rgb(23 19 21 / 0.04), 0 12px 32px -12px rgb(23 19 21 / 0.14);
+  --shadow-float: 0 24px 60px -24px rgb(23 19 21 / 0.28);
+  --shadow-panel: 0 30px 80px -30px rgb(23 19 21 / 0.35);
+}
+
+/* ==========================================================================
+   BASE
+   ========================================================================== */
+
+@layer base {
+  *,
+  *::before,
+  *::after {
+    border-color: color-mix(in srgb, var(--color-dark) 10%, transparent);
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-behavior: smooth;
+    /* Sticky header offset for in-page anchors */
+    scroll-padding-top: 7rem;
+  }
+
+  body {
+    background-color: var(--color-cream);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-weight: 400;
+    letter-spacing: 0.01em;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    overflow-x: hidden;
+  }
+
+  /* Custom cursor (desktop only, injected via .has-custom-cursor) */
+  body.has-custom-cursor,
+  body.has-custom-cursor * {
+    cursor: none !important;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5 {
+    font-family: var(--font-display);
+    color: var(--color-dark);
+    font-weight: 500;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  /* Visible, on-brand focus for keyboard users only */
+  :focus-visible {
+    outline: 2px solid var(--color-burgundy);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  ::selection {
+    background-color: var(--color-burgundy);
+    color: var(--color-cream);
+  }
+
+  /* Restrained scrollbar */
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--color-cream-deep);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: color-mix(in srgb, var(--color-burgundy) 25%, transparent);
+    border: 3px solid var(--color-cream-deep);
+    border-radius: 999px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: color-mix(in srgb, var(--color-burgundy) 45%, transparent);
+  }
+
+  input,
+  textarea,
+  select,
+  button {
+    font: inherit;
+    color: inherit;
+  }
+
+  img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  /* Remove number input spinners — quantity steppers are custom */
+  input[type='number']::-webkit-outer-spin-button,
+  input[type='number']::-webkit-inner-spin-button {
+    appearance: none;
+    margin: 0;
+  }
+  input[type='number'] {
+    appearance: textfield;
+    -moz-appearance: textfield;
+  }
+
+  /* Range slider — luxury thin gold track */
+  input[type='range'] {
+    appearance: none;
+    background: transparent;
+    cursor: pointer;
+  }
+  input[type='range']::-webkit-slider-runnable-track {
+    height: 2px;
+    background: color-mix(in srgb, var(--color-dark) 14%, transparent);
+  }
+  input[type='range']::-webkit-slider-thumb {
+    appearance: none;
+    margin-top: -7px;
+    width: 16px;
+    height: 16px;
+    border-radius: 999px;
+    background: var(--color-cream);
+    border: 1px solid var(--color-burgundy);
+    box-shadow: 0 2px 8px -2px rgb(23 19 21 / 0.3);
+  }
+  input[type='range']::-moz-range-track {
+    height: 2px;
+    background: color-mix(in srgb, var(--color-dark) 14%, transparent);
+  }
+  input[type='range']::-moz-range-thumb {
+    width: 16px;
+    height: 16px;
+    border: 1px solid var(--color-burgundy);
+    border-radius: 999px;
+    background: var(--color-cream);
+  }
+  input[type='range']:focus-visible::-webkit-slider-thumb {
+    outline: 2px solid var(--color-burgundy);
+    outline-offset: 2px;
+  }
+}
+
+/* ==========================================================================
+   UTILITIES
+   ========================================================================== */
+
+@utility container-lux {
+  width: 100%;
+  margin-inline: auto;
+  max-width: 88rem;
+  padding-inline: 1.25rem;
+  @media (min-width: 768px) {
+    padding-inline: 2.5rem;
+  }
+  @media (min-width: 1280px) {
+    padding-inline: 3.5rem;
+  }
+}
+
+/* Editorial eyebrow: letterspaced micro-caps with a gold rule */
+@utility eyebrow {
+  font-family: var(--font-sans);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+}
+
+@utility eyebrow-rule {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+@utility display-title {
+  font-family: var(--font-display);
+  font-weight: 500;
+  line-height: 1.02;
+  letter-spacing: -0.015em;
+}
+
+@utility body-copy {
+  font-size: 0.9375rem;
+  line-height: 1.75;
+  color: var(--color-muted);
+  @media (min-width: 768px) {
+    font-size: 1rem;
+  }
+}
+
+/* Gold hairline used to separate premium sections */
+@utility gold-hairline {
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    transparent,
+    color-mix(in srgb, var(--color-gold) 55%, transparent),
+    transparent
+  );
+}
+
+/* Film-grain overlay — keeps large flat surfaces from looking digital */
+@utility grain {
+  position: relative;
+  isolation: isolate;
+}
+@utility grain-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.5;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='0.22'/%3E%3C/svg%3E");
+}
+
+@utility no-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* Animates a single-line <a> underline from left to right */
+@utility link-underline {
+  position: relative;
+  &::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -3px;
+    height: 1px;
+    width: 100%;
+    background: currentColor;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 400ms var(--ease-lux);
+  }
+  &:hover::after,
+  &:focus-visible::after {
+    transform: scaleX(1);
+  }
+}
+
+@utility link-underline-static {
+  position: relative;
+  &::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -3px;
+    height: 1px;
+    width: 100%;
+    background: currentColor;
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 400ms var(--ease-lux);
+  }
+  &:hover::after,
+  &:focus-visible::after {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+}
+
+/* Vertical editorial text */
+@utility vertical-text {
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+}
+
+/* Shimmer for skeletons — deliberately slow and low contrast */
+@utility shimmer {
+  position: relative;
+  overflow: hidden;
+  background-color: var(--color-cream-deep);
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    transform: translateX(-100%);
+    background-image: linear-gradient(
+      90deg,
+      transparent,
+      rgb(255 255 255 / 0.55),
+      transparent
+    );
+    animation: diva-shimmer 2.4s var(--ease-inout) infinite;
+  }
+}
+
+/* Mask used by the horizontal carousels to fade their trailing edge */
+@utility mask-fade-x {
+  mask-image: linear-gradient(to right, transparent, black 3rem, black calc(100% - 3rem), transparent);
+}
+
+@utility safe-bottom {
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+/* ==========================================================================
+   KEYFRAMES
+   ========================================================================== */
+
+@keyframes diva-shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes diva-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes diva-scroll-hint {
+  0%,
+  100% {
+    transform: translateY(0);
+    opacity: 0.45;
+  }
+  50% {
+    transform: translateY(8px);
+    opacity: 1;
+  }
+}
+
+@keyframes diva-marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* ==========================================================================
+   REDUCED MOTION — kill non-essential animation, keep the interface usable
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
