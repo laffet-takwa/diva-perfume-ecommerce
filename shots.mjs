@@ -12,6 +12,17 @@ const browser = await puppeteer.launch({
 })
 
 const shots = [
+  // Hero crop matrix — the campaign portrait must keep its face at every size
+  { name: 'hero-1920x1080', path: '/', w: 1920, h: 1080, full: false, wait: 2400 },
+  { name: 'hero-1600x900', path: '/', w: 1600, h: 900, full: false, wait: 2400 },
+  { name: 'hero-1440x1000', path: '/', w: 1440, h: 1000, full: false, wait: 2400 },
+  { name: 'hero-1366x768', path: '/', w: 1366, h: 768, full: false, wait: 2400 },
+  { name: 'hero-1280x720', path: '/', w: 1280, h: 720, full: false, wait: 2400 },
+  { name: 'hero-1024x768', path: '/', w: 1024, h: 768, full: false, wait: 2400 },
+  { name: 'hero-834x1112', path: '/', w: 834, h: 1112, full: false, wait: 2400 },
+  { name: 'hero-390x844', path: '/', w: 390, h: 844, full: false, wait: 2400 },
+  { name: 'hero-360x640', path: '/', w: 360, h: 640, full: false, wait: 2400 },
+
   { name: 'home-hero', path: '/', w: 1440, h: 1000, full: false, wait: 2600 },
   { name: 'home-full', path: '/', w: 1440, h: 1000, full: true, wait: 3200 },
   { name: 'home-mobile', path: '/', w: 390, h: 844, full: false, wait: 2600 },

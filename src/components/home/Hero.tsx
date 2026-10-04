@@ -64,9 +64,10 @@ export function Hero() {
             alt={CAMPAIGN_IMAGE.alt}
             frame="tall"
             priority
-            parallax={reduceMotion ? 0 : 5}
+            focus="50% 12%"
+            parallax={reduceMotion ? 0 : 3}
             feather="left"
-            className="w-full sm:max-w-[26rem] lg:aspect-auto lg:h-[66vh] lg:max-w-none"
+            className="w-full sm:max-w-[26rem] lg:aspect-auto lg:h-[64vh] lg:max-w-none"
           />
 
           {/* Floating flacon chip — commerce intent without stealing the frame */}

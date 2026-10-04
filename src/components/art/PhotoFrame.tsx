@@ -20,7 +20,16 @@ export interface PhotoFrameProps {
   className?: string
   /** Above-the-fold images should not lazy-load */
   priority?: boolean
-  /** Slow vertical drift on scroll, in percent of the frame height */
+  /**
+   * Focal point as an `object-position` value. The crop is taken away from this
+   * point, so a face placed near the top edge of the source should use a
+   * top-biased value such as `50% 14%`. Defaults to a centred crop.
+   */
+  focus?: string
+  /**
+   * Slow vertical drift on scroll, in percent of the frame height. Keep it
+   * small: each percent can nudge a top-anchored crop further off the subject.
+   */
   parallax?: number
   /** Fades the top-left into the page cream so the photo has no hard edge */
   feather?: 'none' | 'left' | 'bottom'
@@ -47,6 +56,7 @@ export function PhotoFrame({
   frame = 'tall',
   className,
   priority = false,
+  focus = '50% 50%',
   parallax = 0,
   feather = 'none',
   delay = 0,
@@ -68,6 +78,9 @@ export function PhotoFrame({
         className,
       )}
     >
+      {/* `focus` is the frame's focal point. Cropping happens away from it, so
+          `50% 14%` keeps a subject's face in shot whatever the panel ratio is.
+          No resting zoom: a resting scale would eat the focal area. */}
       <div className="absolute inset-0 overflow-hidden">
         <motion.img
           src={src}
@@ -76,8 +89,8 @@ export function PhotoFrame({
           fetchPriority={priority ? 'high' : undefined}
           decoding="async"
           draggable={false}
-          style={reduceMotion ? undefined : { y: drift }}
-          className="size-full scale-[1.06] object-cover object-center will-change-transform"
+          style={{ objectPosition: focus, ...(reduceMotion ? {} : { y: drift }) }}
+          className="size-full object-cover will-change-transform"
         />
       </div>
 
