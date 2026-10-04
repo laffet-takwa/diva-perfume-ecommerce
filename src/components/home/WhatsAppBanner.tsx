@@ -116,7 +116,8 @@ export function WhatsAppBanner() {
                 photoTone={hero.photoTone}
                 photoAlt={hero.name}
                 sizeMl={HERO_DECANT}
-                className="mx-auto h-auto w-[86%] drop-shadow-[0_50px_70px_rgba(0,0,0,0.45)]"
+                bare
+                className="mx-auto h-auto w-[78%] drop-shadow-[0_50px_70px_rgba(0,0,0,0.55)]"
               />
             </motion.div>
             <p className="mt-6 text-center font-sans text-[0.625rem] uppercase tracking-[0.28em] text-white/50">

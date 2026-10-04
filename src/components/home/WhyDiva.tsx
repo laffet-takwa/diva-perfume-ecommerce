@@ -33,8 +33,8 @@ const PROMISES = [
   {
     icon: Wallet,
     title: 'Best Price',
-    headline: 'Up to 90% less than the bottle.',
-    body: 'You pay for the millilitres you use, not the shelf space you do not. A 5 ml of a 690 DT bottle costs less than a coffee — and it is the same juice, in the same proportions.',
+    headline: 'Up to 97% less than the bottle.',
+    body: 'You pay for the millilitres you use, not the shelf space you do not. A 5 ml of a 1 450 DT bottle costs 55 DT here — and it is the same juice, in the same proportions, filled to the same volume.',
     proof: 'Price shown per volume, always',
     href: whatsappEnquiry('Hi DIVA! Can you match this price?'),
     cta: 'Price match?',

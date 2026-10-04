@@ -78,40 +78,39 @@ function ProductCardBase({ product, compact = false, ml, className }: ProductCar
             className="absolute inset-0 bg-noir/0 transition-colors duration-500 group-hover/card:bg-noir/[0.04]"
           />
 
-          {product.badge && !compact && (
-            <div className="absolute left-3 top-3">
-              <Badge tone={product.badge}>{product.badge}</Badge>
-            </div>
-          )}
-
-          {/* The saving is the reason the card exists — it never hides */}
-          {!compact && (
-            <div className="absolute right-3 top-3 flex flex-col items-end gap-1.5">
+          {/* Badge + saving stack on the left; only the wishlist heart floats
+              right, so the two never collide on a two-column mobile grid. */}
+          <div className="absolute left-3 top-3 flex flex-col items-start gap-1.5">
+            {product.badge && !compact && <Badge tone={product.badge}>{product.badge}</Badge>}
+            {!compact && (
               <span className="rounded-full bg-noir px-2.5 py-1 font-sans text-[0.5625rem] font-medium uppercase tracking-[0.14em] text-ivory">
                 Save {saving}%
               </span>
-              <button
-                type="button"
-                onClick={(e) => {
-                  e.preventDefault()
-                  handleWish()
-                }}
-                aria-pressed={wished}
-                aria-label={
-                  wished ? `Remove ${product.name} from wishlist` : `Add ${product.name} to wishlist`
-                }
-                className={cn(
-                  'flex size-9 items-center justify-center rounded-full border bg-ivory/85 backdrop-blur-sm transition-all duration-300 hover:bg-ivory',
-                  wished ? 'border-noir/40 text-noir' : 'border-noir/10 text-muted hover:text-noir',
-                )}
-              >
-                <Heart
-                  className={cn('size-4 transition-transform', wished && 'scale-110')}
-                  fill={wished ? 'currentColor' : 'none'}
-                  aria-hidden="true"
-                />
-              </button>
-            </div>
+            )}
+          </div>
+
+          {!compact && (
+            <button
+              type="button"
+              onClick={(e) => {
+                e.preventDefault()
+                handleWish()
+              }}
+              aria-pressed={wished}
+              aria-label={
+                wished ? `Remove ${product.name} from wishlist` : `Add ${product.name} to wishlist`
+              }
+              className={cn(
+                'absolute right-3 top-3 flex size-9 items-center justify-center rounded-full border bg-ivory/85 backdrop-blur-sm transition-all duration-300 hover:bg-ivory',
+                wished ? 'border-noir/40 text-noir' : 'border-noir/10 text-muted hover:text-noir',
+              )}
+            >
+              <Heart
+                className={cn('size-4 transition-transform', wished && 'scale-110')}
+                fill={wished ? 'currentColor' : 'none'}
+                aria-hidden="true"
+              />
+            </button>
           )}
         </div>
       </Link>

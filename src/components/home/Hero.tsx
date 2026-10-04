@@ -183,9 +183,9 @@ function BottleCluster({ reduceMotion }: { reduceMotion: boolean }) {
       {CLUSTER.map((product, i) => {
         const centre = i === Math.floor(CLUSTER.length / 2)
         const offsets = [
-          'left-0 bottom-[10%] w-[46%] -rotate-[7deg]',
+          'left-0 bottom-[10%] w-[46%] -rotate-[4deg]',
           'left-[27%] bottom-[20%] w-[52%] rotate-0 z-10',
-          'right-0 bottom-[8%] w-[44%] rotate-[7deg]',
+          'right-0 bottom-[8%] w-[44%] rotate-[4deg]',
         ]
         const price = product.sizes[1].price
 
@@ -206,7 +206,7 @@ function BottleCluster({ reduceMotion }: { reduceMotion: boolean }) {
                 className="group/bottle block focus-visible:outline-offset-4"
                 aria-label={`${product.name} by ${product.brand} — ${formatPrice(price)}`}
               >
-                <span className="relative flex aspect-[3/4] items-center justify-center overflow-hidden rounded-sm bg-gradient-to-b from-sand/80 to-taupe/60 transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover/bottle:-translate-y-1.5">
+                <span className="relative flex aspect-[3/4] items-center justify-center overflow-hidden rounded-sm bg-gradient-to-b from-sand/80 to-taupe/60 shadow-[0_22px_50px_-28px_rgba(12,12,14,0.55)] transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover/bottle:-translate-y-1.5">
                   <Flacon
                     art={product.art}
                     photo={product.photo}

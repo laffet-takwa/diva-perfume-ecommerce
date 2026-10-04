@@ -54,8 +54,10 @@ export function Header() {
       >
         <div className="flex h-8 items-center justify-center gap-2 border-b border-gold/30 px-4">
           <span className="eyebrow text-center text-[0.5625rem] text-ivory/85 sm:text-[0.625rem]">
-            <span className="hidden sm:inline">Decanted to order · 3 / 5 / 10 ml · </span>
-            Free delivery over 150 DT · Pay cash on delivery
+            <span className="sm:hidden">Free delivery over 150 DT</span>
+            <span className="hidden sm:inline">
+              Decanted to order · 3 / 5 / 10 ml · Free delivery over 150 DT · Pay cash on delivery
+            </span>
           </span>
         </div>
       </motion.div>

@@ -18,7 +18,7 @@ export type ButtonVariant =
 export type ButtonSize = 'sm' | 'md' | 'lg'
 
 const BASE =
-  'group relative inline-flex items-center justify-center gap-2.5 rounded-md font-sans font-medium uppercase tracking-[0.16em] transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] disabled:cursor-not-allowed disabled:opacity-45 select-none'
+  'group relative inline-flex items-center justify-center gap-2.5 whitespace-nowrap rounded-md font-sans font-medium uppercase tracking-[0.16em] transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] disabled:cursor-not-allowed disabled:opacity-45 select-none'
 
 const VARIANTS: Record<ButtonVariant, string> = {
   primary:
