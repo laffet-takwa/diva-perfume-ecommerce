@@ -2,9 +2,17 @@ import ArtScene from '@/components/art/ArtScene'
 import { BottleArt } from '@/components/art/BottleArt'
 import Reveal from '@/components/ui/Reveal'
 import { ButtonLink } from '@/components/ui/Button'
+import { InstagramIcon } from '@/components/ui/InstagramIcon'
 import { useSeo } from '@/hooks/useSeo'
 import { BESTSELLERS, products } from '@/data/products'
 import { spellCount } from '@/lib/utils'
+import {
+  INSTAGRAM_FORMER_HANDLES,
+  INSTAGRAM_HANDLE,
+  INSTAGRAM_JOINED,
+  INSTAGRAM_LINK,
+  INSTAGRAM_LOCATION,
+} from '@/lib/instagram'
 import type { SceneVariant } from '@/components/art/ArtScene'
 
 /* ==========================================================================
@@ -26,7 +34,7 @@ const CHAPTERS: Chapter[] = [
     id: 'story',
     index: '01',
     title: 'Our story',
-    body: `DIVA STORE started in 2026 with a frustration most perfume people share: the good bottles are the expensive ones, and the expensive ones are the ones you can only afford once. We built the opposite. Everything here is poured from a sealed, full-price bottle into a 3, 5 or 10 ml spray. ${spellCount(products.length)} fragrances, one point of view — and a ticket that does not require a special occasion.`,
+    body: `DIVA STORE started in August 2023, in Tunis, with a frustration most perfume people share: the good bottles are the expensive ones, and the expensive ones are the ones you can only afford once. We built the opposite. Everything here is poured from a sealed, full-price bottle into a 3, 5 or 10 ml spray. ${spellCount(products.length)} fragrances, one point of view — and a ticket that does not require a special occasion.`,
     scene: 'story',
     pull: 'A boutique, not a locked door.',
   },
@@ -55,6 +63,19 @@ const CHAPTERS: Chapter[] = [
     scene: 'promise',
     reversed: true,
     pull: 'You pay for what you wear.',
+  },
+]
+
+/** Instagram's own "About this profile", restated in the house's words. */
+const PROFILE_FACTS: { label: string; value: string }[] = [
+  { label: 'Username', value: INSTAGRAM_HANDLE },
+  { label: 'Joined', value: INSTAGRAM_JOINED },
+  { label: 'Account location', value: INSTAGRAM_LOCATION },
+  {
+    label: 'Former usernames',
+    value: INSTAGRAM_FORMER_HANDLES.length
+      ? INSTAGRAM_FORMER_HANDLES.join(', ')
+      : `None — ${INSTAGRAM_HANDLE.replace('@', '')} is the original name`,
   },
 ]
 
@@ -162,6 +183,75 @@ export function About() {
           </div>
         </section>
       ))}
+
+      {/* The profile card — Instagram's "About this profile", in the open */}
+      <section
+        id="profile"
+        className="scroll-mt-28 border-b border-dark/10 py-20 md:py-28"
+        aria-labelledby="profile-title"
+      >
+        <div className="container-lux grid gap-12 lg:grid-cols-2 lg:items-center lg:gap-16">
+          <Reveal variant="up">
+            <div className="eyebrow eyebrow-rule mb-5">
+              <span className="h-px w-6 bg-gold/60" aria-hidden="true" />
+              <span className="text-noir/70">The profile</span>
+            </div>
+            <h2 id="profile-title" className="display-title text-[clamp(1.7rem,3.8vw,2.6rem)]">
+              One account, no anonymous shelf.
+            </h2>
+            <p className="mt-6 max-w-lg text-[0.9375rem] leading-relaxed text-muted">
+              The feed is our shop window: every pour is posted the day it is decanted, with the
+              batch photo and the fill date on it. Instagram publishes our joining date and
+              account location on the profile itself, so you can check who you are ordering from
+              before you spend a dinar.
+            </p>
+            <a
+              href={INSTAGRAM_LINK}
+              target="_blank"
+              rel="noreferrer noopener"
+              className="mt-8 inline-flex h-[3.25rem] items-center gap-2.5 rounded-md bg-noir px-8 text-xs font-medium uppercase tracking-[0.16em] text-ivory transition-colors duration-300 hover:bg-noir-deep"
+            >
+              <InstagramIcon className="size-4" />
+              {INSTAGRAM_HANDLE}
+            </a>
+          </Reveal>
+
+          <Reveal variant="up" delay={0.1}>
+            <div className="rounded-md border border-gold/30 bg-sand/40 p-7 md:p-8">
+              <p className="eyebrow mb-6 text-noir/70">About this profile</p>
+              <dl className="flex flex-col">
+                {PROFILE_FACTS.map((fact, index) => (
+                  <div
+                    key={fact.label}
+                    className={[
+                      'flex flex-col gap-1 border-t border-noir/10 py-4 sm:flex-row sm:items-baseline sm:gap-6',
+                      index === 0 ? 'border-t-0 pt-0' : '',
+                    ].join(' ')}
+                  >
+                    <dt className="text-[0.625rem] uppercase tracking-[0.22em] text-muted sm:w-44 sm:shrink-0">
+                      {fact.label}
+                    </dt>
+                    <dd className="text-[0.9375rem] text-dark">
+                      {fact.label === 'Username' ? (
+                        <a
+                          href={INSTAGRAM_LINK}
+                          target="_blank"
+                          rel="noreferrer noopener"
+                          className="link-underline"
+                        >
+                          {fact.value}
+                        </a>
+                      ) : (
+                        fact.value
+                      )}
+                    </dd>
+                  </div>
+                ))}
+              </dl>
+            </div>
+          </Reveal>
+        </div>
+      </section>
 
       {/* Closing note */}
       <section className="border-b border-dark/10 bg-sand/40 py-20 md:py-24" aria-labelledby="careers-title">
