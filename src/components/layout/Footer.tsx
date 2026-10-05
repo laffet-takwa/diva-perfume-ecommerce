@@ -3,7 +3,7 @@ import type { FormEvent } from 'react'
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { ArrowUpRight, Mail, MapPin } from 'lucide-react'
-import { FOOTER_COLUMNS, SOCIAL_LINKS } from '@/data/navigation'
+import { FOOTER_COLUMNS, PROJECT_DEMO, SOCIAL_LINKS } from '@/data/navigation'
 import { InstagramIcon } from '@/components/ui/InstagramIcon'
 import { WhatsAppIcon } from '@/components/ui/WhatsAppIcon'
 import { whatsappEnquiry, WHATSAPP_DISPLAY, WHATSAPP_HOURS, WHATSAPP_REPLY_TIME } from '@/lib/whatsapp'
@@ -11,7 +11,7 @@ import Logo from './Logo'
 import { useUI } from '@/context'
 import { isValidEmail, NEWSLETTER_STORAGE, readStorage, sanitizeText, writeStorage } from '@/lib/utils'
 import { fadeUp, staggerContainer } from '@/lib/motion'
-import { Button } from '@/components/ui/Button'
+import { Button, buttonStyles } from '@/components/ui/Button'
 
 /* ==========================================================================
    Footer
@@ -53,13 +53,26 @@ export function Footer() {
               A decants house for people who would rather wear a hundred great fragrances than
               own ten. Poured to order from sealed, full-price bottles.
             </p>
-            <button
-              type="button"
-              onClick={openSearch}
-              className="self-start text-[0.6875rem] font-medium uppercase tracking-[0.2em] text-noir underline decoration-gold decoration-1 underline-offset-8 transition-colors hover:text-noir-deep"
-            >
-              Search the collection
-            </button>
+            <div className="flex flex-wrap items-center gap-x-6 gap-y-4">
+              <button
+                type="button"
+                onClick={openSearch}
+                className="text-[0.6875rem] font-medium uppercase tracking-[0.2em] text-noir underline decoration-gold decoration-1 underline-offset-8 transition-colors hover:text-noir-deep"
+              >
+                Search the collection
+              </button>
+
+              {/* The deployed build of this storefront, reachable from every page */}
+              <a
+                href={PROJECT_DEMO.href}
+                target="_blank"
+                rel="noreferrer noopener"
+                className={buttonStyles({ variant: 'outline', size: 'sm' })}
+              >
+                {PROJECT_DEMO.label}
+                <ArrowUpRight className="size-3.5" aria-hidden="true" />
+              </a>
+            </div>
 
             {/* Live contact — the three channels the house actually runs */}
             <ul className="mt-2 flex flex-col gap-4 border-t border-noir/10 pt-6">

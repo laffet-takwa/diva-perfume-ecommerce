@@ -36,7 +36,7 @@ npm run dev -- --port 5174
 | `npm run preview` | Serve the built output |
 | `npm run lint` | Oxlint, configured by `.oxlintrc.json` |
 
-Two Puppeteer scripts sit at the repo root. They are **not** wired into `package.json`
+Three Puppeteer scripts sit at the repo root. They are **not** wired into `package.json`
 because they need a real Chrome install and a running dev server:
 
 ```bash
@@ -46,12 +46,23 @@ node flow.smoke.mjs
 
 # screenshot capture into %TEMP%\kilo\shots
 node shots.mjs
+
+# full-page JPEG capture of every route, desktop + mobile, into ./docs
+npm run preview -- --port 4180
+BASE_URL=http://localhost:4180 node shots-jpg.mjs
 ```
 
-Both read `BASE_URL` (default `http://localhost:5178`) and expect Chrome at
-`C:\Program Files\Google\Chrome\Application\chrome.exe`. Both drive Chrome through
+All three read `BASE_URL` (default `http://localhost:5178`) and expect Chrome at
+`C:\Program Files\Google\Chrome\Application\chrome.exe`. They drive Chrome through
 `puppeteer-core`, so they read the DOM rather than the TypeScript — treat them as a safety
 net, not a substitute for `npm run build` and `npm run lint`.
+
+`shots-jpg.mjs` seeds the cart, wishlist and order through the real UI before capturing, so
+`15-cart`, `16-checkout` and `17-order-success` show populated pages rather than empty
+states. It writes 54 JPEGs (quality 82) into `docs/` — every route in `ROUTES` at 1440 and
+at 390, plus the cart drawer, the search overlay, the footer and the mobile menu. Files are
+numbered in visiting order; mobile shots are prefixed `mobile-`. Override the output
+directory with `SHOT_DIR` and the JPEG quality in the `QUALITY` constant at the top.
 
 ## Stack
 
@@ -108,6 +119,11 @@ public/
 
 Every page except `Home` is `React.lazy`, wrapped in `<Suspense>` with `PageSkeleton` and
 given a shared motion transition by the `Page` wrapper in `App.tsx`.
+
+`PROJECT_DEMO` in `src/data/navigation.ts` holds the deployed Vercel build. It is linked
+twice, both as an outline `buttonStyles` anchor with an `ArrowUpRight`: `size="lg"` beside
+the CTAs on `About`, and `size="sm"` in the footer next to "Search the collection" so the
+link is reachable from every page. Change the URL in that one constant to repoint both.
 
 ## State and persistence
 
