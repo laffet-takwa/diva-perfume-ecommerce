@@ -74,6 +74,9 @@ export const SOCIAL_LINKS: SocialLink[] = [
 
 export const FREE_SHIPPING_COPY = 'Free delivery over 150 DT'
 
+/** Studio credit shown under the footer bar. */
+export const SITE_CREDIT = 'Created by Takwa Laffet · Dar Tech'
+
 /** The deployed build of this storefront, linked from the About page. */
 export const PROJECT_DEMO = {
   label: 'View live demo',
