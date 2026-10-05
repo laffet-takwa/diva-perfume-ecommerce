@@ -160,6 +160,17 @@ export function Footer() {
             </p>
             <p className="font-quote text-base italic text-muted">Poured to order, never refilled.</p>
             <p className="text-[0.6875rem] text-muted">Free delivery over 150 DT · 14-day returns</p>
+            <p className="text-[0.625rem] text-muted">
+              Demo by{' '}
+              <a
+                href="https://diva-perfume-ecommerce-src.vercel.app/"
+                target="_blank"
+                rel="noreferrer noopener"
+                className="underline decoration-gold underline-offset-4 hover:text-noir"
+              >
+                takwa laffet dar tech
+              </a>
+            </p>
           </div>
         </div>
       </div>
