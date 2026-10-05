@@ -3,7 +3,13 @@ import type { FormEvent } from 'react'
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { ArrowUpRight, Mail, MapPin } from 'lucide-react'
-import { FOOTER_COLUMNS, PROJECT_DEMO, SITE_CREDIT, SOCIAL_LINKS } from '@/data/navigation'
+import {
+  CREATOR_PORTFOLIO,
+  FOOTER_COLUMNS,
+  PROJECT_DEMO,
+  SITE_CREDIT,
+  SOCIAL_LINKS,
+} from '@/data/navigation'
 import { InstagramIcon } from '@/components/ui/InstagramIcon'
 import { WhatsAppIcon } from '@/components/ui/WhatsAppIcon'
 import { whatsappEnquiry, WHATSAPP_DISPLAY, WHATSAPP_HOURS, WHATSAPP_REPLY_TIME } from '@/lib/whatsapp'
@@ -162,7 +168,7 @@ export function Footer() {
             <p className="text-[0.6875rem] text-muted">Free delivery over 150 DT · 14-day returns</p>
             <p className="text-[0.625rem] text-muted">
               <a
-                href={PROJECT_DEMO.href}
+                href={CREATOR_PORTFOLIO}
                 target="_blank"
                 rel="noreferrer noopener"
                 className="underline decoration-gold underline-offset-4 hover:text-noir"
