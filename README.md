@@ -64,6 +64,29 @@ at 390, plus the cart drawer, the search overlay, the footer and the mobile menu
 numbered in visiting order; mobile shots are prefixed `mobile-`. Override the output
 directory with `SHOT_DIR` and the JPEG quality in the `QUALITY` constant at the top.
 
+## Screenshots
+
+**Live demo:** <https://diva-perfume-ecommerce-src.vercel.app/>
+
+Full-page JPEGs are checked into the repo under [`docs/`](docs/). Every route is captured
+at desktop (`1440 × 900`) and mobile (`390 × 844`) via `shots-jpg.mjs`; states that only
+exist after interaction (the cart drawer, the search overlay) get their own frames.
+
+| Home | Shop | Product | Collections |
+| --- | --- | --- | --- |
+| <img alt="Home" src="docs/01-home.jpg" width="280"> | <img alt="Shop" src="docs/02-shop-all.jpg" width="280"> | <img alt="Product detail" src="docs/07-product-sauvage.jpg" width="280"> | <img alt="Collections" src="docs/10-collections.jpg" width="280"> |
+
+| About | Wishlist | Cart | Checkout | Order success |
+| --- | --- | --- | --- | --- |
+| <img alt="About" src="docs/13-about.jpg" width="280"> | <img alt="Wishlist" src="docs/14-wishlist.jpg" width="280"> | <img alt="Cart" src="docs/15-cart.jpg" width="280"> | <img alt="Checkout" src="docs/16-checkout.jpg" width="280"> | <img alt="Order success" src="docs/17-order-success.jpg" width="280"> |
+
+| Search | Cart drawer | Footer |
+| --- | --- | --- |
+| <img alt="Search overlay" src="docs/27-search-overlay.jpg" width="280"> | <img alt="Cart drawer" src="docs/26-cart-drawer.jpg" width="280"> | <img alt="Footer with demo credit" src="docs/28-footer.jpg" width="280"> |
+
+Each desktop frame is paired with a mobile shot, `mobile-01-home.jpg` … `mobile-25-not-found.jpg`,
+plus `mobile-29-menu.jpg`. The full list is in [`docs/`](docs/) — 54 files, 12.4 MB total.
+
 ## Stack
 
 - **React 19** + **TypeScript 6** (strict, `noUnusedLocals`, `verbatimModuleSyntax`)
